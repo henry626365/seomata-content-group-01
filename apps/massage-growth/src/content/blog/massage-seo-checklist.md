@@ -1,89 +1,53 @@
 ---
-title: "Massage SEO Checklist for Local Clinics"
-description: "A practical local SEO checklist massage clinic owners can run monthly to improve rankings, calls, and bookings."
+title: "按摩店本地 SEO 检查清单"
+description: "一份面向按摩店经营者的本地 SEO 实操清单，覆盖 Google 地图、服务页、评价与预约转化。"
 pubDate: "2026-05-06"
 heroImage: "../../assets/massage-seo-checklist-hero.jpg"
 ---
 
-Most massage clinics do not have an SEO problem. They have an execution consistency problem.
+很多按摩店并不缺“营销想法”，真正缺的是可持续执行的检查机制。  
+如果只在网站上线时做一次优化，后续三个月不复盘，Google 地图曝光、评价活跃度和预约转化通常都会逐步下滑。
 
-Owners usually update their site once, then get busy with staffing, schedule gaps, and no-shows. Three months later, their Google Maps visibility drops and weekend slots are still empty.
+![按摩店本地 SEO 执行清单预览图，包含资料页、服务页、评价与预约转化检查项](/images/massage-seo-checklist-preview.svg)
 
-![Checklist preview for massage SEO operations, including profile, pages, reviews, booking CTA, and tracking](/images/massage-seo-checklist-preview.svg)
+## 为什么这个问题对按摩店重要
 
-## Monthly checklist that actually moves bookings
+按摩店是典型的本地服务业，客户决策链路很短：搜索 -> 看地图与评价 -> 访问页面 -> 预约。  
+只要其中一个环节出问题，比如资料页不完整、服务页不清楚、预约按钮不明显，就会直接影响到店预约量。
 
-Start with actions that connect directly to booked appointments:
+## 常见错误
 
-- Confirm your Google Business Profile primary category is still accurate (`Massage therapist` or your most relevant service category)
-- Add 4-6 fresh photos from the clinic floor each month (front desk, room setup, team, signage)
-- Publish one service-intent page update (for example: deep tissue, prenatal, lymphatic drainage)
-- Review your top 10 search queries in Google Search Console and adjust title tags to match what local clients type
-- Check every main conversion path: tap-to-call, booking form, mobile speed, and confirmation page
+- 只关注“排名”，不关注地图曝光后的来电和预约数据
+- Google Business Profile 类目长期不更新，服务项目写得过于笼统
+- 服务页面只写疗法介绍，没有明确适合人群、时长和预约入口
+- 评价数量不少，但近 60 天几乎没有新增，信任感下降
+- 手机端预约流程过长，用户中途流失
 
-If your team cannot complete this list in under two hours monthly, the process is too complex.
+## 正确做法
 
-## Location trust signals clients look for before booking
+把 SEO 当作门店运营动作，而不是一次性项目。建议按月执行以下节奏：
 
-When people compare massage options, they are not reading long educational pages. They scan for proof:
+1. **资料页检查**：核对类目、营业时间、服务项、照片更新频率。  
+2. **内容页检查**：每月至少优化一篇核心服务页（如深层组织、孕期按摩）。  
+3. **评价流程检查**：确认邀评短信与回复流程是否被前台稳定执行。  
+4. **预约链路检查**：重点测试手机端从落地页到预约成功的完整路径。
 
-1. Do you look active and legitimate in Google Maps?
-2. Are there recent positive reviews with specific outcomes?
-3. Can they quickly understand service type, duration, and pricing expectation?
-4. Is booking easy from mobile without forcing a phone call?
+## 实用清单
 
-Your SEO content should support those decisions, not distract from them.
+- [ ] Google Business Profile 主类目与服务项是否与当前业务一致  
+- [ ] 最近 30 天是否有门店实拍图片更新  
+- [ ] 核心服务页是否写清“适合谁、时长、价格区间、预约按钮”  
+- [ ] 最近 30 天是否有新增真实评价并完成回复  
+- [ ] 手机端预约按钮是否在首屏或关键内容后可见  
+- [ ] 是否每月固定复盘地图曝光、来电量、预约提交量
 
-## A simple operating rhythm for small clinics
+## FAQ
 
-Use this cadence with a front desk lead or owner-operator:
+### Q1：按摩店先做网站还是先做 Google 地图？
+A：先把 Google 地图资料页做完整，同时优化网站核心服务页。两者不是二选一，而是并行推进。
 
-- Week 1: review profile data and rankings
-- Week 2: update one service page and internal links
-- Week 3: gather and publish client review requests
-- Week 4: test conversion flow and fix one friction point
+### Q2：评价少会影响预约吗？
+A：会。对本地服务来说，评价的“近期活跃度”和“回复质量”直接影响客户信任与预约意愿。
 
-This is not glamorous work, but it is exactly what helps local massage clinics build reliable inbound demand.
-
-## Evidence pack (v2 draft placeholders)
-
-### Screenshot slots
-
-![后台截图感：Google Search Console local queries](../../assets/evidence/massage-seo-checklist-dashboard.jpg)
-
-![地图场景：Google Business Profile local map visibility](../../assets/evidence/massage-seo-checklist-map.jpg)
-
-![门店运营场景：front desk and booking operations](../../assets/evidence/massage-seo-checklist-clinic.jpg)
-
-### Data slots
-
-- Baseline metrics: map impressions, calls, booking form submissions, and conversion rate
-- 30-day changes after checklist execution: metric-by-metric delta
-- Segment note: weekday vs weekend demand difference
-
-### Case slot
-
-- Clinic profile: single-location massage clinic, 2-4 therapists, suburban U.S. market
-- Problem: low map visibility + inconsistent reviews + weak mobile conversion
-- Actions: monthly checklist adoption for 8 weeks
-- Outcomes: visibility trend, call increase, and booked session lift
-
-### Visual recommendation
-
-- One-page “Checklist to Outcomes” flowchart:
-  `Monthly Tasks -> Visibility Signals -> Client Trust -> Booking Actions`
-
-### Data methodology note (publish-ready)
-
-- Sample definition: include only completed appointments and valid inbound calls within the selected date range.
-- Time window: compare baseline 30 days vs implementation 30 days (or 8-week window if seasonality is high).
-- Attribution rule: map-related actions are counted from Google Business Profile insights; booking actions are counted from confirmed form submissions and tracked call outcomes.
-- Exclusions: spam leads, duplicate submissions, staff test bookings, and internal calls.
-
-### Image naming convention (publish-ready)
-
-- Use this format: `massage-seo-checklist-[asset-type]-[topic]-v1.png`
-- Asset types: `screenshot`, `chart`, `diagram`, `case`.
-- Example filenames:
-  - `massage-seo-checklist-screenshot-gsc-queries-v1.png`
-  - `massage-seo-checklist-chart-booking-conversion-v1.png`
+### Q3：多久能看到变化？
+A：通常 4-8 周可以看到趋势变化，但前提是每周有稳定执行动作，而不是只做一次更新。

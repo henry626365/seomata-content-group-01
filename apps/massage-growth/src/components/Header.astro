@@ -2,22 +2,28 @@
 import { sites } from '@seomata/site-config';
 import HeaderLink from './HeaderLink.astro';
 
-const site = sites.massageGrowth;
+const site = {
+	...sites.massageGrowth,
+	name: '按摩店增长指南',
+	niche: '按摩店本地营销',
+	description:
+		'面向按摩店、按摩师和养生馆的 Google 地图、本地 SEO、客户评价和预约转化资源。'
+};
 ---
 
 <header>
 	<nav>
 		<h2><a href="/">{site.name}</a></h2>
 		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/google-maps">Google Maps</HeaderLink>
-			<HeaderLink href="/reviews">Reviews</HeaderLink>
-			<HeaderLink href="/website-conversion">Website Conversion</HeaderLink>
-			<HeaderLink href="/massage-seo">Massage SEO</HeaderLink>
-			<HeaderLink href="/templates">Templates</HeaderLink>
-			<HeaderLink href="/case-breakdowns">Case Breakdowns</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href="/">首页</HeaderLink>
+			<HeaderLink href="/blog">文章</HeaderLink>
+			<HeaderLink href="/google-maps">Google 地图</HeaderLink>
+			<HeaderLink href="/reviews">客户评价</HeaderLink>
+			<HeaderLink href="/website-conversion">网站转化</HeaderLink>
+			<HeaderLink href="/massage-seo">按摩 SEO</HeaderLink>
+			<HeaderLink href="/templates">模板</HeaderLink>
+			<HeaderLink href="/case-breakdowns">拆解分析</HeaderLink>
+			<HeaderLink href="/about">关于</HeaderLink>
 		</div>
 	</nav>
 </header>
@@ -39,14 +45,16 @@ const site = sites.massageGrowth;
 	}
 	nav {
 		display: flex;
-		align-items: flex-start;
+		align-items: center;
 		gap: 1rem;
-		justify-content: space-between;
+		justify-content: center;
+		flex-wrap: wrap;
+		padding: 0.35rem 0;
 	}
 	.internal-links {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: flex-end;
+		justify-content: center;
 	}
 	nav a {
 		padding: 0.85em 0.45em;
@@ -62,9 +70,10 @@ const site = sites.massageGrowth;
 	@media (max-width: 720px) {
 		nav {
 			flex-direction: column;
+			align-items: center;
 		}
 		.internal-links {
-			justify-content: flex-start;
+			justify-content: center;
 		}
 	}
 </style>

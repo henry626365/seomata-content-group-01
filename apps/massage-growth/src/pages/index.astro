@@ -4,91 +4,97 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { sites } from '@seomata/site-config';
 
-const site = sites.massageGrowth;
+const site = {
+	...sites.massageGrowth,
+	name: '按摩店增长指南',
+	niche: '按摩店本地营销',
+	description:
+		'面向按摩店、按摩师和养生馆的 Google 地图、本地 SEO、客户评价和预约转化资源。'
+};
 
 const resourceCategories = [
 	{
-		title: 'Google Maps Visibility',
+		title: 'Google 地图曝光',
 		description:
-			'Learn how massage clinics can improve map-pack presence through profile accuracy, service alignment, and local relevance signals. The focus is practical visibility work, not abstract ranking talk.'
+			'学习如何优化 Google Business Profile，让按摩店更容易出现在本地搜索和地图结果中。'
 	},
 	{
-		title: 'Reviews & Reputation',
+		title: '客户评价与口碑',
 		description:
-			'Build review systems your front desk can actually run: request timing, response templates, and quality-control workflows. Use review operations to strengthen trust and conversion in local search.'
+			'建立评价获取、回复和管理流程，让新客户在预约前更信任你的按摩服务。'
 	},
 	{
-		title: 'Website & Booking Conversion',
+		title: '网站与预约转化',
 		description:
-			'Improve how service pages, booking flows, and mobile UX convert local visitors into appointments. Prioritize friction reduction, clearer service fit, and stronger first-visit confidence.'
+			'优化服务页面、价格信息、预约按钮和移动端体验，把访问者转化为真实预约。'
 	},
 	{
-		title: 'Massage SEO Guides',
+		title: '按摩 SEO 指南',
 		description:
-			'Get massage-specific SEO guidance for service pages, near-me intent, and local landing structures. Every guide is written for clinic operators, not generic marketing teams.'
+			'围绕按摩服务、城市页面和本地关键词建立更清晰的网站内容结构。'
 	}
 ];
 
 const systemSteps = [
-	'Google Business Profile optimization',
-	'Local service page structure',
-	'Review request and reply system',
-	'Booking conversion improvements'
+	'优化 Google Business Profile',
+	'建立清晰的本地服务页面',
+	'建立评价请求与回复流程',
+	'提升网站预约转化率'
 ];
 
 const templateCards = [
 	{
-		title: 'Review Request SMS Templates',
+		title: '评价请求短信模板',
 		description:
-			'Ready-to-adapt SMS scripts for post-session follow-up, reminder timing, and compliant tone across different client outcomes.'
+			'用于到店服务后跟进的短信模板，覆盖邀请评价、提醒补评和基础话术规范。'
 	},
 	{
-		title: 'Massage Service Page Template',
+		title: '按摩服务页面模板',
 		description:
-			'A reusable page framework for deep tissue, prenatal, and sports massage services with clear fit signals and booking prompts.'
+			'用于梳理服务说明、适合人群、时长价格、评价展示与预约入口的页面结构模板。'
 	},
 	{
-		title: 'Google Maps Visibility Breakdown',
+		title: 'Google 地图曝光拆解',
 		description:
-			'A diagnostic format for reviewing profile completeness, local intent coverage, and conversion gaps between map views and bookings.'
+			'用拆解视角检查地图曝光到预约之间的关键环节，定位可执行的优化点。'
 	}
 ];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 	<head>
-		<BaseHead title={site.name} description={site.description} />
+		<BaseHead
+			title="按摩店增长指南｜Google 地图、本地 SEO 与预约增长资源"
+			description="学习如何通过 Google 地图、本地 SEO、客户评价、服务页面和预约转化优化，帮助按摩店获得更多本地客户。"
+		/>
 	</head>
 	<body>
 		<Header />
 		<main>
 			<section class="hero">
-				<p class="eyebrow">Massage Business Growth Resource Hub</p>
-				<h1>Grow Your Massage Clinic with Local Search</h1>
+				<p class="eyebrow">按摩店增长指南</p>
+				<h1>帮助按摩店通过 Google 地图和本地搜索获得更多预约</h1>
 				<p>
-					Practical SEO, Google Maps, review, and booking conversion resources for massage therapists,
-					wellness studios, and local massage clinics.
+					为按摩店、按摩师和养生馆提供实用的 Google 地图优化、本地 SEO、客户评价管理和预约转化资源。
 				</p>
 				<div class="hero-actions">
-					<a class="cta primary" href="/blog/massage-seo-checklist/">Start with the Massage SEO Checklist</a>
+					<a class="cta primary" href="/blog/massage-seo-checklist/">查看按摩 SEO 检查清单</a>
 					<a class="cta secondary" href="/blog/google-business-profile-for-massage-therapists/"
-						>Explore Google Maps Guides</a
+						>学习 Google 地图优化</a
 					>
 				</div>
 			</section>
 
 			<section>
-				<h2>Built for massage businesses, not generic marketing teams</h2>
+				<h2>专注按摩行业，而不是泛泛的营销建议</h2>
 				<p>
-					Most local SEO advice is written for every business at once. Massage clinics have different search
-					behavior, review patterns, service menus, booking flows, and local competition. This site focuses on
-					those details.
+					大多数本地 SEO 建议都是写给所有行业的，但按摩店的客户搜索方式、服务项目、评价信任、预约流程和本地竞争环境都有自己的特点。本网站专注解决这些具体问题。
 				</p>
 			</section>
 
 			<section>
-				<h2>Main Resource Categories</h2>
+				<h2>核心栏目</h2>
 				<div class="card-grid two-col">
 					{
 						resourceCategories.map((category) => (
@@ -102,24 +108,23 @@ const templateCards = [
 			</section>
 
 			<section class="featured-resource">
-				<h2>Free Massage SEO Checklist</h2>
+				<h2>免费按摩 SEO 检查清单</h2>
 				<p>
-					A practical checklist for improving your massage clinic's Google Business Profile, website service
-					pages, review system, and booking flow.
+					一份实用清单，帮助你检查 Google Business Profile、服务页面、客户评价、预约按钮和本地 SEO 基础。
 				</p>
 				<img
 					src="/images/massage-seo-checklist-preview.svg"
-					alt="Preview of a massage SEO checklist covering Google Business Profile, service pages, reviews, booking CTA, and tracking"
+					alt="按摩店 SEO 检查清单预览图，包含资料页、服务页面、评价、预约按钮和数据追踪项目"
 					loading="lazy"
 				/>
-				<a class="cta primary" href="/blog/massage-seo-checklist/">View the Checklist</a>
+				<a class="cta primary" href="/blog/massage-seo-checklist/">查看检查清单</a>
 			</section>
 
 			<section>
-				<h2>Massage Clinic Visibility System</h2>
+				<h2>按摩店本地曝光增长系统</h2>
 				<img
 					src="/images/massage-local-search-system.svg"
-					alt="Flow diagram showing Search to Google Maps to Website Visit to Booking for massage clinic marketing"
+					alt="按摩店本地搜索转化流程图：搜索、Google 地图、访问网站到完成预约"
 					loading="lazy"
 				/>
 				<ol class="steps">
@@ -134,10 +139,10 @@ const templateCards = [
 			</section>
 
 			<section>
-				<h2>Templates and Breakdowns</h2>
+				<h2>模板与拆解</h2>
 				<img
 					src="/images/massage-review-request-flow.svg"
-					alt="Review workflow from appointment completion to SMS request, Google review, and owner reply"
+					alt="按摩店评价流程图：服务完成、短信邀评、Google 评价与店主回复"
 					loading="lazy"
 				/>
 				<div class="card-grid three-col">
@@ -153,9 +158,9 @@ const templateCards = [
 			</section>
 
 			<section class="latest-guides">
-				<h2>Latest Guides</h2>
-				<p>Explore practical playbooks to improve local visibility, review growth, and booking conversion.</p>
-				<a href="/blog">View all guides</a>
+				<h2>最新指南</h2>
+				<p>查看围绕本地曝光、客户评价与预约转化的最新实操内容。</p>
+				<a href="/blog">查看全部指南</a>
 			</section>
 		</main>
 		<Footer />

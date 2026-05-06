@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">Massage Local Map Visibility Illustration</title>
-  <desc id="desc">Illustrative local map visibility diagram for massage clinics without real map branding or ranking claims.</desc>
+  <title id="title">按摩店本地地图曝光示意图</title>
+  <desc id="desc">用于教育说明的本地地图曝光示意图，不含真实平台品牌或排名暗示。</desc>
   <defs>
     <style>
       .bg { fill: #f4f9fc; }
@@ -28,20 +28,20 @@
     <path class="pin" d="M0 -32 C-18 -32 -32 -18 -32 0 C-32 22 0 54 0 54 C0 54 32 22 32 0 C32 -18 18 -32 0 -32 Z" />
     <circle class="pinInner" cx="0" cy="0" r="12" />
   </g>
-  <text class="clinic" x="374" y="246">Massage Clinic A</text>
+  <text class="clinic" x="374" y="246">按摩门店 A</text>
 
   <g transform="translate(620 355)">
     <path class="pin" d="M0 -32 C-18 -32 -32 -18 -32 0 C-32 22 0 54 0 54 C0 54 32 22 32 0 C32 -18 18 -32 0 -32 Z" />
     <circle class="pinInner" cx="0" cy="0" r="12" />
   </g>
-  <text class="clinic" x="655" y="360">Massage Clinic B</text>
+  <text class="clinic" x="655" y="360">按摩门店 B</text>
 
   <g transform="translate(890 230)">
     <path class="pin" d="M0 -32 C-18 -32 -32 -18 -32 0 C-32 22 0 54 0 54 C0 54 32 22 32 0 C32 -18 18 -32 0 -32 Z" />
     <circle class="pinInner" cx="0" cy="0" r="12" />
   </g>
-  <text class="clinic" x="925" y="236">Massage Clinic C</text>
+  <text class="clinic" x="925" y="236">按摩门店 C</text>
 
-  <text class="label" x="600" y="620" text-anchor="middle">Local map exposure illustration for educational use</text>
-  <text class="note" x="600" y="650" text-anchor="middle">No real platform branding and no implied ranking positions</text>
+  <text class="label" x="600" y="620" text-anchor="middle">本地地图曝光示意（教育用途）</text>
+  <text class="note" x="600" y="650" text-anchor="middle">不使用真实平台品牌，也不暗示真实排名</text>
 </svg>
