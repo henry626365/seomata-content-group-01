@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "outputs": ["dist/**"]
+    }
+  }
+}
