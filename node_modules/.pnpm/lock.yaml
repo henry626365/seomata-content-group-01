@@ -26,6 +26,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.2
         version: 3.7.2
+      '@seomata/site-config':
+        specifier: workspace:*
+        version: link:../../packages/site-config
       astro:
         specifier: ^6.2.2
         version: 6.2.2(@types/node@24.12.2)(rollup@4.60.3)
@@ -50,6 +53,8 @@ importers:
       sharp:
         specifier: ^0.34.3
         version: 0.34.5
+
+  packages/site-config: {}
 
 packages:
 

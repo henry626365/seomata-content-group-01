@@ -2,48 +2,205 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { sites } from '@seomata/site-config';
+
+const site = sites.massageGrowth;
+
+const painPoints = [
+	'Not visible in Google Maps',
+	'Too few recent reviews',
+	'Website visitors do not book'
+];
+
+const systemSteps = [
+	'Google Business Profile optimization',
+	'Local service page structure',
+	'Review request and reply system',
+	'Booking conversion improvements'
+];
+
+const resources = [
+	'Massage SEO Checklist',
+	'Google Review Reply Templates',
+	'Massage Website Conversion Guide'
+];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={site.name} description={site.description} />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="hero">
+				<p class="eyebrow">Massage Clinic Growth Resource</p>
+				<h1>Massage Business Growth</h1>
+				<p>{site.description}</p>
+				<a class="cta" href={site.targetServiceUrl} target="_blank" rel="noopener noreferrer"
+					>Get SEO Help</a
+				>
+			</section>
+
+			<section>
+				<h2>Why massage clinics struggle to get found online</h2>
+				<div class="card-grid three-col">
+					{
+						painPoints.map((point) => (
+							<article class="card">
+								<h3>{point}</h3>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<section>
+				<h2>The massage clinic visibility system</h2>
+				<ol class="steps">
+					{
+						systemSteps.map((step) => (
+							<li>
+								<span class="step-title">{step}</span>
+							</li>
+						))
+					}
+				</ol>
+			</section>
+
+			<section>
+				<h2>Start with these resources</h2>
+				<div class="card-grid three-col">
+					{
+						resources.map((resource) => (
+							<article class="card resource-card">
+								<h3>{resource}</h3>
+								<a href="/blog">Read guide</a>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<section class="latest-guides">
+				<h2>Latest Guides</h2>
+				<p>Explore practical playbooks to improve local visibility, review growth, and booking conversion.</p>
+				<a href="/blog">View all guides</a>
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	:global(:root) {
+		--massage-primary: #0b3a53;
+		--massage-accent: #2f80ed;
+		--massage-soft: #eef5fb;
+	}
+
+	main {
+		display: grid;
+		gap: 2.25rem;
+	}
+
+	section {
+		background: #fff;
+		border: 1px solid #d8e4ee;
+		border-radius: 14px;
+		padding: 1.5rem;
+	}
+
+	.hero {
+		background: #f4f9fc;
+		border-color: #c8ddeb;
+	}
+
+	.eyebrow {
+		font-size: 0.9rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--massage-primary);
+		margin-bottom: 0.6rem;
+	}
+
+	h1 {
+		font-size: clamp(2rem, 4vw, 3rem);
+		color: var(--massage-primary);
+		margin-bottom: 0.8rem;
+	}
+
+	h2 {
+		font-size: clamp(1.35rem, 3vw, 2rem);
+		color: var(--massage-primary);
+		margin-bottom: 1rem;
+	}
+
+	h3 {
+		font-size: 1.08rem;
+		margin: 0;
+		color: #143f5a;
+	}
+
+	.cta {
+		display: inline-block;
+		margin-top: 0.8rem;
+		background: var(--massage-primary);
+		color: #fff;
+		padding: 0.65rem 1.1rem;
+		border-radius: 8px;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.cta:hover {
+		background: #07293a;
+	}
+
+	.card-grid {
+		display: grid;
+		gap: 0.9rem;
+	}
+
+	.three-col {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.card {
+		background: var(--massage-soft);
+		border: 1px solid #cfe1f0;
+		border-radius: 10px;
+		padding: 1rem;
+	}
+
+	.steps {
+		margin: 0;
+		padding-left: 1.15rem;
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.step-title {
+		color: #1c3f56;
+		font-weight: 600;
+	}
+
+	.resource-card a,
+	.latest-guides a {
+		color: var(--massage-accent);
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.latest-guides p {
+		margin-bottom: 0.8rem;
+	}
+
+	@media (max-width: 840px) {
+		.three-col {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
