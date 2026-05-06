@@ -1,0 +1,132 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+
+type ResourceCard = {
+	title: string;
+	description: string;
+	href: string;
+	linkLabel?: string;
+};
+
+type Props = {
+	title: string;
+	description: string;
+	cards: ResourceCard[];
+};
+
+const { title, description, cards } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<p class="eyebrow">Massage Business Growth</p>
+				<h1>{title}</h1>
+				<p>{description}</p>
+			</section>
+
+			<section>
+				<h2>Resources</h2>
+				<div class="card-grid">
+					{
+						cards.map((card) => (
+							<article class="card">
+								<h3>{card.title}</h3>
+								<p>{card.description}</p>
+								<a href={card.href}>{card.linkLabel ?? 'Read resource'}</a>
+							</article>
+						))
+					}
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	:global(:root) {
+		--massage-primary: #0b3a53;
+		--massage-accent: #2f80ed;
+		--massage-soft: #eef5fb;
+	}
+
+	main {
+		display: grid;
+		gap: 2rem;
+	}
+
+	section {
+		background: #fff;
+		border: 1px solid #d2dfeb;
+		border-radius: 14px;
+		padding: 1.6rem;
+	}
+
+	.hero {
+		background: #f4f9fc;
+	}
+
+	.eyebrow {
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--massage-primary);
+	}
+
+	h1 {
+		font-size: clamp(1.9rem, 4vw, 2.8rem);
+		color: var(--massage-primary);
+		margin: 0.4rem 0 0.8rem;
+	}
+
+	h2 {
+		margin-bottom: 1rem;
+		color: var(--massage-primary);
+	}
+
+	.card-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.card {
+		background: var(--massage-soft);
+		border: 1px solid #c8dced;
+		border-radius: 10px;
+		padding: 1rem;
+	}
+
+	h3 {
+		margin: 0;
+		color: #113f5d;
+	}
+
+	.card p {
+		margin: 0.7rem 0;
+		font-size: 0.98rem;
+		line-height: 1.55;
+	}
+
+	.card a {
+		color: var(--massage-accent);
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	@media (max-width: 800px) {
+		.card-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

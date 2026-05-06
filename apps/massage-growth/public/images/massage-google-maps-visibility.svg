@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Massage Local Map Visibility Illustration</title>
+  <desc id="desc">Illustrative local map visibility diagram for massage clinics without real map branding or ranking claims.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f4f9fc; }
+      .map { fill: #ffffff; stroke: #b7d0e2; stroke-width: 3; rx: 16; }
+      .street { stroke: #d5e6f3; stroke-width: 12; fill: none; stroke-linecap: round; }
+      .label { fill: #0b3a53; font: 600 20px Arial, sans-serif; }
+      .pin { fill: #2f80ed; }
+      .pinInner { fill: #ffffff; }
+      .clinic { fill: #0b3a53; font: 700 18px Arial, sans-serif; }
+      .note { fill: #0b3a53; font: 500 18px Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1200" height="700" />
+  <rect class="map" x="80" y="70" width="1040" height="560" />
+
+  <path class="street" d="M140 180 H1040" />
+  <path class="street" d="M180 300 H1060" />
+  <path class="street" d="M120 430 H1020" />
+  <path class="street" d="M250 120 V560" />
+  <path class="street" d="M500 100 V590" />
+  <path class="street" d="M760 120 V560" />
+  <path class="street" d="M960 140 V550" />
+
+  <g transform="translate(340 240)">
+    <path class="pin" d="M0 -32 C-18 -32 -32 -18 -32 0 C-32 22 0 54 0 54 C0 54 32 22 32 0 C32 -18 18 -32 0 -32 Z" />
+    <circle class="pinInner" cx="0" cy="0" r="12" />
+  </g>
+  <text class="clinic" x="374" y="246">Massage Clinic A</text>
+
+  <g transform="translate(620 355)">
+    <path class="pin" d="M0 -32 C-18 -32 -32 -18 -32 0 C-32 22 0 54 0 54 C0 54 32 22 32 0 C32 -18 18 -32 0 -32 Z" />
+    <circle class="pinInner" cx="0" cy="0" r="12" />
+  </g>
+  <text class="clinic" x="655" y="360">Massage Clinic B</text>
+
+  <g transform="translate(890 230)">
+    <path class="pin" d="M0 -32 C-18 -32 -32 -18 -32 0 C-32 22 0 54 0 54 C0 54 32 22 32 0 C32 -18 18 -32 0 -32 Z" />
+    <circle class="pinInner" cx="0" cy="0" r="12" />
+  </g>
+  <text class="clinic" x="925" y="236">Massage Clinic C</text>
+
+  <text class="label" x="600" y="620" text-anchor="middle">Local map exposure illustration for educational use</text>
+  <text class="note" x="600" y="650" text-anchor="middle">No real platform branding and no implied ranking positions</text>
+</svg>

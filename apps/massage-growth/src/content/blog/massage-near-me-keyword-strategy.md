@@ -2,7 +2,7 @@
 title: "How Massage Clinics Should Target “Massage Near Me” Keywords"
 description: "A local keyword strategy for massage clinics to capture near-me intent without creating thin or spammy pages."
 pubDate: "2026-05-06"
-heroImage: "../../assets/blog-placeholder-2.jpg"
+heroImage: "../../assets/massage-near-me-keyword-hero.jpg"
 ---
 
 “Massage near me” searches are high intent but highly competitive.  
@@ -46,9 +46,11 @@ Rank is only one signal. Booked appointments are the real KPI.
 
 ### Screenshot slots
 
-- Screenshot 1: Query report showing near-me modifier patterns
-- Screenshot 2: SERP examples for service + near-me searches in your target city
-- Screenshot 3: Landing page sections mapped to near-me intent
+![后台截图感：near-me keyword analytics dashboard](../../assets/evidence/massage-near-me-keyword-strategy-dashboard.jpg)
+
+![地图场景：map pack visibility for near-me searches](../../assets/evidence/massage-near-me-keyword-strategy-map.jpg)
+
+![门店运营场景：local clinic serving nearby clients](../../assets/evidence/massage-near-me-keyword-strategy-clinic.jpg)
 
 ### Data slots
 

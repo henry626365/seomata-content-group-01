@@ -2,7 +2,7 @@
 title: "Review Reply Templates for Massage Businesses"
 description: "Practical reply templates massage clinics can adapt to respond to Google reviews with professionalism and local trust."
 pubDate: "2026-05-06"
-heroImage: "../../assets/blog-placeholder-3.jpg"
+heroImage: "../../assets/massage-review-reply-templates-hero.jpg"
 ---
 
 Replying to reviews is not just reputation hygiene. It is conversion content for future clients.
@@ -49,9 +49,11 @@ A calm, respectful reply can recover trust even when the original review is hars
 
 ### Screenshot slots
 
-- Screenshot 1: Review inbox workflow and response-time tracking view
-- Screenshot 2: Before/after examples of low-quality vs high-quality public replies
-- Screenshot 3: Profile view of reply consistency across recent reviews
+![后台截图感：review inbox and response dashboard](../../assets/evidence/review-reply-templates-for-massage-businesses-dashboard.jpg)
+
+![地图场景：map listing and review discovery context](../../assets/evidence/review-reply-templates-for-massage-businesses-map.jpg)
+
+![门店运营场景：front desk handling customer reviews](../../assets/evidence/review-reply-templates-for-massage-businesses-clinic.jpg)
 
 ### Data slots
 

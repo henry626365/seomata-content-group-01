@@ -2,12 +2,14 @@
 title: "How to Get More Google Reviews for a Massage Clinic"
 description: "A practical review system for massage clinics to increase review volume, freshness, and quality without awkward asks."
 pubDate: "2026-05-06"
-heroImage: "../../assets/blog-placeholder-3.jpg"
+heroImage: "../../assets/massage-google-reviews-hero.jpg"
 ---
 
 Most massage owners ask for reviews randomly. That is why review flow feels inconsistent.
 
 The fix is a repeatable process tied to specific appointment moments.
+
+![Flowchart of massage review operations from appointment completion to SMS request, Google review, and owner reply](/images/massage-review-request-flow.svg)
 
 ## Ask at the right time, not every time
 
@@ -47,9 +49,11 @@ Reviews with scenario detail perform better in Maps rankings and help hesitant c
 
 ### Screenshot slots
 
-- Screenshot 1: Review request SMS template inside your CRM or booking platform
-- Screenshot 2: Google review velocity chart (new reviews per week)
-- Screenshot 3: Example review mix (short praise vs scenario-specific reviews)
+![后台截图感：review request workflow dashboard](../../assets/evidence/how-to-get-more-google-reviews-for-a-massage-clinic-dashboard.jpg)
+
+![地图场景：local map discovery and review context](../../assets/evidence/how-to-get-more-google-reviews-for-a-massage-clinic-map.jpg)
+
+![门店运营场景：staff handling customer feedback](../../assets/evidence/how-to-get-more-google-reviews-for-a-massage-clinic-clinic.jpg)
 
 ### Data slots
 

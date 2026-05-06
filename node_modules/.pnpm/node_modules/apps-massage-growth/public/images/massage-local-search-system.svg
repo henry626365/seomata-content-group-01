@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Massage Local Search System Flow</title>
+  <desc id="desc">Flowchart showing Search to Google Maps to Website Visit to Booking for massage clinic growth.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f4f9fc; }
+      .card { fill: #ffffff; stroke: #b7d0e2; stroke-width: 3; rx: 18; }
+      .text { fill: #0b3a53; font: 600 28px Arial, sans-serif; }
+      .sub { fill: #2f80ed; font: 500 18px Arial, sans-serif; }
+      .arrow { stroke: #0b3a53; stroke-width: 4; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0b3a53" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1200" height="360" rx="20" />
+
+  <rect class="card" x="40" y="90" width="240" height="180" />
+  <text class="text" x="160" y="170" text-anchor="middle">Search</text>
+  <text class="sub" x="160" y="205" text-anchor="middle">Local intent query</text>
+
+  <rect class="card" x="330" y="90" width="240" height="180" />
+  <text class="text" x="450" y="170" text-anchor="middle">Google Maps</text>
+  <text class="sub" x="450" y="205" text-anchor="middle">Profile visibility</text>
+
+  <rect class="card" x="620" y="90" width="240" height="180" />
+  <text class="text" x="740" y="170" text-anchor="middle">Website Visit</text>
+  <text class="sub" x="740" y="205" text-anchor="middle">Service-page check</text>
+
+  <rect class="card" x="910" y="90" width="240" height="180" />
+  <text class="text" x="1030" y="170" text-anchor="middle">Booking</text>
+  <text class="sub" x="1030" y="205" text-anchor="middle">Appointment confirmed</text>
+
+  <path class="arrow" d="M280 180 H320" />
+  <path class="arrow" d="M570 180 H610" />
+  <path class="arrow" d="M860 180 H900" />
+</svg>

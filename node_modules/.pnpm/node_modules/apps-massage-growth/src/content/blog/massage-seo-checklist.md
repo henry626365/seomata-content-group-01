@@ -2,12 +2,14 @@
 title: "Massage SEO Checklist for Local Clinics"
 description: "A practical local SEO checklist massage clinic owners can run monthly to improve rankings, calls, and bookings."
 pubDate: "2026-05-06"
-heroImage: "../../assets/blog-placeholder-1.jpg"
+heroImage: "../../assets/massage-seo-checklist-hero.jpg"
 ---
 
 Most massage clinics do not have an SEO problem. They have an execution consistency problem.
 
 Owners usually update their site once, then get busy with staffing, schedule gaps, and no-shows. Three months later, their Google Maps visibility drops and weekend slots are still empty.
+
+![Checklist preview for massage SEO operations, including profile, pages, reviews, booking CTA, and tracking](/images/massage-seo-checklist-preview.svg)
 
 ## Monthly checklist that actually moves bookings
 
@@ -47,9 +49,11 @@ This is not glamorous work, but it is exactly what helps local massage clinics b
 
 ### Screenshot slots
 
-- Screenshot 1: Google Search Console queries for top local intent terms (last 90 days)
-- Screenshot 2: Google Business Profile performance panel (calls, website clicks, direction requests)
-- Screenshot 3: Booking funnel step where mobile drop-off is highest
+![后台截图感：Google Search Console local queries](../../assets/evidence/massage-seo-checklist-dashboard.jpg)
+
+![地图场景：Google Business Profile local map visibility](../../assets/evidence/massage-seo-checklist-map.jpg)
+
+![门店运营场景：front desk and booking operations](../../assets/evidence/massage-seo-checklist-clinic.jpg)
 
 ### Data slots
 

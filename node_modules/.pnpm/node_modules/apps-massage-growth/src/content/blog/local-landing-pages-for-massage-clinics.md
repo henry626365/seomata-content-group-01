@@ -2,7 +2,7 @@
 title: "Local Landing Pages for Massage Clinics"
 description: "How massage clinics can build local landing pages for nearby cities and neighborhoods without thin content."
 pubDate: "2026-05-06"
-heroImage: "../../assets/blog-placeholder-4.jpg"
+heroImage: "../../assets/massage-local-landing-pages-hero.jpg"
 ---
 
 Local landing pages can work well for massage clinics, but only when each page reflects real operational differences.
@@ -47,9 +47,11 @@ This creates a strong content graph that supports both discoverability and conve
 
 ### Screenshot slots
 
-- Screenshot 1: Example local landing page with area-specific logistics section
-- Screenshot 2: Internal linking from local page to service and booking pages
-- Screenshot 3: Analytics report for location-page traffic and conversion
+![后台截图感：location page analytics dashboard](../../assets/evidence/local-landing-pages-for-massage-clinics-dashboard.jpg)
+
+![地图场景：service area map and local pins](../../assets/evidence/local-landing-pages-for-massage-clinics-map.jpg)
+
+![门店运营场景：clinic operations for nearby neighborhoods](../../assets/evidence/local-landing-pages-for-massage-clinics-clinic.jpg)
 
 ### Data slots
 

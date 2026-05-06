@@ -1,0 +1,36 @@
+---
+import ResourceCategoryPage from '../../components/home/ResourceCategoryPage.astro';
+
+const cards = [
+	{
+		title: 'Review Request SMS Templates',
+		description:
+			'Use adaptable SMS scripts for post-session review requests, reminders, and tone-safe follow-up in local massage operations.',
+		href: '/blog/how-to-get-more-google-reviews-for-a-massage-clinic/'
+	},
+	{
+		title: 'Review Reply Templates for Massage Businesses',
+		description:
+			'Template patterns for responding to positive, mixed, and negative reviews with professionalism and local trust focus.',
+		href: '/blog/review-reply-templates-for-massage-businesses/'
+	},
+	{
+		title: 'Massage Service Page Template',
+		description:
+			'A reusable page structure for massage services that balances local SEO relevance with booking conversion clarity.',
+		href: '/blog/massage-service-page-examples/'
+	},
+	{
+		title: 'Local SEO Checklist Template',
+		description:
+			'Checklist format covering profile optimization, local intent pages, and booking flow quality controls for ongoing execution.',
+		href: '/blog/massage-seo-checklist/'
+	}
+];
+---
+
+<ResourceCategoryPage
+	title="Massage Marketing Templates"
+	description="Review request scripts, reply templates, service page structures, and local SEO checklists."
+	cards={cards}
+/>

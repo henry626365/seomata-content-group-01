@@ -1,0 +1,36 @@
+---
+import ResourceCategoryPage from '../../components/home/ResourceCategoryPage.astro';
+
+const cards = [
+	{
+		title: 'Massage SEO Checklist for Local Clinics',
+		description:
+			'Use this operating checklist to maintain local search fundamentals across maps visibility, service pages, reviews, and booking.',
+		href: '/blog/massage-seo-checklist/'
+	},
+	{
+		title: 'How Massage Clinics Should Target “Massage Near Me” Keywords',
+		description:
+			'Apply keyword strategy that reflects real search modifiers and service intent, not one-size-fits-all SEO content.',
+		href: '/blog/massage-near-me-keyword-strategy/'
+	},
+	{
+		title: 'Local Landing Pages for Massage Clinics',
+		description:
+			'Build location pages for service areas you actually support, with practical local detail and strong internal link structure.',
+		href: '/blog/local-landing-pages-for-massage-clinics/'
+	},
+	{
+		title: 'Massage Service Page Examples That Help Clients Book',
+		description:
+			'Combine SEO relevance with conversion-focused structure for deep tissue, prenatal, and other core service pages.',
+		href: '/blog/massage-service-page-examples/'
+	}
+];
+---
+
+<ResourceCategoryPage
+	title="Massage SEO Guides"
+	description="Service page, local landing page, and keyword strategy resources for massage clinics."
+	cards={cards}
+/>

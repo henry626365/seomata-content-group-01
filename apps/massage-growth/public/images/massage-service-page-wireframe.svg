@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Massage Service Page Wireframe</title>
+  <desc id="desc">Wireframe showing service name, who it is for, session length, pricing, reviews, book now CTA, and FAQ.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f4f9fc; }
+      .page { fill: #ffffff; stroke: #b7d0e2; stroke-width: 3; rx: 16; }
+      .block { fill: #eef5fb; stroke: #c9dff0; stroke-width: 2; rx: 10; }
+      .title { fill: #0b3a53; font: 700 30px Arial, sans-serif; }
+      .text { fill: #0b3a53; font: 600 22px Arial, sans-serif; }
+      .cta { fill: #0b3a53; rx: 10; }
+      .ctaText { fill: #ffffff; font: 700 20px Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1200" height="760" />
+  <rect class="page" x="180" y="30" width="840" height="700" />
+  <text class="title" x="600" y="80" text-anchor="middle">Massage Service Page Structure</text>
+
+  <rect class="block" x="230" y="110" width="740" height="68" />
+  <text class="text" x="260" y="153">Service name</text>
+
+  <rect class="block" x="230" y="194" width="360" height="96" />
+  <text class="text" x="255" y="245">Who it is for</text>
+
+  <rect class="block" x="610" y="194" width="360" height="96" />
+  <text class="text" x="635" y="245">Session length</text>
+
+  <rect class="block" x="230" y="305" width="360" height="96" />
+  <text class="text" x="255" y="357">Pricing</text>
+
+  <rect class="block" x="610" y="305" width="360" height="96" />
+  <text class="text" x="635" y="357">Reviews</text>
+
+  <rect class="cta" x="230" y="418" width="740" height="68" />
+  <text class="ctaText" x="600" y="462" text-anchor="middle">Book now CTA</text>
+
+  <rect class="block" x="230" y="504" width="740" height="180" />
+  <text class="text" x="260" y="553">FAQ</text>
+</svg>

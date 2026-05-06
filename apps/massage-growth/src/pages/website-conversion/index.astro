@@ -1,0 +1,37 @@
+---
+import ResourceCategoryPage from '../../components/home/ResourceCategoryPage.astro';
+
+const cards = [
+	{
+		title: 'Massage Website Conversion Guide',
+		description:
+			'Improve service clarity, CTA placement, and mobile booking flow so more local visitors become confirmed appointments.',
+		href: '/blog/massage-website-conversion-guide/'
+	},
+	{
+		title: 'Massage Service Page Examples That Help Clients Book',
+		description:
+			'Build service pages around decision clarity, session fit, and trust signals instead of generic treatment descriptions.',
+		href: '/blog/massage-service-page-examples/'
+	},
+	{
+		title: 'Local Landing Pages for Massage Clinics',
+		description:
+			'Structure location pages with real local context, logistics details, and booking pathways for nearby neighborhoods.',
+		href: '/blog/local-landing-pages-for-massage-clinics/'
+	},
+	{
+		title: 'Massage Marketing Breakdowns',
+		description:
+			'Read educational breakdowns on booking-flow friction and practical optimization patterns without claiming client guarantees.',
+		href: '/case-breakdowns/',
+		linkLabel: 'Read breakdowns'
+	}
+];
+---
+
+<ResourceCategoryPage
+	title="Website & Booking Conversion for Massage Clinics"
+	description="Guides for turning massage website visitors into booked appointments."
+	cards={cards}
+/>

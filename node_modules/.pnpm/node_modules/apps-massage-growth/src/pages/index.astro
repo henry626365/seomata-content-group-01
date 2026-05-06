@@ -6,10 +6,27 @@ import { sites } from '@seomata/site-config';
 
 const site = sites.massageGrowth;
 
-const painPoints = [
-	'Not visible in Google Maps',
-	'Too few recent reviews',
-	'Website visitors do not book'
+const resourceCategories = [
+	{
+		title: 'Google Maps Visibility',
+		description:
+			'Learn how massage clinics can improve map-pack presence through profile accuracy, service alignment, and local relevance signals. The focus is practical visibility work, not abstract ranking talk.'
+	},
+	{
+		title: 'Reviews & Reputation',
+		description:
+			'Build review systems your front desk can actually run: request timing, response templates, and quality-control workflows. Use review operations to strengthen trust and conversion in local search.'
+	},
+	{
+		title: 'Website & Booking Conversion',
+		description:
+			'Improve how service pages, booking flows, and mobile UX convert local visitors into appointments. Prioritize friction reduction, clearer service fit, and stronger first-visit confidence.'
+	},
+	{
+		title: 'Massage SEO Guides',
+		description:
+			'Get massage-specific SEO guidance for service pages, near-me intent, and local landing structures. Every guide is written for clinic operators, not generic marketing teams.'
+	}
 ];
 
 const systemSteps = [
@@ -19,10 +36,22 @@ const systemSteps = [
 	'Booking conversion improvements'
 ];
 
-const resources = [
-	'Massage SEO Checklist',
-	'Google Review Reply Templates',
-	'Massage Website Conversion Guide'
+const templateCards = [
+	{
+		title: 'Review Request SMS Templates',
+		description:
+			'Ready-to-adapt SMS scripts for post-session follow-up, reminder timing, and compliant tone across different client outcomes.'
+	},
+	{
+		title: 'Massage Service Page Template',
+		description:
+			'A reusable page framework for deep tissue, prenatal, and sports massage services with clear fit signals and booking prompts.'
+	},
+	{
+		title: 'Google Maps Visibility Breakdown',
+		description:
+			'A diagnostic format for reviewing profile completeness, local intent coverage, and conversion gaps between map views and bookings.'
+	}
 ];
 ---
 
@@ -35,29 +64,64 @@ const resources = [
 		<Header />
 		<main>
 			<section class="hero">
-				<p class="eyebrow">Massage Clinic Growth Resource</p>
-				<h1>Massage Business Growth</h1>
-				<p>{site.description}</p>
-				<a class="cta" href={site.targetServiceUrl} target="_blank" rel="noopener noreferrer"
-					>Get SEO Help</a
-				>
+				<p class="eyebrow">Massage Business Growth Resource Hub</p>
+				<h1>Grow Your Massage Clinic with Local Search</h1>
+				<p>
+					Practical SEO, Google Maps, review, and booking conversion resources for massage therapists,
+					wellness studios, and local massage clinics.
+				</p>
+				<div class="hero-actions">
+					<a class="cta primary" href="/blog/massage-seo-checklist/">Start with the Massage SEO Checklist</a>
+					<a class="cta secondary" href="/blog/google-business-profile-for-massage-therapists/"
+						>Explore Google Maps Guides</a
+					>
+				</div>
 			</section>
 
 			<section>
-				<h2>Why massage clinics struggle to get found online</h2>
-				<div class="card-grid three-col">
+				<h2>Built for massage businesses, not generic marketing teams</h2>
+				<p>
+					Most local SEO advice is written for every business at once. Massage clinics have different search
+					behavior, review patterns, service menus, booking flows, and local competition. This site focuses on
+					those details.
+				</p>
+			</section>
+
+			<section>
+				<h2>Main Resource Categories</h2>
+				<div class="card-grid two-col">
 					{
-						painPoints.map((point) => (
+						resourceCategories.map((category) => (
 							<article class="card">
-								<h3>{point}</h3>
+								<h3>{category.title}</h3>
+								<p>{category.description}</p>
 							</article>
 						))
 					}
 				</div>
 			</section>
 
+			<section class="featured-resource">
+				<h2>Free Massage SEO Checklist</h2>
+				<p>
+					A practical checklist for improving your massage clinic's Google Business Profile, website service
+					pages, review system, and booking flow.
+				</p>
+				<img
+					src="/images/massage-seo-checklist-preview.svg"
+					alt="Preview of a massage SEO checklist covering Google Business Profile, service pages, reviews, booking CTA, and tracking"
+					loading="lazy"
+				/>
+				<a class="cta primary" href="/blog/massage-seo-checklist/">View the Checklist</a>
+			</section>
+
 			<section>
-				<h2>The massage clinic visibility system</h2>
+				<h2>Massage Clinic Visibility System</h2>
+				<img
+					src="/images/massage-local-search-system.svg"
+					alt="Flow diagram showing Search to Google Maps to Website Visit to Booking for massage clinic marketing"
+					loading="lazy"
+				/>
 				<ol class="steps">
 					{
 						systemSteps.map((step) => (
@@ -70,13 +134,18 @@ const resources = [
 			</section>
 
 			<section>
-				<h2>Start with these resources</h2>
+				<h2>Templates and Breakdowns</h2>
+				<img
+					src="/images/massage-review-request-flow.svg"
+					alt="Review workflow from appointment completion to SMS request, Google review, and owner reply"
+					loading="lazy"
+				/>
 				<div class="card-grid three-col">
 					{
-						resources.map((resource) => (
-							<article class="card resource-card">
-								<h3>{resource}</h3>
-								<a href="/blog">Read guide</a>
+						templateCards.map((template) => (
+							<article class="card">
+								<h3>{template.title}</h3>
+								<p>{template.description}</p>
 							</article>
 						))
 					}
@@ -98,6 +167,7 @@ const resources = [
 		--massage-primary: #0b3a53;
 		--massage-accent: #2f80ed;
 		--massage-soft: #eef5fb;
+		--massage-border: #d1deea;
 	}
 
 	main {
@@ -107,9 +177,9 @@ const resources = [
 
 	section {
 		background: #fff;
-		border: 1px solid #d8e4ee;
+		border: 1px solid var(--massage-border);
 		border-radius: 14px;
-		padding: 1.5rem;
+		padding: 1.6rem;
 	}
 
 	.hero {
@@ -146,22 +216,46 @@ const resources = [
 
 	.cta {
 		display: inline-block;
-		margin-top: 0.8rem;
-		background: var(--massage-primary);
-		color: #fff;
 		padding: 0.65rem 1.1rem;
 		border-radius: 8px;
 		font-weight: 600;
 		text-decoration: none;
+		border: 1px solid transparent;
 	}
 
-	.cta:hover {
+	.hero-actions {
+		margin-top: 1rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.primary {
+		background: var(--massage-primary);
+		color: #fff;
+	}
+
+	.primary:hover {
 		background: #07293a;
+	}
+
+	.secondary {
+		background: #fff;
+		color: var(--massage-primary);
+		border-color: #b8cde0;
+	}
+
+	.secondary:hover {
+		background: #f1f7fc;
 	}
 
 	.card-grid {
 		display: grid;
-		gap: 0.9rem;
+		gap: 1rem;
+	}
+
+	.two-col {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
 	.three-col {
@@ -173,6 +267,27 @@ const resources = [
 		border: 1px solid #cfe1f0;
 		border-radius: 10px;
 		padding: 1rem;
+	}
+
+	.card p {
+		margin: 0.7rem 0 0;
+		font-size: 0.98rem;
+		line-height: 1.55;
+		color: #20445e;
+	}
+
+	section img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 10px;
+		border: 1px solid #c6d9e8;
+		margin: 0.4rem 0 1rem;
+		background: #fff;
+	}
+
+	.featured-resource {
+		background: #f7fbff;
 	}
 
 	.steps {
@@ -187,7 +302,6 @@ const resources = [
 		font-weight: 600;
 	}
 
-	.resource-card a,
 	.latest-guides a {
 		color: var(--massage-accent);
 		font-weight: 600;
@@ -199,6 +313,7 @@ const resources = [
 	}
 
 	@media (max-width: 840px) {
+		.two-col,
 		.three-col {
 			grid-template-columns: 1fr;
 		}

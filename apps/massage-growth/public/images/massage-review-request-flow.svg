@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Massage Review Request Flow</title>
+  <desc id="desc">Flow showing appointment completed to SMS request to Google review to owner reply.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f4f9fc; }
+      .card { fill: #ffffff; stroke: #b7d0e2; stroke-width: 3; rx: 18; }
+      .text { fill: #0b3a53; font: 600 26px Arial, sans-serif; }
+      .sub { fill: #2f80ed; font: 500 17px Arial, sans-serif; }
+      .arrow { stroke: #0b3a53; stroke-width: 4; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0b3a53" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1200" height="360" rx="20" />
+
+  <rect class="card" x="30" y="90" width="270" height="180" />
+  <text class="text" x="165" y="165" text-anchor="middle">Appointment completed</text>
+  <text class="sub" x="165" y="205" text-anchor="middle">Session outcome confirmed</text>
+
+  <rect class="card" x="320" y="90" width="250" height="180" />
+  <text class="text" x="445" y="165" text-anchor="middle">SMS request</text>
+  <text class="sub" x="445" y="205" text-anchor="middle">Follow-up sent</text>
+
+  <rect class="card" x="590" y="90" width="250" height="180" />
+  <text class="text" x="715" y="165" text-anchor="middle">Google review</text>
+  <text class="sub" x="715" y="205" text-anchor="middle">Feedback published</text>
+
+  <rect class="card" x="860" y="90" width="310" height="180" />
+  <text class="text" x="1015" y="165" text-anchor="middle">Owner reply</text>
+  <text class="sub" x="1015" y="205" text-anchor="middle">Trust-building response</text>
+
+  <path class="arrow" d="M300 180 H310" />
+  <path class="arrow" d="M570 180 H580" />
+  <path class="arrow" d="M840 180 H850" />
+</svg>

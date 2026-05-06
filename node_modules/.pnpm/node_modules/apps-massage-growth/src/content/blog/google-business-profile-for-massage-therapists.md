@@ -2,12 +2,14 @@
 title: "Google Business Profile Optimization for Massage Therapists"
 description: "How massage therapists can optimize Google Business Profile fields, photos, posts, and services to drive local bookings."
 pubDate: "2026-05-06"
-heroImage: "../../assets/blog-placeholder-2.jpg"
+heroImage: "../../assets/google-business-profile-massage-hero.jpg"
 ---
 
 For most independent massage businesses, Google Business Profile is the highest-leverage growth channel.
 
 People searching for massage in their city often book from Maps results before they ever visit a full website.
+
+![Illustrative local map visibility view showing multiple massage clinic pins without real platform branding](/images/massage-google-maps-visibility.svg)
 
 ## Set up profile foundations that match search intent
 
@@ -52,9 +54,11 @@ When these pieces work together, profile impressions become high-intent calls in
 
 ### Screenshot slots
 
-- Screenshot 1: Before/after Google Business Profile categories and services section
-- Screenshot 2: Photo gallery cadence example (week-by-week uploads)
-- Screenshot 3: Profile performance graph showing calls and booking link clicks
+![后台截图感：Google Business Profile setup dashboard](../../assets/evidence/google-business-profile-for-massage-therapists-dashboard.jpg)
+
+![地图场景：local map and business pin context](../../assets/evidence/google-business-profile-for-massage-therapists-map.jpg)
+
+![门店运营场景：massage clinic team and front desk](../../assets/evidence/google-business-profile-for-massage-therapists-clinic.jpg)
 
 ### Data slots
 

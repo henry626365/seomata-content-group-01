@@ -1,0 +1,36 @@
+---
+import ResourceCategoryPage from '../../components/home/ResourceCategoryPage.astro';
+
+const cards = [
+	{
+		title: 'Google Maps Visibility Breakdown',
+		description:
+			'Educational breakdown of profile setup quality, local intent coverage, and visibility-to-action gaps in massage markets.',
+		href: '/blog/google-business-profile-for-massage-therapists/'
+	},
+	{
+		title: 'Review System Breakdown',
+		description:
+			'Step-by-step educational analysis of how review request timing and response quality affect trust and local conversion.',
+		href: '/blog/how-to-get-more-google-reviews-for-a-massage-clinic/'
+	},
+	{
+		title: 'Booking Flow Breakdown',
+		description:
+			'Instructional breakdown of homepage-to-booking friction points and practical UX improvements for massage websites.',
+		href: '/blog/massage-website-conversion-guide/'
+	},
+	{
+		title: 'Service Page Structure Breakdown',
+		description:
+			'Educational pattern review for building service pages that support both discoverability and clear booking decisions.',
+		href: '/blog/massage-service-page-examples/'
+	}
+];
+---
+
+<ResourceCategoryPage
+	title="Massage Marketing Breakdowns"
+	description="Educational breakdowns of website, Google Maps, and booking flow improvements."
+	cards={cards}
+/>

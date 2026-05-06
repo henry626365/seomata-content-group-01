@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 640" role="img" aria-labelledby="title desc">
+  <title id="title">Massage SEO Checklist Preview</title>
+  <desc id="desc">Checklist preview covering Google Business Profile, Service Pages, Reviews, Booking CTA, and Tracking.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f4f9fc; }
+      .panel { fill: #ffffff; stroke: #b7d0e2; stroke-width: 3; rx: 16; }
+      .row { fill: #eef5fb; stroke: #c9dff0; stroke-width: 1.6; rx: 8; }
+      .title { fill: #0b3a53; font: 700 32px Arial, sans-serif; }
+      .text { fill: #0b3a53; font: 600 24px Arial, sans-serif; }
+      .check { fill: #2f80ed; }
+      .tick { fill: #ffffff; font: 700 20px Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1100" height="640" />
+  <rect class="panel" x="110" y="40" width="880" height="560" />
+  <text class="title" x="550" y="95" text-anchor="middle">Massage SEO Checklist Preview</text>
+
+  <rect class="row" x="160" y="130" width="780" height="78" />
+  <circle class="check" cx="205" cy="169" r="18" />
+  <text class="tick" x="205" y="176" text-anchor="middle"></text>
+  <text class="text" x="240" y="177">Google Business Profile</text>
+
+  <rect class="row" x="160" y="222" width="780" height="78" />
+  <circle class="check" cx="205" cy="261" r="18" />
+  <text class="tick" x="205" y="268" text-anchor="middle"></text>
+  <text class="text" x="240" y="269">Service Pages</text>
+
+  <rect class="row" x="160" y="314" width="780" height="78" />
+  <circle class="check" cx="205" cy="353" r="18" />
+  <text class="tick" x="205" y="360" text-anchor="middle"></text>
+  <text class="text" x="240" y="361">Reviews</text>
+
+  <rect class="row" x="160" y="406" width="780" height="78" />
+  <circle class="check" cx="205" cy="445" r="18" />
+  <text class="tick" x="205" y="452" text-anchor="middle"></text>
+  <text class="text" x="240" y="453">Booking CTA</text>
+
+  <rect class="row" x="160" y="498" width="780" height="78" />
+  <circle class="check" cx="205" cy="537" r="18" />
+  <text class="tick" x="205" y="544" text-anchor="middle"></text>
+  <text class="text" x="240" y="545">Tracking</text>
+</svg>

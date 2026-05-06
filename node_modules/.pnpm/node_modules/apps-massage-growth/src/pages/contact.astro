@@ -1,0 +1,51 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Contact"
+			description="Contact Massage Business Growth for suggestions, corrections, and collaboration requests."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				<h1>Contact</h1>
+				<p>
+					You can contact Massage Business Growth to submit content suggestions, correction requests, or
+					collaboration inquiries.
+				</p>
+				<p>
+					Email: <a href="mailto:hello@massage-business-growth.com">hello@massage-business-growth.com</a>
+				</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	section {
+		background: #fff;
+		border: 1px solid #d2dfeb;
+		border-radius: 14px;
+		padding: 1.6rem;
+	}
+	h1 {
+		color: #0b3a53;
+	}
+	a {
+		color: #2f80ed;
+		text-decoration: none;
+		font-weight: 600;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+</style>

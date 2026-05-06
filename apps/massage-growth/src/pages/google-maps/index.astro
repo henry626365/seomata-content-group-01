@@ -1,0 +1,37 @@
+---
+import ResourceCategoryPage from '../../components/home/ResourceCategoryPage.astro';
+
+const cards = [
+	{
+		title: 'Google Business Profile Optimization for Massage Therapists',
+		description:
+			'Improve profile setup, service alignment, and conversion actions so local map impressions turn into real calls and bookings.',
+		href: '/blog/google-business-profile-for-massage-therapists/'
+	},
+	{
+		title: 'Massage SEO Checklist for Local Clinics',
+		description:
+			'Use a monthly checklist to keep map visibility signals fresh, including categories, photos, local intent pages, and mobile booking flow.',
+		href: '/blog/massage-seo-checklist/'
+	},
+	{
+		title: 'How Massage Clinics Should Target “Massage Near Me” Keywords',
+		description:
+			'Map near-me query intent to the right pages so your clinic appears in relevant local searches without thin, repetitive content.',
+		href: '/blog/massage-near-me-keyword-strategy/'
+	},
+	{
+		title: 'Google Maps Visibility Breakdown',
+		description:
+			'Educational breakdown format for auditing profile completeness, local relevance, and map-to-booking conversion bottlenecks.',
+		href: '/case-breakdowns/',
+		linkLabel: 'Open breakdown'
+	}
+];
+---
+
+<ResourceCategoryPage
+	title="Google Maps Visibility for Massage Clinics"
+	description="Resources for improving how massage clinics appear in Google Maps and local search."
+	cards={cards}
+/>

@@ -1,0 +1,31 @@
+---
+import ResourceCategoryPage from '../../components/home/ResourceCategoryPage.astro';
+
+const cards = [
+	{
+		title: 'How to Get More Google Reviews for a Massage Clinic',
+		description:
+			'Build a repeatable review request system based on session outcomes, message timing, and front-desk workflow consistency.',
+		href: '/blog/how-to-get-more-google-reviews-for-a-massage-clinic/'
+	},
+	{
+		title: 'Review Reply Templates for Massage Businesses',
+		description:
+			'Use practical response structures for positive, neutral, and negative reviews while protecting tone, trust, and compliance.',
+		href: '/blog/review-reply-templates-for-massage-businesses/'
+	},
+	{
+		title: 'Review Request SMS Templates',
+		description:
+			'Template-style scripts for post-session follow-up, reminder cadence, and higher-quality review capture from real clients.',
+		href: '/templates/',
+		linkLabel: 'View templates'
+	}
+];
+---
+
+<ResourceCategoryPage
+	title="Reviews & Reputation for Massage Businesses"
+	description="Templates and guides for getting, managing, and replying to reviews."
+	cards={cards}
+/>

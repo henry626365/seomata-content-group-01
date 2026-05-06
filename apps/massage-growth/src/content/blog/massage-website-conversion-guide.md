@@ -2,12 +2,14 @@
 title: "Massage Website Conversion Guide"
 description: "How massage clinic websites can convert more local visitors into booked appointments with clearer structure and booking flow."
 pubDate: "2026-05-06"
-heroImage: "../../assets/blog-placeholder-4.jpg"
+heroImage: "../../assets/massage-website-conversion-hero.jpg"
 ---
 
 A massage website does not need to look impressive. It needs to remove booking hesitation.
 
 If traffic is decent but bookings are low, the issue is usually page clarity, not traffic volume.
+
+![Local search conversion system showing movement from search to map visibility, website visit, and booking completion](/images/massage-local-search-system.svg)
 
 ## What high-converting massage pages include
 
@@ -50,9 +52,11 @@ If one metric stalls for two weeks, inspect only that step and make one focused 
 
 ### Screenshot slots
 
-- Screenshot 1: Mobile homepage hero + first CTA placement
-- Screenshot 2: Service page booking section before/after simplification
-- Screenshot 3: Booking form analytics view (step completion or drop-off)
+![后台截图感：website conversion analytics dashboard](../../assets/evidence/massage-website-conversion-guide-dashboard.jpg)
+
+![地图场景：local map intent to website traffic](../../assets/evidence/massage-website-conversion-guide-map.jpg)
+
+![门店运营场景：reception and appointment operations](../../assets/evidence/massage-website-conversion-guide-clinic.jpg)
 
 ### Data slots
 
