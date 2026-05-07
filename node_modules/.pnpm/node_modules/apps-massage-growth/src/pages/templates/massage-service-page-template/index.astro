@@ -1,0 +1,65 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import SiteFooter from '../../../components/home/SiteFooter.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title="按摩服务页面结构模板｜按摩店增长指南"
+			description="按摩服务页面结构模板，帮助门店清晰表达适合人群、时长价格、评价与预约入口。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="page">
+			<section class="hero">
+				<p class="eyebrow">模板 / 页面结构</p>
+				<h1>按摩服务页面结构模板</h1>
+				<p>用统一框架减少“信息写很多但客户仍犹豫”的情况，让服务页真正承担预约承接职责。</p>
+			</section>
+			<section>
+				<h2>推荐结构（从上到下）</h2>
+				<ol>
+					<li>服务名称 + 核心价值（首屏）</li>
+					<li>适合人群与典型场景</li>
+					<li>时长与价格说明</li>
+					<li>真实评价/体验反馈</li>
+					<li>立即预约 CTA</li>
+					<li>FAQ（边界、注意事项、改期规则）</li>
+				</ol>
+			</section>
+			<section>
+				<h2>上线前检查</h2>
+				<ul class="checklist">
+					<li>[ ] 首屏是否明确告诉用户“适不适合我”</li>
+					<li>[ ] 时长与价格是否可理解、可比较</li>
+					<li>[ ] 页面内至少有 2 个清晰预约入口</li>
+					<li>[ ] FAQ 是否覆盖常见犹豫问题</li>
+				</ul>
+			</section>
+			<section>
+				<h2>搭配阅读</h2>
+				<ul>
+					<li><a href="/blog/massage-service-page-examples/">更容易促成预约的按摩服务页面应该怎么写</a></li>
+					<li><a href="/blog/massage-pricing-page-seo-and-conversion-tips/">按摩店价格页面 SEO 与转化建议</a></li>
+				</ul>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.page { width: min(980px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0 2.5rem; display: grid; gap: 1rem; }
+	section { background: #fff; border: 1px solid #d1deea; border-radius: 16px; padding: 1.2rem 1.25rem; }
+	.hero { background: #f4f9fc; }
+	.eyebrow { margin: 0 0 .5rem; font-size: .82rem; color: #0b3a53; font-weight: 700; }
+	h1,h2 { color: #0b3a53; margin: 0 0 .6rem; }
+	p,li { color: #355a72; line-height: 1.65; }
+	ul,ol { margin: 0; padding-left: 1.1rem; }
+	.checklist { list-style: none; padding-left: 0; }
+	.checklist li { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 10px; padding: .55rem .7rem; margin-bottom: .5rem; }
+</style>

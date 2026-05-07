@@ -1,0 +1,71 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import SiteFooter from '../../../components/home/SiteFooter.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title="按摩店 Google 地图曝光不足时应该先检查什么｜教学拆解"
+			description="教学拆解地图曝光不足的排查顺序，强调可验证动作，不伪造真实案例数据。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="page">
+			<section class="hero">
+				<p class="eyebrow">Case Breakdown（教学拆解）</p>
+				<h1>按摩店 Google 地图曝光不足时应该先检查什么</h1>
+				<p>本页为教育型拆解示例，展示排查逻辑，不包含任何真实客户排名或收益承诺。</p>
+			</section>
+			<section>
+				<h2>典型症状（教学场景）</h2>
+				<ul>
+					<li>门店在部分搜索词下偶尔出现，但稳定性差</li>
+					<li>曝光与咨询质量不匹配，出现大量无效咨询</li>
+					<li>团队持续做动作，但不知道先改哪里</li>
+				</ul>
+			</section>
+			<section>
+				<h2>排查顺序</h2>
+				<ol>
+					<li><strong>一致性：</strong>名称、电话、营业时间、服务项是否一致。</li>
+					<li><strong>相关性：</strong>类目与核心服务是否匹配，网站是否有对应承接页。</li>
+					<li><strong>活跃度：</strong>照片更新、评价新增与回复时效是否稳定。</li>
+					<li><strong>承接链路：</strong>地图点击后是否能顺畅进入预约流程。</li>
+				</ol>
+			</section>
+			<section>
+				<h2>优先执行动作</h2>
+				<ul class="checklist">
+					<li>[ ] 先修信息一致性，再谈进阶优化</li>
+					<li>[ ] 每月补充真实照片与服务项更新</li>
+					<li>[ ] 建立评价回复 SLA（24-48 小时）</li>
+					<li>[ ] 每周复盘“曝光词相关性 + 有效咨询”</li>
+				</ul>
+			</section>
+			<section>
+				<h2>相关资源</h2>
+				<ul>
+					<li><a href="/templates/google-business-profile-checklist/">Google Business Profile 检查清单</a></li>
+					<li><a href="/blog/why-your-massage-clinic-is-not-showing-on-google-maps/">为什么你的按摩店没有出现在 Google 地图上</a></li>
+				</ul>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.page { width: min(980px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0 2.5rem; display: grid; gap: 1rem; }
+	section { background: #fff; border: 1px solid #d1deea; border-radius: 16px; padding: 1.2rem 1.25rem; }
+	.hero { background: #f4f9fc; }
+	.eyebrow { margin: 0 0 .5rem; font-size: .82rem; color: #0b3a53; font-weight: 700; }
+	h1,h2 { color: #0b3a53; margin: 0 0 .6rem; }
+	p,li { color: #355a72; line-height: 1.65; }
+	ul,ol { margin: 0; padding-left: 1.1rem; }
+	.checklist { list-style: none; padding-left: 0; }
+	.checklist li { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 10px; padding: .55rem .7rem; margin-bottom: .5rem; }
+</style>

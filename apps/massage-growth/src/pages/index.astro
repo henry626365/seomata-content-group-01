@@ -207,6 +207,12 @@ const templateResources = [
 		description: '段落顺序与必备模块，用来对齐撰稿、设计与 SEO 需求。',
 		href: '/blog/massage-service-page-examples/',
 		badge: '模板'
+	},
+	{
+		title: '按摩行业本地搜索可见度报告',
+		description: '方法透明的行业观察框架，帮助门店判断当前处于基础、稳定还是进阶阶段。',
+		href: '/reports/massage-local-search-visibility-report/',
+		badge: '报告'
 	}
 ];
 
@@ -405,8 +411,13 @@ const latestPosts = (await getCollection('blog'))
 	}
 	.resource-row {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-template-columns: repeat(4, minmax(0, 1fr));
 		gap: 0.9rem;
+	}
+	@media (max-width: 1080px) {
+		.resource-row {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
 	@media (max-width: 800px) {
 		.resource-row {

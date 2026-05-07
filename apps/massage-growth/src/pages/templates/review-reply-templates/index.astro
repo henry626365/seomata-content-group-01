@@ -1,0 +1,62 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import SiteFooter from '../../../components/home/SiteFooter.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title="Google 评价回复模板｜按摩店增长指南"
+			description="按摩店 Google 评价回复模板，覆盖好评、中评、差评场景，并提供回复时效与语气规范。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="page">
+			<section class="hero">
+				<p class="eyebrow">模板 / 口碑</p>
+				<h1>Google 评价回复模板</h1>
+				<p>统一门店公开回复质量，减少情绪化应对，提升潜在客户在预约前的信任感。</p>
+			</section>
+			<section>
+				<h2>模板结构</h2>
+				<ol>
+					<li><strong>好评：</strong>感谢 + 点出服务细节 + 欢迎再次到店。</li>
+					<li><strong>中评：</strong>承接感受 + 补充改进动作 + 邀请继续反馈。</li>
+					<li><strong>差评：</strong>先致歉 + 明确处理责任人 + 引导私下沟通。</li>
+				</ol>
+			</section>
+			<section>
+				<h2>回复规范</h2>
+				<ul class="checklist">
+					<li>[ ] 24-48 小时内完成公开回复</li>
+					<li>[ ] 每条回复至少包含 1 条具体场景信息</li>
+					<li>[ ] 不公开披露客户隐私或敏感健康信息</li>
+					<li>[ ] 差评需由店长或指定负责人复核</li>
+				</ul>
+			</section>
+			<section>
+				<h2>搭配阅读</h2>
+				<ul>
+					<li><a href="/blog/review-reply-templates-for-massage-businesses/">按摩店 Google 评价回复模板（实战）</a></li>
+					<li><a href="/blog/how-to-respond-to-negative-reviews-as-a-massage-therapist/">按摩师如何回复负面评价</a></li>
+				</ul>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.page { width: min(980px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0 2.5rem; display: grid; gap: 1rem; }
+	section { background: #fff; border: 1px solid #d1deea; border-radius: 16px; padding: 1.2rem 1.25rem; }
+	.hero { background: #f4f9fc; }
+	.eyebrow { margin: 0 0 .5rem; font-size: .82rem; color: #0b3a53; font-weight: 700; }
+	h1,h2 { color: #0b3a53; margin: 0 0 .6rem; }
+	p,li { color: #355a72; line-height: 1.65; }
+	ul,ol { margin: 0; padding-left: 1.1rem; }
+	.checklist { list-style: none; padding-left: 0; }
+	.checklist li { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 10px; padding: .55rem .7rem; margin-bottom: .5rem; }
+</style>

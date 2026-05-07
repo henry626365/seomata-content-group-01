@@ -1,0 +1,64 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import SiteFooter from '../../../components/home/SiteFooter.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title="预约转化检查清单｜按摩店增长指南"
+			description="按摩店预约转化检查清单模板，帮助团队快速定位从访问到预约提交的关键流失点。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="page">
+			<section class="hero">
+				<p class="eyebrow">模板 / 转化优化</p>
+				<h1>预约转化检查清单</h1>
+				<p>围绕入口、表单、成功页和移动端体验做固定巡检，优先修复最影响预约的环节。</p>
+			</section>
+			<section>
+				<h2>关键检查模块</h2>
+				<ol>
+					<li>首屏预约入口是否清晰可见</li>
+					<li>按钮文案是否明确下一步动作</li>
+					<li>表单字段是否最小化</li>
+					<li>提交后是否有明确确认与后续沟通说明</li>
+					<li>移动端是否可在 1 分钟内完成提交</li>
+				</ol>
+			</section>
+			<section>
+				<h2>每周复盘项</h2>
+				<ul class="checklist">
+					<li>[ ] CTA 点击率是否环比稳定</li>
+					<li>[ ] 表单提交率是否出现异常波动</li>
+					<li>[ ] 有效预约率是否提升</li>
+					<li>[ ] 本周确认的流失点是否有责任人和截止时间</li>
+				</ul>
+			</section>
+			<section>
+				<h2>搭配阅读</h2>
+				<ul>
+					<li><a href="/blog/massage-website-conversion-guide/">按摩店网站预约转化指南</a></li>
+					<li><a href="/blog/how-to-improve-online-booking-flow-for-massage-clinics/">按摩店如何优化线上预约流程</a></li>
+				</ul>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.page { width: min(980px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0 2.5rem; display: grid; gap: 1rem; }
+	section { background: #fff; border: 1px solid #d1deea; border-radius: 16px; padding: 1.2rem 1.25rem; }
+	.hero { background: #f4f9fc; }
+	.eyebrow { margin: 0 0 .5rem; font-size: .82rem; color: #0b3a53; font-weight: 700; }
+	h1,h2 { color: #0b3a53; margin: 0 0 .6rem; }
+	p,li { color: #355a72; line-height: 1.65; }
+	ul,ol { margin: 0; padding-left: 1.1rem; }
+	.checklist { list-style: none; padding-left: 0; }
+	.checklist li { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 10px; padding: .55rem .7rem; margin-bottom: .5rem; }
+</style>

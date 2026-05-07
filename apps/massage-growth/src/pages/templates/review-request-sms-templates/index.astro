@@ -1,0 +1,62 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import SiteFooter from '../../../components/home/SiteFooter.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title="评价请求短信模板｜按摩店增长指南"
+			description="适用于按摩店的评价请求短信模板，包含发送时机、合规表达与执行节奏。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="page">
+			<section class="hero">
+				<p class="eyebrow">模板 / 话术</p>
+				<h1>评价请求短信模板</h1>
+				<p>帮助门店把邀评动作标准化：发给谁、什么时候发、怎么发才不过度打扰。</p>
+			</section>
+			<section>
+				<h2>核心模板</h2>
+				<ul>
+					<li><strong>服务后首发：</strong>感谢到店 + 邀请真实反馈 + 评价链接。</li>
+					<li><strong>次日提醒：</strong>温和提醒，不强调分值，不诱导好评。</li>
+					<li><strong>老客模板：</strong>关系型表达，重点是长期信任。</li>
+				</ul>
+			</section>
+			<section>
+				<h2>执行边界</h2>
+				<ul class="checklist">
+					<li>[ ] 禁止“请给五星”“好评返现”等诱导表达</li>
+					<li>[ ] 每位客户最多 1 次主邀 + 1 次提醒</li>
+					<li>[ ] 统一发送主体，避免被识别为垃圾短信</li>
+					<li>[ ] 每周复盘发送量、点击率、评价新增率</li>
+				</ul>
+			</section>
+			<section>
+				<h2>搭配阅读</h2>
+				<ul>
+					<li><a href="/blog/massage-clinic-review-request-sms-templates/">按摩店评价请求短信模板（实战版）</a></li>
+					<li><a href="/blog/how-to-get-more-google-reviews-for-a-massage-clinic/">按摩店如何获得更多 Google 评价</a></li>
+				</ul>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.page { width: min(980px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0 2.5rem; display: grid; gap: 1rem; }
+	section { background: #fff; border: 1px solid #d1deea; border-radius: 16px; padding: 1.2rem 1.25rem; }
+	.hero { background: #f4f9fc; }
+	.eyebrow { margin: 0 0 .5rem; font-size: .82rem; color: #0b3a53; font-weight: 700; }
+	h1,h2 { color: #0b3a53; margin: 0 0 .6rem; }
+	p,li { color: #355a72; line-height: 1.65; }
+	ul { margin: 0; padding-left: 1.1rem; }
+	.checklist { list-style: none; padding-left: 0; }
+	.checklist li { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 10px; padding: .55rem .7rem; margin-bottom: .5rem; }
+</style>

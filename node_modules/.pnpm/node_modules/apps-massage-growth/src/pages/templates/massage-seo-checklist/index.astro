@@ -1,0 +1,76 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import SiteFooter from '../../../components/home/SiteFooter.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title="按摩 SEO 检查清单模板｜按摩店增长指南"
+			description="可直接执行的按摩店 SEO 检查清单模板，覆盖 Google 地图、服务页、评价与预约转化。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="page">
+			<section class="hero">
+				<p class="eyebrow">模板 / 清单</p>
+				<h1>按摩 SEO 检查清单</h1>
+				<p>把零散优化动作变成每周可执行、每月可复盘的固定流程，避免“想到才做”。</p>
+			</section>
+
+			<section>
+				<h2>适用对象</h2>
+				<ul>
+					<li>按摩店店长、门店运营、兼职内容负责人</li>
+					<li>已有网站和 GBP，但执行动作不稳定的团队</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>执行模块</h2>
+				<ol>
+					<li><strong>地图基础：</strong>类目、服务项、营业时间、照片、评价回复时效。</li>
+					<li><strong>服务页面：</strong>适合人群、时长价格、预约入口、FAQ 是否完整。</li>
+					<li><strong>口碑信号：</strong>邀评节奏、评价新增、差评处理与复盘。</li>
+					<li><strong>预约转化：</strong>移动端按钮可见度、表单提交率、成功页反馈。</li>
+					<li><strong>数据复盘：</strong>曝光词、咨询质量、预约提交趋势。</li>
+				</ol>
+			</section>
+
+			<section>
+				<h2>每月检查项（可复制）</h2>
+				<ul class="checklist">
+					<li>[ ] GBP 信息与实际经营保持一致</li>
+					<li>[ ] 核心服务页完成一次结构与文案复查</li>
+					<li>[ ] 当月新增评价均完成专业回复</li>
+					<li>[ ] 移动端预约流程至少真机走查 1 次</li>
+					<li>[ ] 输出当月 3 条可执行优化动作</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>搭配阅读</h2>
+				<ul>
+					<li><a href="/blog/massage-seo-checklist/">按摩店本地 SEO 检查清单</a></li>
+					<li><a href="/blog/google-maps-ranking-checklist-for-massage-businesses/">按摩店 Google 地图排名检查清单</a></li>
+				</ul>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.page { width: min(980px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0 2.5rem; display: grid; gap: 1rem; }
+	section { background: #fff; border: 1px solid #d1deea; border-radius: 16px; padding: 1.2rem 1.25rem; }
+	.hero { background: #f4f9fc; }
+	.eyebrow { margin: 0 0 .5rem; font-size: .82rem; color: #0b3a53; font-weight: 700; }
+	h1,h2 { color: #0b3a53; margin: 0 0 .6rem; }
+	p,li { color: #355a72; line-height: 1.65; }
+	ul,ol { margin: 0; padding-left: 1.1rem; }
+	.checklist { list-style: none; padding-left: 0; }
+	.checklist li { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 10px; padding: .55rem .7rem; margin-bottom: .5rem; }
+</style>

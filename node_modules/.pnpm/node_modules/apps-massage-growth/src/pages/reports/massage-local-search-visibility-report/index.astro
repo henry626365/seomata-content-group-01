@@ -1,0 +1,123 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import SiteFooter from '../../../components/home/SiteFooter.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title="按摩行业本地搜索可见度报告｜按摩店增长指南"
+			description="面向按摩店经营者的本地搜索可见度方法论报告，透明说明口径与限制，不伪造样本和结论。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="page">
+			<section class="hero">
+				<p class="eyebrow">Reports / 方法论报告</p>
+				<h1>按摩行业本地搜索可见度报告</h1>
+				<p>
+					本报告用于帮助按摩店建立可见度诊断框架。为保证真实可信，本文不虚构样本数据，
+					重点提供可复用的方法、观察维度与执行建议。
+				</p>
+			</section>
+
+			<section>
+				<h2>报告目的</h2>
+				<ul>
+					<li>帮助门店判断“地图可见度问题”究竟出在曝光、信任还是承接环节。</li>
+					<li>建立统一复盘口径，避免团队只看单一指标（例如只看排名截图）。</li>
+					<li>为后续月度优化提供优先级依据。</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>方法与口径（透明说明）</h2>
+				<p>本页采用方法论报告形式，核心基于公开可观察信号与门店运营实践，不宣称具体行业均值。</p>
+				<ol>
+					<li><strong>可见度信号：</strong>资料页完整度、类目匹配度、评价活跃度、照片更新频率。</li>
+					<li><strong>信任信号：</strong>评价内容细节、差评处理质量、信息一致性。</li>
+					<li><strong>承接信号：</strong>地图到网站路径、预约入口可达性、移动端提交流程。</li>
+				</ol>
+				<p class="note">说明：如无统一采样数据，报告不输出“百分比结论”，避免伪精确。</p>
+			</section>
+
+			<section>
+				<h2>可见度分层框架（建议用于自评）</h2>
+				<div class="grid">
+					<article class="card">
+						<h3>基础层</h3>
+						<p>资料页信息完整且一致，核心服务表达清晰，预约入口可用。</p>
+					</article>
+					<article class="card">
+						<h3>稳定层</h3>
+						<p>评价与照片保持月度更新，差评处理有标准流程，关键词与页面映射明确。</p>
+					</article>
+					<article class="card">
+						<h3>进阶层</h3>
+						<p>可见度、咨询质量、预约转化形成闭环复盘，并能持续优化内容结构。</p>
+					</article>
+				</div>
+			</section>
+
+			<section>
+				<h2>门店可执行结论（不依赖外部大样本）</h2>
+				<ul class="checklist">
+					<li>[ ] 先修一致性：名称、电话、营业时间、服务项与网站信息统一。</li>
+					<li>[ ] 再修活跃度：评价回复 SLA + 照片月更机制。</li>
+					<li>[ ] 后修承接链路：地图点击后的预约路径必须顺畅。</li>
+					<li>[ ] 固定复盘节奏：每月输出 3 条可执行改进动作并跟踪结果。</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>如何使用本报告</h2>
+				<ol>
+					<li>先按“基础层/稳定层/进阶层”给门店做当前定位。</li>
+					<li>从最低短板项开始修复，不追求一次性全部优化。</li>
+					<li>每 30 天复盘一次，观察可见度与预约质量是否同步改善。</li>
+				</ol>
+			</section>
+
+			<section>
+				<h2>相关资源</h2>
+				<ul>
+					<li><a href="/blog/google-maps-ranking-checklist-for-massage-businesses/">按摩店 Google 地图排名检查清单</a></li>
+					<li><a href="/templates/google-business-profile-checklist/">Google Business Profile 检查清单</a></li>
+					<li><a href="/case-breakdowns/google-maps-visibility-breakdown/">Google 地图曝光不足教学拆解</a></li>
+				</ul>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.page {
+		width: min(980px, calc(100% - 2rem));
+		margin: 0 auto;
+		padding: 1.25rem 0 2.5rem;
+		display: grid;
+		gap: 1rem;
+	}
+	section {
+		background: #fff;
+		border: 1px solid #d1deea;
+		border-radius: 16px;
+		padding: 1.2rem 1.25rem;
+	}
+	.hero { background: #f4f9fc; }
+	.eyebrow { margin: 0 0 .5rem; font-size: .82rem; color: #0b3a53; font-weight: 700; }
+	h1, h2, h3 { color: #0b3a53; margin: 0 0 .6rem; }
+	p, li { color: #355a72; line-height: 1.65; }
+	ul, ol { margin: 0; padding-left: 1.1rem; }
+	.note { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 10px; padding: .6rem .75rem; margin-top: .75rem; }
+	.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+	.card { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 12px; padding: .8rem; }
+	.card p { margin: 0; }
+	.checklist { list-style: none; padding-left: 0; }
+	.checklist li { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 10px; padding: .55rem .7rem; margin-bottom: .5rem; }
+	@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>

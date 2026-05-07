@@ -1,0 +1,61 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import SiteFooter from '../../../components/home/SiteFooter.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title="Google Business Profile 检查清单｜按摩店增长指南"
+			description="按摩店 GBP 检查清单模板，覆盖类目、服务项、照片、评价和预约入口等关键维护项。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="page">
+			<section class="hero">
+				<p class="eyebrow">模板 / 地图运营</p>
+				<h1>Google Business Profile 检查清单</h1>
+				<p>把地图优化从“临时操作”变成固定维护动作，重点盯一致性、活跃度和预约承接。</p>
+			</section>
+			<section>
+				<h2>每周检查</h2>
+				<ul class="checklist">
+					<li>[ ] 名称、电话、营业时间与实际经营一致</li>
+					<li>[ ] 新增评价是否在 24-48 小时内回复</li>
+					<li>[ ] 预约入口是否可正常使用</li>
+				</ul>
+			</section>
+			<section>
+				<h2>每月检查</h2>
+				<ul class="checklist">
+					<li>[ ] 服务项是否完整且与网站一致</li>
+					<li>[ ] 是否更新近期真实门店照片</li>
+					<li>[ ] 简介是否反映当前主营方向</li>
+				</ul>
+			</section>
+			<section>
+				<h2>搭配阅读</h2>
+				<ul>
+					<li><a href="/blog/google-business-profile-for-massage-therapists/">按摩师与按摩店的 Google Business Profile 优化指南</a></li>
+					<li><a href="/blog/google-maps-ranking-checklist-for-massage-businesses/">按摩店 Google 地图排名检查清单</a></li>
+				</ul>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.page { width: min(980px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0 2.5rem; display: grid; gap: 1rem; }
+	section { background: #fff; border: 1px solid #d1deea; border-radius: 16px; padding: 1.2rem 1.25rem; }
+	.hero { background: #f4f9fc; }
+	.eyebrow { margin: 0 0 .5rem; font-size: .82rem; color: #0b3a53; font-weight: 700; }
+	h1,h2 { color: #0b3a53; margin: 0 0 .6rem; }
+	p,li { color: #355a72; line-height: 1.65; }
+	ul { margin: 0; padding-left: 1.1rem; }
+	.checklist { list-style: none; padding-left: 0; }
+	.checklist li { background: #eef5fb; border: 1px solid #cfe1f0; border-radius: 10px; padding: .55rem .7rem; margin-bottom: .5rem; }
+</style>
