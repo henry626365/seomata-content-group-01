@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
   <title id="title">按摩服务页面结构线框图</title>
-  <desc id="desc">展示服务名称、适合人群、时长、价格、评价、预约按钮和常见问题的页面结构。</desc>
+  <desc id="desc">展示服务名称、适合人群、时长与价格、客户评价、立即预约与常见问题的页面结构。</desc>
   <defs>
     <style>
       .bg { fill: #f4f9fc; }
@@ -23,17 +23,14 @@
   <text class="text" x="255" y="245">适合人群</text>
 
   <rect class="block" x="610" y="194" width="360" height="96" />
-  <text class="text" x="635" y="245">服务时长</text>
+  <text class="text" x="635" y="245">时长与价格</text>
 
-  <rect class="block" x="230" y="305" width="360" height="96" />
-  <text class="text" x="255" y="357">价格信息</text>
-
-  <rect class="block" x="610" y="305" width="360" height="96" />
-  <text class="text" x="635" y="357">客户评价</text>
+  <rect class="block" x="230" y="305" width="740" height="96" />
+  <text class="text" x="255" y="357">客户评价</text>
 
   <rect class="cta" x="230" y="418" width="740" height="68" />
-  <text class="ctaText" x="600" y="462" text-anchor="middle">立即预约按钮</text>
+  <text class="ctaText" x="600" y="462" text-anchor="middle">立即预约</text>
 
   <rect class="block" x="230" y="504" width="740" height="180" />
-  <text class="text" x="260" y="553">常见问题</text>
+  <text class="text" x="260" y="553">常见问题（FAQ）</text>
 </svg>

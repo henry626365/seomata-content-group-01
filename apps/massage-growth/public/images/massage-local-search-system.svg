@@ -20,8 +20,8 @@
   <text class="sub" x="160" y="205" text-anchor="middle">本地意图查询</text>
 
   <rect class="card" x="330" y="90" width="240" height="180" />
-  <text class="text" x="450" y="170" text-anchor="middle">Google Maps</text>
-  <text class="sub" x="450" y="205" text-anchor="middle">资料页曝光</text>
+  <text class="text" x="450" y="170" text-anchor="middle">Google 地图</text>
+  <text class="sub" x="450" y="205" text-anchor="middle">资料页与地图展示</text>
 
   <rect class="card" x="620" y="90" width="240" height="180" />
   <text class="text" x="740" y="170" text-anchor="middle">访问网站</text>

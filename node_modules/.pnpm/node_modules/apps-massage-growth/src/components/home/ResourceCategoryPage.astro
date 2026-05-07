@@ -1,6 +1,6 @@
 ---
 import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
+import SiteFooter from '../../components/home/SiteFooter.astro';
 import Header from '../../components/Header.astro';
 
 type ResourceCard = {
@@ -28,27 +28,27 @@ const { title, description, cards } = Astro.props;
 		<Header />
 		<main>
 			<section class="hero">
-				<p class="eyebrow">Massage Business Growth</p>
+				<p class="eyebrow">按摩店增长指南</p>
 				<h1>{title}</h1>
 				<p>{description}</p>
 			</section>
 
 			<section>
-				<h2>Resources</h2>
+				<h2>相关资源</h2>
 				<div class="card-grid">
 					{
 						cards.map((card) => (
 							<article class="card">
 								<h3>{card.title}</h3>
 								<p>{card.description}</p>
-								<a href={card.href}>{card.linkLabel ?? 'Read resource'}</a>
+								<a href={card.href}>{card.linkLabel ?? '阅读全文'}</a>
 							</article>
 						))
 					}
 				</div>
 			</section>
 		</main>
-		<Footer />
+		<SiteFooter />
 	</body>
 </html>
 

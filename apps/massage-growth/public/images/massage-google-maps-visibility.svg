@@ -1,47 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">按摩店本地地图曝光示意图</title>
-  <desc id="desc">用于教育说明的本地地图曝光示意图，不含真实平台品牌或排名暗示。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">本地曝光与信任要素示意图</title>
+  <desc id="desc">展示本地搜索曝光、地图结果、评价信任与预约入口四个环节，用于教育说明，不含真实平台品牌或排名暗示。</desc>
   <defs>
     <style>
       .bg { fill: #f4f9fc; }
-      .map { fill: #ffffff; stroke: #b7d0e2; stroke-width: 3; rx: 16; }
-      .street { stroke: #d5e6f3; stroke-width: 12; fill: none; stroke-linecap: round; }
-      .label { fill: #0b3a53; font: 600 20px Arial, sans-serif; }
-      .pin { fill: #2f80ed; }
-      .pinInner { fill: #ffffff; }
-      .clinic { fill: #0b3a53; font: 700 18px Arial, sans-serif; }
-      .note { fill: #0b3a53; font: 500 18px Arial, sans-serif; }
+      .box { fill: #ffffff; stroke: #b7d0e2; stroke-width: 3; rx: 14; }
+      .k { fill: #0b3a53; font: 700 22px Arial, sans-serif; }
+      .d { fill: #3d6a85; font: 500 17px Arial, sans-serif; }
+      .accent { fill: #2f80ed; }
+      .line { stroke: #0b3a53; stroke-width: 2.5; fill: none; marker-end: url(#ah); }
     </style>
+    <marker id="ah" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#0b3a53" />
+    </marker>
   </defs>
-  <rect class="bg" x="0" y="0" width="1200" height="700" />
-  <rect class="map" x="80" y="70" width="1040" height="560" />
+  <rect class="bg" width="1200" height="520" rx="18" />
 
-  <path class="street" d="M140 180 H1040" />
-  <path class="street" d="M180 300 H1060" />
-  <path class="street" d="M120 430 H1020" />
-  <path class="street" d="M250 120 V560" />
-  <path class="street" d="M500 100 V590" />
-  <path class="street" d="M760 120 V560" />
-  <path class="street" d="M960 140 V550" />
+  <rect class="box" x="48" y="140" width="250" height="240" />
+  <text class="k" x="173" y="210" text-anchor="middle">本地搜索曝光</text>
+  <text class="d" x="173" y="250" text-anchor="middle">附近意图</text>
+  <text class="d" x="173" y="280" text-anchor="middle">与地域词</text>
+  <circle class="accent" cx="173" cy="335" r="8" />
 
-  <g transform="translate(340 240)">
-    <path class="pin" d="M0 -32 C-18 -32 -32 -18 -32 0 C-32 22 0 54 0 54 C0 54 32 22 32 0 C32 -18 18 -32 0 -32 Z" />
-    <circle class="pinInner" cx="0" cy="0" r="12" />
-  </g>
-  <text class="clinic" x="374" y="246">按摩门店 A</text>
+  <rect class="box" x="338" y="140" width="250" height="240" />
+  <text class="k" x="463" y="210" text-anchor="middle">地图结果</text>
+  <text class="d" x="463" y="250" text-anchor="middle">资料页</text>
+  <text class="d" x="463" y="280" text-anchor="middle">与服务信息</text>
+  <circle class="accent" cx="463" cy="335" r="8" />
 
-  <g transform="translate(620 355)">
-    <path class="pin" d="M0 -32 C-18 -32 -32 -18 -32 0 C-32 22 0 54 0 54 C0 54 32 22 32 0 C32 -18 18 -32 0 -32 Z" />
-    <circle class="pinInner" cx="0" cy="0" r="12" />
-  </g>
-  <text class="clinic" x="655" y="360">按摩门店 B</text>
+  <rect class="box" x="628" y="140" width="250" height="240" />
+  <text class="k" x="753" y="210" text-anchor="middle">评价信任</text>
+  <text class="d" x="753" y="250" text-anchor="middle">近期评价</text>
+  <text class="d" x="753" y="280" text-anchor="middle">与公开回复</text>
+  <circle class="accent" cx="753" cy="335" r="8" />
 
-  <g transform="translate(890 230)">
-    <path class="pin" d="M0 -32 C-18 -32 -32 -18 -32 0 C-32 22 0 54 0 54 C0 54 32 22 32 0 C32 -18 18 -32 0 -32 Z" />
-    <circle class="pinInner" cx="0" cy="0" r="12" />
-  </g>
-  <text class="clinic" x="925" y="236">按摩门店 C</text>
+  <rect class="box" x="918" y="140" width="234" height="240" />
+  <text class="k" x="1035" y="210" text-anchor="middle">预约入口</text>
+  <text class="d" x="1035" y="250" text-anchor="middle">电话、表单</text>
+  <text class="d" x="1035" y="280" text-anchor="middle">与在线预约</text>
+  <circle class="accent" cx="1035" cy="335" r="8" />
 
-  <text class="label" x="600" y="620" text-anchor="middle">本地地图曝光示意（教育用途）</text>
-  <text class="note" x="600" y="650" text-anchor="middle">不使用真实平台品牌，也不暗示真实排名</text>
+  <path class="line" d="M298 260 H332" />
+  <path class="line" d="M588 260 H622" />
+  <path class="line" d="M878 260 H912" />
+
+  <text class="d" x="600" y="460" text-anchor="middle">教育示意图：不表示排名保证或真实数据</text>
 </svg>

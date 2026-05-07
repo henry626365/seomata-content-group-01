@@ -1,0 +1,35 @@
+---
+type Props = {
+	title: string;
+	description?: string;
+	headingId?: string;
+};
+
+const { title, description, headingId } = Astro.props;
+---
+
+<div class="section-header">
+	<h2 {...headingId ? { id: headingId } : {}}>{title}</h2>
+	{description && <p class="desc">{description}</p>}
+</div>
+
+<style>
+	.section-header {
+		margin-bottom: clamp(1.35rem, 3vw, 1.85rem);
+	}
+	h2 {
+		margin: 0 0 0.55rem;
+		font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+		color: #0b3a53;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1.25;
+	}
+	.desc {
+		margin: 0;
+		max-width: 52ch;
+		font-size: clamp(0.95rem, 1.5vw, 1.02rem);
+		line-height: 1.65;
+		color: #3f6279;
+	}
+</style>

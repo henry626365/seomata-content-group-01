@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
   <title id="title">按摩店评价请求流程图</title>
-  <desc id="desc">展示服务完成后短信邀评、Google 评价发布与店主回复的完整流程。</desc>
+  <desc id="desc">展示完成服务、发送评价请求、获得 Google 评价与店主回复的流程。</desc>
   <defs>
     <style>
       .bg { fill: #f4f9fc; }
@@ -16,16 +16,16 @@
   <rect class="bg" x="0" y="0" width="1200" height="360" rx="20" />
 
   <rect class="card" x="30" y="90" width="270" height="180" />
-  <text class="text" x="165" y="165" text-anchor="middle">服务完成</text>
+  <text class="text" x="165" y="165" text-anchor="middle">完成服务</text>
   <text class="sub" x="165" y="205" text-anchor="middle">确认服务反馈</text>
 
   <rect class="card" x="320" y="90" width="250" height="180" />
-  <text class="text" x="445" y="165" text-anchor="middle">短信邀评</text>
-  <text class="sub" x="445" y="205" text-anchor="middle">发送跟进消息</text>
+  <text class="text" x="445" y="165" text-anchor="middle">发送评价请求</text>
+  <text class="sub" x="445" y="205" text-anchor="middle">短信或跟进消息</text>
 
   <rect class="card" x="590" y="90" width="250" height="180" />
-  <text class="text" x="715" y="165" text-anchor="middle">Google 评价</text>
-  <text class="sub" x="715" y="205" text-anchor="middle">客户反馈发布</text>
+  <text class="text" x="715" y="165" text-anchor="middle">获得 Google 评价</text>
+  <text class="sub" x="715" y="205" text-anchor="middle">客户公开反馈</text>
 
   <rect class="card" x="860" y="90" width="310" height="180" />
   <text class="text" x="1015" y="165" text-anchor="middle">店主回复</text>

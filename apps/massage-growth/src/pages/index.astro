@@ -1,64 +1,245 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { sites } from '@seomata/site-config';
+import SiteFooter from '../components/home/SiteFooter.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import SectionHeader from '../components/home/SectionHeader.astro';
+import FeaturedArticleGrid from '../components/home/FeaturedArticleGrid.astro';
+import ArticleCard from '../components/home/ArticleCard.astro';
+import CollectionGrid from '../components/home/CollectionGrid.astro';
+import ResourceCard from '../components/home/ResourceCard.astro';
 
-const site = {
-	...sites.massageGrowth,
-	name: '按摩店增长指南',
-	niche: '按摩店本地营销',
-	description:
-		'面向按摩店、按摩师和养生馆的 Google 地图、本地 SEO、客户评价和预约转化资源。'
+const previewByPostId: Record<string, string> = {
+	'massage-seo-checklist': '/images/massage-seo-checklist-preview.svg',
+	'google-business-profile-for-massage-therapists': '/images/massage-google-maps-visibility.svg',
+	'how-to-get-more-google-reviews-for-a-massage-clinic': '/images/massage-review-request-flow.svg',
+	'massage-website-conversion-guide': '/images/massage-local-search-system.svg',
+	'massage-service-page-examples': '/images/massage-service-page-wireframe.svg',
+	'massage-near-me-keyword-strategy': '/images/massage-google-maps-visibility.svg',
+	'local-landing-pages-for-massage-clinics': '/images/massage-local-search-system.svg',
+	'review-reply-templates-for-massage-businesses': '/images/massage-review-request-flow.svg'
 };
 
-const resourceCategories = [
+const categoryByPostId: Record<string, string> = {
+	'massage-seo-checklist': '按摩 SEO',
+	'google-business-profile-for-massage-therapists': 'Google 地图',
+	'how-to-get-more-google-reviews-for-a-massage-clinic': '客户评价',
+	'massage-website-conversion-guide': '网站转化',
+	'massage-service-page-examples': '服务页面',
+	'massage-near-me-keyword-strategy': '按摩 SEO',
+	'local-landing-pages-for-massage-clinics': 'Google 地图',
+	'review-reply-templates-for-massage-businesses': '客户评价'
+};
+
+const featured = {
+	href: '/blog/massage-seo-checklist/',
+	title: '按摩店本地 SEO 检查清单',
+	description:
+		'从 Google Business Profile、服务页面、评价、预约按钮和本地内容结构开始，系统检查按摩店的线上曝光基础。',
+	image: '/images/massage-seo-checklist-preview.svg',
+	imageAlt: '按摩店本地 SEO 检查清单预览，包含资料页、服务页、评价、预约与本地内容项',
+	category: '按摩 SEO'
+};
+
+const featuredSide = [
 	{
-		title: 'Google 地图曝光',
-		description:
-			'学习如何优化 Google Business Profile，让按摩店更容易出现在本地搜索和地图结果中。'
+		href: '/blog/google-business-profile-for-massage-therapists/',
+		title: 'Google Business Profile 优化指南',
+		description: '核对类目、服务项、照片节奏与公开信息一致性，让资料页承接本地搜索意图。',
+		image: '/images/massage-google-maps-visibility.svg',
+		imageAlt: '本地搜索曝光、地图结果、评价信任与预约入口示意图',
+		category: 'Google 地图'
 	},
 	{
-		title: '客户评价与口碑',
-		description:
-			'建立评价获取、回复和管理流程，让新客户在预约前更信任你的按摩服务。'
+		href: '/blog/how-to-get-more-google-reviews-for-a-massage-clinic/',
+		title: '按摩店如何获得更多 Google 评价',
+		description: '把邀评做成可重复的前台动作：时机、话术边界与合规提醒。',
+		image: '/images/massage-review-request-flow.svg',
+		imageAlt: '完成服务、发送评价请求、获得 Google 评价与店主回复流程图',
+		category: '客户评价'
 	},
 	{
-		title: '网站与预约转化',
-		description:
-			'优化服务页面、价格信息、预约按钮和移动端体验，把访问者转化为真实预约。'
+		href: '/blog/massage-website-conversion-guide/',
+		title: '按摩店网站预约转化指南',
+		description: '从首屏信息、移动端操作路径到预约按钮位置，减少中途流失。',
+		image: '/images/massage-local-search-system.svg',
+		imageAlt: '搜索、Google 地图、访问网站到完成预约的流程示意图',
+		category: '网站转化'
 	},
 	{
-		title: '按摩 SEO 指南',
-		description:
-			'围绕按摩服务、城市页面和本地关键词建立更清晰的网站内容结构。'
+		href: '/blog/massage-service-page-examples/',
+		title: '更容易促成预约的按摩服务页面应该怎么写',
+		description: '用清晰结构呈现适合人群、时长价格与预约入口，降低决策犹豫。',
+		image: '/images/massage-service-page-wireframe.svg',
+		imageAlt: '按摩服务页面线框：服务名称、适合人群、时长与价格、评价、预约与 FAQ',
+		category: '服务页面'
 	}
 ];
 
-const systemSteps = [
-	'优化 Google Business Profile',
-	'建立清晰的本地服务页面',
-	'建立评价请求与回复流程',
-	'提升网站预约转化率'
+const mapCards = [
+	{
+		href: '/blog/google-business-profile-for-massage-therapists/',
+		title: '按摩师与按摩店的 Google Business Profile 优化指南',
+		description: '梳理资料页信息架构与本地相关性基础，避免因类目或信息不一致错过曝光。',
+		image: '/images/massage-google-maps-visibility.svg',
+		imageAlt: '本地搜索曝光、地图结果、评价信任与预约入口教育示意图',
+		category: 'Google 地图'
+	},
+	{
+		href: '/blog/massage-near-me-keyword-strategy/',
+		title: '按摩店如何布局「Massage Near Me」类关键词',
+		description: '把泛意图词拆到服务与城市语境里，避免内容彼此抢位、语意不清。',
+		image: '/images/massage-seo-checklist-preview.svg',
+		imageAlt: 'SEO 检查清单式结构示意，用于内容规划参考',
+		category: '按摩 SEO'
+	},
+	{
+		href: '/blog/local-landing-pages-for-massage-clinics/',
+		title: '按摩店本地落地页建设指南',
+		description: '为「城市 + 服务」落地页补齐要素：意图对应、信任块与预约路径。',
+		image: '/images/massage-local-search-system.svg',
+		imageAlt: '从搜索到预约转化的流程示意图',
+		category: 'Google 地图'
+	}
 ];
 
-const templateCards = [
+const reviewCards = [
+	{
+		href: '/blog/how-to-get-more-google-reviews-for-a-massage-clinic/',
+		title: '按摩店如何获得更多 Google 评价',
+		description: '把邀评融入服务收尾节奏，并注意合规与体验边界。',
+		image: '/images/massage-review-request-flow.svg',
+		imageAlt: '评价请求与回复流程示意图',
+		category: '客户评价'
+	},
+	{
+		href: '/blog/review-reply-templates-for-massage-businesses/',
+		title: '按摩店 Google 评价回复模板',
+		description: '面向好评、中评与差评的公开回复思路，突出专业与可核实信息。',
+		image: '/images/massage-review-request-flow.svg',
+		imageAlt: '评价与公开回复环节示意图',
+		category: '客户评价'
+	},
+	{
+		href: '/templates/',
+		title: '评价请求短信模板',
+		description: '到店后跟进的短信话术与节奏示例，可按门店语气微调。',
+		image: '/images/massage-review-request-flow.svg',
+		imageAlt: '评价请求与跟进流程示意图',
+		category: '模板'
+	}
+];
+
+const conversionCards = [
+	{
+		href: '/blog/massage-website-conversion-guide/',
+		title: '按摩店网站预约转化指南',
+		description: '聚焦移动端路径、预约按钮与首屏信息是否回答了客户真正的问题。',
+		image: '/images/massage-local-search-system.svg',
+		imageAlt: '访问网站并完成预约的转化流程',
+		category: '网站转化'
+	},
+	{
+		href: '/blog/massage-service-page-examples/',
+		title: '更容易促成预约的按摩服务页面应该怎么写',
+		description: '用线框级结构检查：适合人群、时长价格、评价与 FAQ 是否到位。',
+		image: '/images/massage-service-page-wireframe.svg',
+		imageAlt: '按摩服务页面结构线框示意',
+		category: '服务页面'
+	},
+	{
+		href: '/templates/',
+		title: '按摩服务页面结构模板',
+		description: '可直接套用的段落顺序与要点清单，便于前台与外包对齐。',
+		image: '/images/massage-service-page-wireframe.svg',
+		imageAlt: '服务页面模块结构示意',
+		category: '模板'
+	}
+];
+
+const collectionItems = [
+	{
+		title: 'Google 地图优化专题',
+		description: '资料页、类目、照片节奏、服务项与本地相关性，一起梳理地图侧基础。',
+		href: '/google-maps/',
+		image: '/images/massage-google-maps-visibility.svg',
+		imageAlt: '本地曝光与地图环节教育示意图'
+	},
+	{
+		title: '评价与口碑专题',
+		description: '邀评流程、公开回复与常见情境话术，让评价成为持续运营动作。',
+		href: '/reviews/',
+		image: '/images/massage-review-request-flow.svg',
+		imageAlt: '评价请求与回复流程示意图'
+	},
+	{
+		title: '按摩服务页面专题',
+		description: '面向转化与本地 SEO 的服务页结构与示例，减少「看了网页仍不预约」。',
+		href: '/website-conversion/',
+		image: '/images/massage-service-page-wireframe.svg',
+		imageAlt: '按摩服务页面线框结构'
+	},
+	{
+		title: '本地 SEO 基础专题',
+		description: '清单式检查：内容意图、落地页、评价与预约是否形成闭环。',
+		href: '/massage-seo/',
+		image: '/images/massage-seo-checklist-preview.svg',
+		imageAlt: '按摩店 SEO 检查清单预览'
+	}
+];
+
+const templateResources = [
+	{
+		title: '按摩 SEO 检查清单',
+		description: '按月复盘资料页、服务页、评价、预约入口与本地内容是否一致。',
+		href: '/blog/massage-seo-checklist/',
+		badge: '清单'
+	},
 	{
 		title: '评价请求短信模板',
-		description:
-			'用于到店服务后跟进的短信模板，覆盖邀请评价、提醒补评和基础话术规范。'
+		description: '短信邀评示例话术，可与前台流程结合，注意频率与合规。',
+		href: '/templates/',
+		badge: '模板'
 	},
 	{
-		title: '按摩服务页面模板',
-		description:
-			'用于梳理服务说明、适合人群、时长价格、评价展示与预约入口的页面结构模板。'
-	},
-	{
-		title: 'Google 地图曝光拆解',
-		description:
-			'用拆解视角检查地图曝光到预约之间的关键环节，定位可执行的优化点。'
+		title: '按摩服务页面结构模板',
+		description: '段落顺序与必备模块，用来对齐撰稿、设计与 SEO 需求。',
+		href: '/blog/massage-service-page-examples/',
+		badge: '模板'
 	}
 ];
+
+const breakdownCards = [
+	{
+		href: '/blog/massage-website-conversion-guide/',
+		title: '一个按摩店网站为什么有访问却没有预约',
+		description: '从设备体验、首屏信息与预约路径拆解常见流失点，不涉及任何个案数据。',
+		image: '/images/massage-local-search-system.svg',
+		imageAlt: '从访问到预约的环节拆解示意',
+		category: '营销拆解'
+	},
+	{
+		href: '/blog/massage-service-page-examples/',
+		title: '一个服务页面应该如何降低预约犹豫',
+		description: '用结构与文案层次回应「是否适合我、要多少钱、怎么约」三类问题。',
+		image: '/images/massage-service-page-wireframe.svg',
+		imageAlt: '服务页面模块拆解示意',
+		category: '营销拆解'
+	},
+	{
+		href: '/blog/google-business-profile-for-massage-therapists/',
+		title: 'Google 地图曝光不足时先检查什么',
+		description: '优先核对类目、服务项、营业信息与照片是否传递一致的专业信号。',
+		image: '/images/massage-google-maps-visibility.svg',
+		imageAlt: '地图曝光相关环节示意图',
+		category: '营销拆解'
+	}
+];
+
+const latestPosts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 6);
 ---
 
 <!doctype html>
@@ -69,101 +250,104 @@ const templateCards = [
 			description="学习如何通过 Google 地图、本地 SEO、客户评价、服务页面和预约转化优化，帮助按摩店获得更多本地客户。"
 		/>
 	</head>
-	<body>
+	<body class="home-body">
 		<Header />
-		<main>
-			<section class="hero">
-				<p class="eyebrow">按摩店增长指南</p>
-				<h1>帮助按摩店通过 Google 地图和本地搜索获得更多预约</h1>
-				<p>
-					为按摩店、按摩师和养生馆提供实用的 Google 地图优化、本地 SEO、客户评价管理和预约转化资源。
-				</p>
-				<div class="hero-actions">
-					<a class="cta primary" href="/blog/massage-seo-checklist/">查看按摩 SEO 检查清单</a>
-					<a class="cta secondary" href="/blog/google-business-profile-for-massage-therapists/"
-						>学习 Google 地图优化</a
-					>
+		<main class="home-main">
+			<HomeHero
+				title="帮助按摩店通过 Google 地图和本地搜索获得更多预约"
+				subtitle="面向按摩店、按摩师和养生馆的实用增长资源，覆盖 Google Business Profile、本地 SEO、客户评价、服务页面和预约转化。"
+				primaryLabel="查看按摩 SEO 检查清单"
+				primaryHref="/blog/massage-seo-checklist/"
+				secondaryLabel="学习 Google 地图优化"
+				secondaryHref="/blog/google-business-profile-for-massage-therapists/"
+			/>
+
+			<section class="panel" aria-labelledby="featured-title">
+				<SectionHeader
+					headingId="featured-title"
+					title="精选指南"
+					description="从清单到实操页面，优先补齐本地曝光、评价与预约路径上的关键模块。"
+				/>
+				<FeaturedArticleGrid featured={featured} items={featuredSide} />
+			</section>
+
+			<section class="panel">
+				<SectionHeader
+					title="Google 地图曝光"
+					description="学习如何优化 Google Business Profile、服务项目、照片、评价和本地相关性，让附近客户更容易发现你的按摩店。"
+				/>
+				<div class="card-row-3">
+					{mapCards.map((c) => <ArticleCard {...c} />)}
 				</div>
 			</section>
 
-			<section>
-				<h2>专注按摩行业，而不是泛泛的营销建议</h2>
-				<p>
-					大多数本地 SEO 建议都是写给所有行业的，但按摩店的客户搜索方式、服务项目、评价信任、预约流程和本地竞争环境都有自己的特点。本网站专注解决这些具体问题。
-				</p>
-			</section>
-
-			<section>
-				<h2>核心栏目</h2>
-				<div class="card-grid two-col">
-					{
-						resourceCategories.map((category) => (
-							<article class="card">
-								<h3>{category.title}</h3>
-								<p>{category.description}</p>
-							</article>
-						))
-					}
+			<section class="panel">
+				<SectionHeader
+					title="客户评价与口碑"
+					description="建立评价请求、评价回复和口碑管理流程，让新客户在预约前更信任你的按摩服务。"
+				/>
+				<div class="card-row-3">
+					{reviewCards.map((c) => <ArticleCard {...c} />)}
 				</div>
 			</section>
 
-			<section class="featured-resource">
-				<h2>免费按摩 SEO 检查清单</h2>
-				<p>
-					一份实用清单，帮助你检查 Google Business Profile、服务页面、客户评价、预约按钮和本地 SEO 基础。
-				</p>
-				<img
-					src="/images/massage-seo-checklist-preview.svg"
-					alt="按摩店 SEO 检查清单预览图，包含资料页、服务页面、评价、预约按钮和数据追踪项目"
-					loading="lazy"
+			<section class="panel">
+				<SectionHeader
+					title="网站与预约转化"
+					description="优化服务介绍、价格信息、预约按钮和移动端体验，把网站访问者转化为真实预约。"
 				/>
-				<a class="cta primary" href="/blog/massage-seo-checklist/">查看检查清单</a>
-			</section>
-
-			<section>
-				<h2>按摩店本地曝光增长系统</h2>
-				<img
-					src="/images/massage-local-search-system.svg"
-					alt="按摩店本地搜索转化流程图：搜索、Google 地图、访问网站到完成预约"
-					loading="lazy"
-				/>
-				<ol class="steps">
-					{
-						systemSteps.map((step) => (
-							<li>
-								<span class="step-title">{step}</span>
-							</li>
-						))
-					}
-				</ol>
-			</section>
-
-			<section>
-				<h2>模板与拆解</h2>
-				<img
-					src="/images/massage-review-request-flow.svg"
-					alt="按摩店评价流程图：服务完成、短信邀评、Google 评价与店主回复"
-					loading="lazy"
-				/>
-				<div class="card-grid three-col">
-					{
-						templateCards.map((template) => (
-							<article class="card">
-								<h3>{template.title}</h3>
-								<p>{template.description}</p>
-							</article>
-						))
-					}
+				<div class="card-row-3">
+					{conversionCards.map((c) => <ArticleCard {...c} />)}
 				</div>
 			</section>
 
-			<section class="latest-guides">
-				<h2>最新指南</h2>
-				<p>查看围绕本地曝光、客户评价与预约转化的最新实操内容。</p>
-				<a href="/blog">查看全部指南</a>
+			<section class="panel">
+				<SectionHeader
+					title="热门专题"
+					description="按主题聚合地图、评价、服务页与本地 SEO 基础，便于系统阅读。"
+				/>
+				<CollectionGrid items={collectionItems} />
+			</section>
+
+			<section class="panel">
+				<SectionHeader title="实用模板与清单" description="即用型结构、话术与清单，适合门店直接执行或微调。" />
+				<div class="resource-row">
+					{templateResources.map((r) => <ResourceCard {...r} />)}
+				</div>
+			</section>
+
+			<section class="panel">
+				<SectionHeader
+					title="按摩营销拆解"
+					description="通过教育型拆解，分析按摩店网站、Google 地图和预约流程中常见的优化机会。不展示个案例数据或排名截图。"
+				/>
+				<div class="card-row-3">
+					{breakdownCards.map((c) => <ArticleCard {...c} />)}
+				</div>
+			</section>
+
+			<section class="panel">
+				<SectionHeader title="最新指南" description="围绕本地曝光、评价与预约转化的最新更新内容。" />
+				<div class="card-row-3 latest">
+					{
+						latestPosts.map((post) => (
+							<ArticleCard
+								href={`/blog/${post.id}/`}
+								title={post.data.title}
+								description={post.data.description}
+								image={previewByPostId[post.id] ?? '/images/massage-local-search-system.svg'}
+								imageAlt={`《${post.data.title}》配图示意`}
+								category={categoryByPostId[post.id] ?? '指南'}
+							/>
+						))
+					}
+				</div>
+				<p class="more-link">
+					<a href="/blog/">浏览全部指南</a>
+				</p>
 			</section>
 		</main>
-		<Footer />
+		<SiteFooter />
 	</body>
 </html>
 
@@ -174,153 +358,72 @@ const templateCards = [
 		--massage-soft: #eef5fb;
 		--massage-border: #d1deea;
 	}
-
-	main {
-		display: grid;
-		gap: 2.25rem;
-	}
-
-	section {
-		background: #fff;
-		border: 1px solid var(--massage-border);
-		border-radius: 14px;
-		padding: 1.6rem;
-	}
-
-	.hero {
-		background: #f4f9fc;
-		border-color: #c8ddeb;
-	}
-
-	.eyebrow {
-		font-size: 0.9rem;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		color: var(--massage-primary);
-		margin-bottom: 0.6rem;
-	}
-
-	h1 {
-		font-size: clamp(2rem, 4vw, 3rem);
-		color: var(--massage-primary);
-		margin-bottom: 0.8rem;
-	}
-
-	h2 {
-		font-size: clamp(1.35rem, 3vw, 2rem);
-		color: var(--massage-primary);
-		margin-bottom: 1rem;
-	}
-
-	h3 {
-		font-size: 1.08rem;
+	.home-body {
 		margin: 0;
-		color: #143f5a;
-	}
-
-	.cta {
-		display: inline-block;
-		padding: 0.65rem 1.1rem;
-		border-radius: 8px;
-		font-weight: 600;
-		text-decoration: none;
-		border: 1px solid transparent;
-	}
-
-	.hero-actions {
-		margin-top: 1rem;
+		min-height: 100vh;
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
+		flex-direction: column;
+		background: linear-gradient(180deg, #f4f9fc 0%, #f0f4f7 35%, #ffffff 100%);
+		color: #1c3a4d;
+		overflow-x: clip;
 	}
-
-	.primary {
-		background: var(--massage-primary);
-		color: #fff;
+	.home-main {
+		flex: 1;
+		width: min(1180px, calc(100% - clamp(1.5rem, 5vw, 3rem)));
+		margin: 0 auto;
+		padding: clamp(1.25rem, 3vw, 1.75rem) 0 clamp(2rem, 5vw, 3.25rem);
+		display: flex;
+		flex-direction: column;
+		gap: clamp(2rem, 4.5vw, 2.75rem);
 	}
-
-	.primary:hover {
-		background: #07293a;
-	}
-
-	.secondary {
+	.panel {
 		background: #fff;
-		color: var(--massage-primary);
-		border-color: #b8cde0;
+		border: 1px solid rgba(209, 222, 234, 0.95);
+		border-radius: 22px;
+		padding: clamp(1.5rem, 3.5vw, 2.25rem) clamp(1.25rem, 3.5vw, 2rem);
+		box-shadow:
+			0 1px 0 rgba(255, 255, 255, 0.8) inset,
+			0 10px 40px rgba(11, 58, 83, 0.05);
 	}
-
-	.secondary:hover {
-		background: #f1f7fc;
-	}
-
-	.card-grid {
+	.card-row-3 {
 		display: grid;
-		gap: 1rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.15rem;
+		align-items: stretch;
 	}
-
-	.two-col {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-
-	.three-col {
+	.card-row-3.latest {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
-
-	.card {
-		background: var(--massage-soft);
-		border: 1px solid #cfe1f0;
-		border-radius: 10px;
-		padding: 1rem;
+	.latest {
+		row-gap: 1rem;
 	}
-
-	.card p {
-		margin: 0.7rem 0 0;
-		font-size: 0.98rem;
-		line-height: 1.55;
-		color: #20445e;
-	}
-
-	section img {
-		display: block;
-		width: 100%;
-		height: auto;
-		border-radius: 10px;
-		border: 1px solid #c6d9e8;
-		margin: 0.4rem 0 1rem;
-		background: #fff;
-	}
-
-	.featured-resource {
-		background: #f7fbff;
-	}
-
-	.steps {
-		margin: 0;
-		padding-left: 1.15rem;
-		display: grid;
-		gap: 0.75rem;
-	}
-
-	.step-title {
-		color: #1c3f56;
-		font-weight: 600;
-	}
-
-	.latest-guides a {
-		color: var(--massage-accent);
-		font-weight: 600;
-		text-decoration: none;
-	}
-
-	.latest-guides p {
-		margin-bottom: 0.8rem;
-	}
-
-	@media (max-width: 840px) {
-		.two-col,
-		.three-col {
+	@media (max-width: 900px) {
+		.card-row-3,
+		.card-row-3.latest {
 			grid-template-columns: 1fr;
 		}
+	}
+	.resource-row {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.9rem;
+	}
+	@media (max-width: 800px) {
+		.resource-row {
+			grid-template-columns: 1fr;
+		}
+	}
+	.more-link {
+		margin: 1.35rem 0 0;
+		text-align: right;
+		padding-top: 0.25rem;
+	}
+	.more-link a {
+		font-weight: 600;
+		color: var(--massage-accent);
+		text-decoration: none;
+	}
+	.more-link a:hover {
+		text-decoration: underline;
 	}
 </style>

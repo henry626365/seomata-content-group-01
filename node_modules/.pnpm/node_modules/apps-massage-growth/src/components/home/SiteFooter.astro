@@ -1,0 +1,124 @@
+---
+const year = 2026;
+---
+
+<footer class="site-footer">
+	<div class="footer-inner">
+		<div class="brand">
+			<strong class="name">按摩店增长指南</strong>
+			<p>面向按摩店、按摩师和养生馆的本地搜索、评价和预约转化资源。</p>
+		</div>
+
+		<div class="cols">
+			<div>
+				<h3>栏目</h3>
+				<ul>
+					<li><a href="/google-maps/">Google 地图</a></li>
+					<li><a href="/reviews/">客户评价</a></li>
+					<li><a href="/website-conversion/">网站转化</a></li>
+					<li><a href="/massage-seo/">按摩 SEO</a></li>
+					<li><a href="/templates/">模板</a></li>
+				</ul>
+			</div>
+			<div>
+				<h3>信任页面</h3>
+				<ul>
+					<li><a href="/about/">关于</a></li>
+					<li><a href="/editorial-policy/">编辑政策</a></li>
+					<li><a href="/contact/">联系</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<p class="copy">© {year} 按摩店增长指南. All rights reserved.</p>
+</footer>
+
+<style>
+	.site-footer {
+		margin-top: clamp(2.5rem, 6vw, 4rem);
+		padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 4vw, 1.75rem) 1.75rem;
+		background: linear-gradient(180deg, #0a3349 0%, #082836 100%);
+		color: #e8f2f9;
+		border-top: 1px solid #143d55;
+		overflow-x: clip;
+	}
+	.footer-inner {
+		max-width: 1180px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+		gap: clamp(1.75rem, 4vw, 3rem);
+		align-items: start;
+	}
+	.brand .name {
+		display: block;
+		font-size: 1.15rem;
+		margin-bottom: 0.55rem;
+		color: #ffffff;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+	.brand p {
+		margin: 0;
+		max-width: 26rem;
+		font-size: 0.92rem;
+		line-height: 1.6;
+		color: #b8d4e8;
+	}
+	.cols {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: clamp(1.25rem, 3vw, 2rem);
+	}
+	.cols h3 {
+		margin: 0 0 0.75rem;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: #7eb3d4;
+	}
+	.cols ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.5rem;
+	}
+	.cols a {
+		color: #f0f7fc;
+		text-decoration: none;
+		font-size: 0.94rem;
+		font-weight: 500;
+		border-bottom: 1px solid transparent;
+		transition:
+			color 0.15s ease,
+			border-color 0.15s ease;
+	}
+	.cols a:hover {
+		color: #ffffff;
+		border-bottom-color: rgba(255, 255, 255, 0.35);
+	}
+	.copy {
+		margin: 2rem auto 0;
+		max-width: 1180px;
+		padding-top: 1.35rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		font-size: 0.82rem;
+		color: #8eb8d4;
+		text-align: center;
+	}
+	@media (max-width: 720px) {
+		.footer-inner {
+			grid-template-columns: 1fr;
+		}
+		.cols {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+	@media (max-width: 420px) {
+		.cols {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
