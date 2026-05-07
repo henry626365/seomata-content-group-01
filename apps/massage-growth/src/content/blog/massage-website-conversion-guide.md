@@ -8,8 +8,6 @@ heroImage: "../../assets/massage-website-conversion-hero.jpg"
 按摩店网站不需要“看起来很高级”，它需要让客户快速完成预约。  
 很多门店流量并不低，但预约量上不去，问题通常不在引流，而在页面信息和预约路径。
 
-![按摩店本地搜索到预约转化流程图，展示搜索、地图、访问和预约的关键环节](/images/massage-local-search-system.svg)
-
 ## 为什么这个问题对按摩店重要
 
 按摩服务的购买决策往往在几分钟内完成。  

@@ -8,8 +8,6 @@ heroImage: "../../assets/massage-service-page-examples-hero.jpg"
 很多按摩店服务页写得像百科词条：概念很多，决策信息很少。  
 用户真正关心的是“我适不适合”“多少钱”“怎么预约”，如果这三点不清晰，页面很难转化。
 
-![按摩服务页面结构线框图，包含服务名称、适合人群、时长、价格、评价、预约按钮与 FAQ](/images/massage-service-page-wireframe.svg)
-
 ## 为什么这个问题对按摩店重要
 
 服务页通常是本地搜索流量最先进入的页面。  

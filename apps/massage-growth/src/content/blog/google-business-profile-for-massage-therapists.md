@@ -8,8 +8,6 @@ heroImage: "../../assets/google-business-profile-massage-hero.jpg"
 对绝大多数按摩店来说，Google Business Profile（GBP）不是“可选项”，而是本地获客的第一入口。  
 很多用户在地图结果里就完成了筛选，甚至不进官网就直接拨号或预约。
 
-![按摩店本地地图曝光示意图，展示本地搜索中门店可见性的教育型说明](/images/massage-google-maps-visibility.svg)
-
 ## 为什么这个问题对按摩店重要
 
 按摩服务决策通常发生在“附近搜索”场景：  
