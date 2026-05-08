@@ -34,13 +34,15 @@ const site = {
 	}
 	h2 {
 		margin: 0;
-		font-size: 1.65rem;
+		font-size: 1.9rem;
 		font-weight: 800;
-		line-height: 1.1;
+		line-height: 1;
 	}
 
 	h2 a,
 	h2 a.active {
+		display: inline-flex;
+		align-items: center;
 		color: rgb(var(--accent));
 		background: linear-gradient(90deg, #0b3a53 0%, #2f80ed 50%, #00a78e 100%);
 		-webkit-background-clip: text;
@@ -49,22 +51,25 @@ const site = {
 		text-shadow:
 			0 1px 0 rgba(255, 255, 255, 0.75),
 			0 0 10px rgba(47, 128, 237, 0.12);
-		padding: 0.25rem 0.9rem;
+		padding: 0.72rem 0.9rem;
 		border-radius: 999px;
 		text-decoration: none;
 	}
 	nav {
 		display: flex;
 		align-items: center;
-		gap: 1rem;
-		justify-content: center;
-		flex-wrap: wrap;
+		gap: 1.25rem;
+		justify-content: space-between;
+		flex-wrap: nowrap;
+		max-width: 960px;
+		margin: 0 auto;
 		padding: 0.35rem 0;
 	}
 	.internal-links {
 		display: flex;
+		align-items: center;
 		flex-wrap: wrap;
-		justify-content: center;
+		justify-content: flex-end;
 	}
 	nav a {
 		padding: 0.85em 0.45em;
@@ -79,11 +84,13 @@ const site = {
 	}
 	@media (max-width: 720px) {
 		h2 {
-			font-size: 1.35rem;
+			font-size: 1.45rem;
 		}
 		nav {
 			flex-direction: column;
 			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
 		}
 		.internal-links {
 			justify-content: center;
