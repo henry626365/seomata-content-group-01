@@ -10,26 +10,24 @@ import ArticleCard from '../components/home/ArticleCard.astro';
 import CollectionGrid from '../components/home/CollectionGrid.astro';
 import ResourceCard from '../components/home/ResourceCard.astro';
 
-const previewByPostId: Record<string, string> = {
-	'massage-seo-checklist': '/images/massage-seo-checklist-preview.svg',
-	'google-business-profile-for-massage-therapists': '/images/massage-google-maps-visibility.svg',
-	'how-to-get-more-google-reviews-for-a-massage-clinic': '/images/massage-review-request-flow.svg',
-	'massage-website-conversion-guide': '/images/massage-local-search-system.svg',
-	'massage-service-page-examples': '/images/massage-service-page-wireframe.svg',
-	'massage-near-me-keyword-strategy': '/images/massage-google-maps-visibility.svg',
-	'local-landing-pages-for-massage-clinics': '/images/massage-local-search-system.svg',
-	'review-reply-templates-for-massage-businesses': '/images/massage-review-request-flow.svg'
+const allBlogPosts = await getCollection('blog');
+const postById = new Map(allBlogPosts.map((post) => [post.id, post]));
+const getCardImage = (href: string, fallback: string) => {
+	const match = href.match(/^\/blog\/([^/]+)\/?$/);
+	if (!match) return fallback;
+	return postById.get(match[1])?.data.heroImage?.src ?? fallback;
 };
+const getPostImage = (postId: string, fallback: string) => postById.get(postId)?.data.heroImage?.src ?? fallback;
 
 const categoryByPostId: Record<string, string> = {
-	'massage-seo-checklist': '按摩 SEO',
-	'google-business-profile-for-massage-therapists': 'Google 地图',
-	'how-to-get-more-google-reviews-for-a-massage-clinic': '客户评价',
-	'massage-website-conversion-guide': '网站转化',
-	'massage-service-page-examples': '服务页面',
-	'massage-near-me-keyword-strategy': '按摩 SEO',
-	'local-landing-pages-for-massage-clinics': 'Google 地图',
-	'review-reply-templates-for-massage-businesses': '客户评价'
+	'massage-seo-checklist': 'SEO 专题',
+	'google-business-profile-for-massage-therapists': '地图专题',
+	'how-to-get-more-google-reviews-for-a-massage-clinic': '评价专题',
+	'massage-website-conversion-guide': '转化专题',
+	'massage-service-page-examples': '服务页专题',
+	'massage-near-me-keyword-strategy': 'SEO 专题',
+	'local-landing-pages-for-massage-clinics': '地图专题',
+	'review-reply-templates-for-massage-businesses': '评价专题'
 };
 
 const featured = {
@@ -37,9 +35,9 @@ const featured = {
 	title: '按摩店本地 SEO 检查清单',
 	description:
 		'从 Google Business Profile、服务页面、评价、预约按钮和本地内容结构开始，系统检查按摩店的线上曝光基础。',
-	image: '/images/massage-seo-checklist-preview.svg',
+	image: getCardImage('/blog/massage-seo-checklist/', '/images/massage-seo-checklist-preview.svg'),
 	imageAlt: '按摩店本地 SEO 检查清单预览，包含资料页、服务页、评价、预约与本地内容项',
-	category: '按摩 SEO'
+	category: 'SEO 专题'
 };
 
 const featuredSide = [
@@ -47,33 +45,33 @@ const featuredSide = [
 		href: '/blog/google-business-profile-for-massage-therapists/',
 		title: 'Google Business Profile 优化指南',
 		description: '核对类目、服务项、照片节奏与公开信息一致性，让资料页承接本地搜索意图。',
-		image: '/images/massage-google-maps-visibility.svg',
+		image: getCardImage('/blog/google-business-profile-for-massage-therapists/', '/images/massage-google-maps-visibility.svg'),
 		imageAlt: '本地搜索曝光、地图结果、评价信任与预约入口示意图',
-		category: 'Google 地图'
+		category: '地图专题'
 	},
 	{
 		href: '/blog/how-to-get-more-google-reviews-for-a-massage-clinic/',
 		title: '按摩店如何获得更多 Google 评价',
 		description: '把邀评做成可重复的前台动作：时机、话术边界与合规提醒。',
-		image: '/images/massage-review-request-flow.svg',
+		image: getCardImage('/blog/how-to-get-more-google-reviews-for-a-massage-clinic/', '/images/massage-review-request-flow.svg'),
 		imageAlt: '完成服务、发送评价请求、获得 Google 评价与店主回复流程图',
-		category: '客户评价'
+		category: '评价专题'
 	},
 	{
 		href: '/blog/massage-website-conversion-guide/',
 		title: '按摩店网站预约转化指南',
 		description: '从首屏信息、移动端操作路径到预约按钮位置，减少中途流失。',
-		image: '/images/massage-local-search-system.svg',
+		image: getCardImage('/blog/massage-website-conversion-guide/', '/images/massage-local-search-system.svg'),
 		imageAlt: '搜索、Google 地图、访问网站到完成预约的流程示意图',
-		category: '网站转化'
+		category: '转化专题'
 	},
 	{
 		href: '/blog/massage-service-page-examples/',
 		title: '更容易促成预约的按摩服务页面应该怎么写',
 		description: '用清晰结构呈现适合人群、时长价格与预约入口，降低决策犹豫。',
-		image: '/images/massage-service-page-wireframe.svg',
+		image: getCardImage('/blog/massage-service-page-examples/', '/images/massage-service-page-wireframe.svg'),
 		imageAlt: '按摩服务页面线框：服务名称、适合人群、时长与价格、评价、预约与 FAQ',
-		category: '服务页面'
+		category: '服务页专题'
 	}
 ];
 
@@ -82,25 +80,25 @@ const mapCards = [
 		href: '/blog/google-business-profile-for-massage-therapists/',
 		title: '按摩师与按摩店的 Google Business Profile 优化指南',
 		description: '梳理资料页信息架构与本地相关性基础，避免因类目或信息不一致错过曝光。',
-		image: '/images/massage-google-maps-visibility.svg',
+		image: getCardImage('/blog/google-business-profile-for-massage-therapists/', '/images/massage-google-maps-visibility.svg'),
 		imageAlt: '本地搜索曝光、地图结果、评价信任与预约入口教育示意图',
-		category: 'Google 地图'
+		category: '地图专题'
 	},
 	{
 		href: '/blog/massage-near-me-keyword-strategy/',
 		title: '按摩店如何布局「Massage Near Me」类关键词',
 		description: '把泛意图词拆到服务与城市语境里，避免内容彼此抢位、语意不清。',
-		image: '/images/massage-seo-checklist-preview.svg',
+		image: getCardImage('/blog/massage-near-me-keyword-strategy/', '/images/massage-seo-checklist-preview.svg'),
 		imageAlt: 'SEO 检查清单式结构示意，用于内容规划参考',
-		category: '按摩 SEO'
+		category: 'SEO 专题'
 	},
 	{
 		href: '/blog/local-landing-pages-for-massage-clinics/',
 		title: '按摩店本地落地页建设指南',
 		description: '为「城市 + 服务」落地页补齐要素：意图对应、信任块与预约路径。',
-		image: '/images/massage-local-search-system.svg',
+		image: getCardImage('/blog/local-landing-pages-for-massage-clinics/', '/images/massage-local-search-system.svg'),
 		imageAlt: '从搜索到预约转化的流程示意图',
-		category: 'Google 地图'
+		category: '地图专题'
 	}
 ];
 
@@ -109,17 +107,17 @@ const reviewCards = [
 		href: '/blog/how-to-get-more-google-reviews-for-a-massage-clinic/',
 		title: '按摩店如何获得更多 Google 评价',
 		description: '把邀评融入服务收尾节奏，并注意合规与体验边界。',
-		image: '/images/massage-review-request-flow.svg',
+		image: getCardImage('/blog/how-to-get-more-google-reviews-for-a-massage-clinic/', '/images/massage-review-request-flow.svg'),
 		imageAlt: '评价请求与回复流程示意图',
-		category: '客户评价'
+		category: '评价专题'
 	},
 	{
 		href: '/blog/review-reply-templates-for-massage-businesses/',
 		title: '按摩店 Google 评价回复模板',
 		description: '面向好评、中评与差评的公开回复思路，突出专业与可核实信息。',
-		image: '/images/massage-review-request-flow.svg',
+		image: getCardImage('/blog/review-reply-templates-for-massage-businesses/', '/images/massage-review-request-flow.svg'),
 		imageAlt: '评价与公开回复环节示意图',
-		category: '客户评价'
+		category: '评价专题'
 	},
 	{
 		href: '/templates/',
@@ -127,7 +125,7 @@ const reviewCards = [
 		description: '到店后跟进的短信话术与节奏示例，可按门店语气微调。',
 		image: '/images/massage-review-request-flow.svg',
 		imageAlt: '评价请求与跟进流程示意图',
-		category: '模板'
+		category: '模板资源'
 	}
 ];
 
@@ -136,17 +134,17 @@ const conversionCards = [
 		href: '/blog/massage-website-conversion-guide/',
 		title: '按摩店网站预约转化指南',
 		description: '聚焦移动端路径、预约按钮与首屏信息是否回答了客户真正的问题。',
-		image: '/images/massage-local-search-system.svg',
+		image: getCardImage('/blog/massage-website-conversion-guide/', '/images/massage-local-search-system.svg'),
 		imageAlt: '访问网站并完成预约的转化流程',
-		category: '网站转化'
+		category: '转化专题'
 	},
 	{
 		href: '/blog/massage-service-page-examples/',
 		title: '更容易促成预约的按摩服务页面应该怎么写',
 		description: '用线框级结构检查：适合人群、时长价格、评价与 FAQ 是否到位。',
-		image: '/images/massage-service-page-wireframe.svg',
+		image: getCardImage('/blog/massage-service-page-examples/', '/images/massage-service-page-wireframe.svg'),
 		imageAlt: '按摩服务页面结构线框示意',
-		category: '服务页面'
+		category: '服务页专题'
 	},
 	{
 		href: '/templates/',
@@ -154,7 +152,7 @@ const conversionCards = [
 		description: '可直接套用的段落顺序与要点清单，便于前台与外包对齐。',
 		image: '/images/massage-service-page-wireframe.svg',
 		imageAlt: '服务页面模块结构示意',
-		category: '模板'
+		category: '模板资源'
 	}
 ];
 
@@ -163,28 +161,28 @@ const collectionItems = [
 		title: 'Google 地图优化专题',
 		description: '资料页、类目、照片节奏、服务项与本地相关性，一起梳理地图侧基础。',
 		href: '/google-maps/',
-		image: '/images/massage-google-maps-visibility.svg',
+		image: getPostImage('google-business-profile-for-massage-therapists', '/images/massage-google-maps-visibility.svg'),
 		imageAlt: '本地曝光与地图环节教育示意图'
 	},
 	{
 		title: '评价与口碑专题',
 		description: '邀评流程、公开回复与常见情境话术，让评价成为持续运营动作。',
 		href: '/reviews/',
-		image: '/images/massage-review-request-flow.svg',
+		image: getPostImage('how-to-get-more-google-reviews-for-a-massage-clinic', '/images/massage-review-request-flow.svg'),
 		imageAlt: '评价请求与回复流程示意图'
 	},
 	{
 		title: '按摩服务页面专题',
 		description: '面向转化与本地 SEO 的服务页结构与示例，减少「看了网页仍不预约」。',
 		href: '/website-conversion/',
-		image: '/images/massage-service-page-wireframe.svg',
+		image: getPostImage('massage-service-page-examples', '/images/massage-service-page-wireframe.svg'),
 		imageAlt: '按摩服务页面线框结构'
 	},
 	{
 		title: '本地 SEO 基础专题',
 		description: '清单式检查：内容意图、落地页、评价与预约是否形成闭环。',
 		href: '/massage-seo/',
-		image: '/images/massage-seo-checklist-preview.svg',
+		image: getPostImage('massage-seo-checklist', '/images/massage-seo-checklist-preview.svg'),
 		imageAlt: '按摩店 SEO 检查清单预览'
 	}
 ];
@@ -194,25 +192,33 @@ const templateResources = [
 		title: '按摩 SEO 检查清单',
 		description: '按月复盘资料页、服务页、评价、预约入口与本地内容是否一致。',
 		href: '/blog/massage-seo-checklist/',
-		badge: '清单'
+		badge: '清单',
+		image: getPostImage('massage-seo-checklist', '/images/massage-seo-checklist-preview.svg'),
+		imageAlt: '按摩 SEO 检查清单主图'
 	},
 	{
 		title: '评价请求短信模板',
 		description: '短信邀评示例话术，可与前台流程结合，注意频率与合规。',
 		href: '/templates/',
-		badge: '模板'
+		badge: '模板',
+		image: getPostImage('massage-clinic-review-request-sms-templates', '/images/massage-review-request-flow.svg'),
+		imageAlt: '评价请求短信模板示意主图'
 	},
 	{
 		title: '按摩服务页面结构模板',
 		description: '段落顺序与必备模块，用来对齐撰稿、设计与 SEO 需求。',
 		href: '/blog/massage-service-page-examples/',
-		badge: '模板'
+		badge: '模板',
+		image: getPostImage('massage-service-page-examples', '/images/massage-service-page-wireframe.svg'),
+		imageAlt: '按摩服务页面结构模板主图'
 	},
 	{
 		title: '按摩行业本地搜索可见度报告',
 		description: '方法透明的行业观察框架，帮助门店判断当前处于基础、稳定还是进阶阶段。',
 		href: '/reports/massage-local-search-visibility-report/',
-		badge: '报告'
+		badge: '报告',
+		image: getPostImage('massage-near-me-keyword-strategy', '/images/massage-google-maps-visibility.svg'),
+		imageAlt: '本地搜索可见度报告示意主图'
 	}
 ];
 
@@ -221,7 +227,7 @@ const breakdownCards = [
 		href: '/blog/massage-website-conversion-guide/',
 		title: '一个按摩店网站为什么有访问却没有预约',
 		description: '从设备体验、首屏信息与预约路径拆解常见流失点，不涉及任何个案数据。',
-		image: '/images/massage-local-search-system.svg',
+		image: getCardImage('/blog/massage-website-conversion-guide/', '/images/massage-local-search-system.svg'),
 		imageAlt: '从访问到预约的环节拆解示意',
 		category: '营销拆解'
 	},
@@ -229,7 +235,7 @@ const breakdownCards = [
 		href: '/blog/massage-service-page-examples/',
 		title: '一个服务页面应该如何降低预约犹豫',
 		description: '用结构与文案层次回应「是否适合我、要多少钱、怎么约」三类问题。',
-		image: '/images/massage-service-page-wireframe.svg',
+		image: getCardImage('/blog/massage-service-page-examples/', '/images/massage-service-page-wireframe.svg'),
 		imageAlt: '服务页面模块拆解示意',
 		category: '营销拆解'
 	},
@@ -237,13 +243,13 @@ const breakdownCards = [
 		href: '/blog/google-business-profile-for-massage-therapists/',
 		title: 'Google 地图曝光不足时先检查什么',
 		description: '优先核对类目、服务项、营业信息与照片是否传递一致的专业信号。',
-		image: '/images/massage-google-maps-visibility.svg',
+		image: getCardImage('/blog/google-business-profile-for-massage-therapists/', '/images/massage-google-maps-visibility.svg'),
 		imageAlt: '地图曝光相关环节示意图',
 		category: '营销拆解'
 	}
 ];
 
-const latestPosts = (await getCollection('blog'))
+const latestPosts = allBlogPosts
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 6);
 ---
@@ -341,7 +347,7 @@ const latestPosts = (await getCollection('blog'))
 								href={`/blog/${post.id}/`}
 								title={post.data.title}
 								description={post.data.description}
-								image={previewByPostId[post.id] ?? '/images/massage-local-search-system.svg'}
+								image={post.data.heroImage?.src ?? '/images/massage-local-search-system.svg'}
 								imageAlt={`《${post.data.title}》配图示意`}
 								category={categoryByPostId[post.id] ?? '指南'}
 							/>
