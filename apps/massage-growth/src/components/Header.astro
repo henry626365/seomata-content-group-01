@@ -34,7 +34,7 @@ const site = {
 	}
 	h2 {
 		margin: 0;
-		font-size: 1.9rem;
+		font-size: 2.2rem;
 		font-weight: 800;
 		line-height: 1;
 	}
@@ -43,14 +43,8 @@ const site = {
 	h2 a.active {
 		display: inline-flex;
 		align-items: center;
-		color: rgb(var(--accent));
-		background: linear-gradient(90deg, #0b3a53 0%, #2f80ed 50%, #00a78e 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		text-shadow:
-			0 1px 0 rgba(255, 255, 255, 0.75),
-			0 0 10px rgba(47, 128, 237, 0.12);
+		color: #2f80ed;
+		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75), 0 0 10px rgba(47, 128, 237, 0.12);
 		padding: 0.72rem 0.9rem;
 		border-radius: 999px;
 		text-decoration: none;
@@ -77,14 +71,28 @@ const site = {
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
 		font-size: 0.92rem;
+		transition:
+			color 0.2s ease,
+			border-bottom-color 0.2s ease,
+			background-color 0.2s ease,
+			transform 0.12s ease;
+	}
+	nav a:hover {
+		color: rgb(var(--accent));
+		background-color: rgba(47, 128, 237, 0.08);
+	}
+	nav a:active {
+		color: #1b5fc3;
+		transform: translateY(1px);
 	}
 	nav a.active {
-		text-decoration: none;
+		color: rgb(var(--accent));
+		background-color: rgba(47, 128, 237, 0.12);
 		border-bottom-color: var(--accent);
 	}
 	@media (max-width: 720px) {
 		h2 {
-			font-size: 1.45rem;
+			font-size: 1.7rem;
 		}
 		nav {
 			flex-direction: column;
