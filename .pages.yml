@@ -1,0 +1,36 @@
+media:
+  input: apps/massage-growth/public/images
+  output: /images
+
+content:
+  - name: massage_growth_posts
+    label: 按摩店增长文章
+    type: collection
+    path: apps/massage-growth/src/content/blog
+    filename: "{primary}.md"
+    view:
+      primary: title
+      fields: [title, pubDate, category]
+      sort: [pubDate, title, category]
+      default:
+        sort: pubDate
+        order: desc
+    fields:
+      - { name: title, label: 标题, type: string, required: true }
+      - { name: description, label: SEO 描述, type: string, required: true, options: { maxlength: 180 } }
+      - { name: pubDate, label: 发布日期, type: date, required: true }
+      - { name: updatedDate, label: 更新日期, type: date }
+      - { name: heroImage, label: 封面图, type: image }
+      - name: category
+        label: 栏目
+        type: select
+        required: true
+        options:
+          values:
+            - Google 地图
+            - 客户评价
+            - 网站转化
+            - 按摩 SEO
+            - 模板
+            - 案例拆解
+      - { name: body, label: 正文, type: rich-text }
