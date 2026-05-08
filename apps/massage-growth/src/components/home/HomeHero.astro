@@ -1,4 +1,6 @@
 ---
+import EyebrowLabel from './EyebrowLabel.astro';
+
 type Props = {
 	eyebrow?: string;
 	title: string;
@@ -28,7 +30,7 @@ const {
 <section class="home-hero">
 	<div class="hero-layout">
 		<div class="hero-copy">
-			<p class="eyebrow">{eyebrow}</p>
+			<EyebrowLabel text={eyebrow} />
 			<h1>{title}</h1>
 			<p class="lead">{subtitle}</p>
 			<div class="actions">
@@ -63,13 +65,6 @@ const {
 	}
 	.hero-copy {
 		text-align: left;
-	}
-	.eyebrow {
-		margin: 0 0 0.65rem;
-		font-size: 0.82rem;
-		font-weight: 700;
-		letter-spacing: 0.04em;
-		color: #0b5a7a;
 	}
 	h1 {
 		margin: 0 0 0.85rem;
