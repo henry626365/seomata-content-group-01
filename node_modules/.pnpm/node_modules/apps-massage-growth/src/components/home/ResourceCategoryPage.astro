@@ -2,12 +2,19 @@
 import BaseHead from '../../components/BaseHead.astro';
 import SiteFooter from '../../components/home/SiteFooter.astro';
 import Header from '../../components/Header.astro';
+import ArticleCard from '../../components/home/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import { nonBlogCardMap } from '../../data/nonBlogCardMap';
 
 type ResourceCard = {
 	title: string;
 	description: string;
 	href: string;
 	linkLabel?: string;
+	category?: string;
+	image?: string;
+	imageAlt?: string;
+	imageFromPostId?: string;
 };
 
 type Props = {
@@ -17,6 +24,39 @@ type Props = {
 };
 
 const { title, description, cards } = Astro.props;
+const allBlogPosts = await getCollection('blog');
+const postById = new Map(allBlogPosts.map((post) => [post.id, post]));
+const categoryByPostId: Record<string, string> = {
+	'massage-seo-checklist': 'SEO 专题',
+	'google-business-profile-for-massage-therapists': '地图专题',
+	'how-to-get-more-google-reviews-for-a-massage-clinic': '评价专题',
+	'massage-website-conversion-guide': '转化专题',
+	'massage-service-page-examples': '服务页专题',
+	'massage-near-me-keyword-strategy': 'SEO 专题',
+	'local-landing-pages-for-massage-clinics': '地图专题',
+	'review-reply-templates-for-massage-businesses': '评价专题'
+};
+
+const getPostIdFromHref = (href: string) => href.match(/^\/blog\/([^/]+)\/?$/)?.[1];
+const normalizeHref = (href: string) => (href.endsWith('/') ? href : `${href}/`);
+const resolvedCards = cards.map((card) => {
+	const postId = getPostIdFromHref(card.href);
+	const post = postId ? postById.get(postId) : undefined;
+	const nonBlogMeta = nonBlogCardMap[normalizeHref(card.href)];
+	return {
+		href: card.href,
+		title: card.title ?? post?.data.title ?? '文章',
+		description: card.description ?? post?.data.description ?? '',
+		image:
+			card.image ??
+			(card.imageFromPostId ? postById.get(card.imageFromPostId)?.data.heroImage?.src : undefined) ??
+			(nonBlogMeta?.imageFromPostId ? postById.get(nonBlogMeta.imageFromPostId)?.data.heroImage?.src : undefined) ??
+			post?.data.heroImage?.src ??
+			'/images/massage-local-search-system.svg',
+		imageAlt: card.imageAlt ?? nonBlogMeta?.imageAlt ?? `《${card.title ?? post?.data.title ?? '文章'}》配图`,
+		category: card.category ?? nonBlogMeta?.category ?? (postId ? categoryByPostId[postId] ?? '精选文章' : '资源')
+	};
+});
 ---
 
 <!doctype html>
@@ -37,12 +77,15 @@ const { title, description, cards } = Astro.props;
 				<h2>相关资源</h2>
 				<div class="card-grid">
 					{
-						cards.map((card) => (
-							<article class="card">
-								<h3>{card.title}</h3>
-								<p>{card.description}</p>
-								<a href={card.href}>{card.linkLabel ?? '阅读全文'}</a>
-							</article>
+						resolvedCards.map((card) => (
+							<ArticleCard
+								href={card.href}
+								title={card.title}
+								description={card.description}
+								image={card.image}
+								imageAlt={card.imageAlt}
+								category={card.category}
+							/>
 						))
 					}
 				</div>
@@ -96,32 +139,14 @@ const { title, description, cards } = Astro.props;
 
 	.card-grid {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.15rem;
 	}
 
-	.card {
-		background: var(--massage-soft);
-		border: 1px solid #c8dced;
-		border-radius: 10px;
-		padding: 1rem;
-	}
-
-	h3 {
-		margin: 0;
-		color: #113f5d;
-	}
-
-	.card p {
-		margin: 0.7rem 0;
-		font-size: 0.98rem;
-		line-height: 1.55;
-	}
-
-	.card a {
-		color: var(--massage-accent);
-		font-weight: 600;
-		text-decoration: none;
+	@media (max-width: 980px) {
+		.card-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
 
 	@media (max-width: 800px) {
