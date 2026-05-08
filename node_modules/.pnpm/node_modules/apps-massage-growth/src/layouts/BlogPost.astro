@@ -8,7 +8,7 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, author = '按摩店增长指南编辑团队' } = Astro.props;
 ---
 
 <html lang="zh-CN">
@@ -38,20 +38,59 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				color: rgb(var(--gray-dark));
 			}
 			.title {
-				margin-bottom: 1em;
+				margin-bottom: 1.25rem;
 				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
+				line-height: 1.2;
 			}
 			.title h1 {
-				margin: 0 0 0.5em 0;
+				margin: 0 0 0.65rem 0;
 			}
-			.date {
-				margin-bottom: 0.5em;
+			.meta {
+				margin: 0 0 0.75rem;
+				padding: 0;
+				list-style: none;
 				color: rgb(var(--gray));
+				display: grid;
+				gap: 0.3rem;
+				font-size: 0.95rem;
 			}
-			.last-updated-on {
-				font-style: italic;
+			.meta strong {
+				color: rgb(var(--gray-dark));
+				font-weight: 700;
+			}
+			.toc {
+				border: 1px solid #d2dfeb;
+				border-radius: 12px;
+				background: #f7fbff;
+				padding: 1rem 1rem 0.9rem;
+				margin: 0 0 1.2rem;
+			}
+			.toc h2 {
+				margin: 0 0 0.45rem;
+				font-size: 1rem;
+				color: #0b3a53;
+			}
+			.toc p {
+				margin: 0;
+				color: #47677f;
+				font-size: 0.92rem;
+			}
+			.related-reading {
+				margin-top: 1.4rem;
+				padding-top: 1rem;
+				border-top: 1px solid #d2dfeb;
+			}
+			.related-reading h2 {
+				margin: 0 0 0.6rem;
+				font-size: 1.05rem;
+				color: #0b3a53;
+			}
+			.related-reading ul {
+				margin: 0;
+				padding-left: 1.15rem;
+			}
+			.related-reading a {
+				color: #2f80ed;
 			}
 		</style>
 	</head>
@@ -59,26 +98,43 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	<body>
 		<Header />
 		<main>
-			<article>
+			<article id="article-top">
 				<div class="hero-image">
 					{heroImage && <Image width={1020} height={510} src={heroImage} alt={`${title} 文章主图`} />}
 				</div>
 				<div class="prose">
 					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
+						<ul class="meta">
+							<li><strong>作者：</strong>{author}</li>
+							<li>
+								<strong>Published：</strong>
+								<FormattedDate date={pubDate} />
+							</li>
 							{
 								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
+									<li>
+										<strong>Updated：</strong>
+										<FormattedDate date={updatedDate} />
+									</li>
 								)
 							}
-						</div>
+						</ul>
 						<h1>{title}</h1>
 						<hr />
 					</div>
+					<section class="toc" aria-labelledby="toc-title">
+						<h2 id="toc-title">文章目录</h2>
+						<p>目录区域已预留，后续可按正文标题自动生成锚点导航。</p>
+					</section>
 					<slot />
+					<section class="related-reading" id="extended-reading" aria-labelledby="related-reading-title">
+						<h2 id="related-reading-title">延伸阅读</h2>
+						<ul>
+							<li><a href="/blog/">浏览全部按摩增长指南</a></li>
+							<li><a href="/google-maps/">Google 地图专题</a></li>
+							<li><a href="/reviews/">客户评价专题</a></li>
+						</ul>
+					</section>
 				</div>
 			</article>
 		</main>

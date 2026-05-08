@@ -1,7 +1,9 @@
 ---
 title: "按摩店 Google 地图排名检查清单"
 description: "建立可持续执行的地图优化检查机制，从资料完整度、评价活跃到预约承接，系统提升本地可见度。"
-pubDate: "2026-05-07"
+pubDate: "2026-04-08"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/google-maps-ranking-checklist-for-massage-businesses.jpg
 ---
 

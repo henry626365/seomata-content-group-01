@@ -1,7 +1,9 @@
 ---
 title: "按摩店预约按钮文案示例"
 description: "从页面场景、用户决策阶段和行动阻力出发，设计更容易促成预约的按摩店 CTA 文案。"
-pubDate: "2026-05-07"
+pubDate: "2026-04-02"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/best-booking-cta-examples-for-massage-clinics.jpg
 ---
 

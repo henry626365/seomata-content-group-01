@@ -1,7 +1,9 @@
 ---
 title: "按摩店 Google 地图照片上传指南"
 description: "从照片类型、拍摄标准到更新节奏，建立按摩店可持续执行的地图照片管理机制。"
-pubDate: "2026-05-07"
+pubDate: "2026-05-02"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/massage-clinic-google-maps-photo-guide.jpg
 ---
 

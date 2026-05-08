@@ -2,6 +2,8 @@
 title: "按摩店 Google 评价回复模板"
 description: "面向按摩店的 Google 评价回复模板，覆盖好评、中评和差评场景，提升口碑与信任。"
 pubDate: "2026-05-06"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/review-reply-templates-for-massage-businesses.jpg
 ---
 

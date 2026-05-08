@@ -1,7 +1,9 @@
 ---
 title: "降低预约率的按摩店网站常见问题"
 description: "拆解最常见的按摩店网站转化错误，并给出优先级明确的修复动作，减少访问到预约之间的流失。"
-pubDate: "2026-05-07"
+pubDate: "2026-03-25"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/common-massage-website-mistakes-that-reduce-bookings.jpg
 ---
 

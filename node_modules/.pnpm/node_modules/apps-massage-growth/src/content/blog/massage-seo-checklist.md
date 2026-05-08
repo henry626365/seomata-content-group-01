@@ -2,6 +2,8 @@
 title: "按摩店本地 SEO 检查清单"
 description: "一份面向按摩店经营者的本地 SEO 实操清单，覆盖 Google 地图、服务页、评价与预约转化。"
 pubDate: "2026-05-06"
+updatedDate: "2026-05-06"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/massage-seo-checklist.jpg
 ---
 

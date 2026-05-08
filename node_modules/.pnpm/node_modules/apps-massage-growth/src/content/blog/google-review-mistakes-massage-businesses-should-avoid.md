@@ -1,7 +1,9 @@
 ---
 title: "按摩店获取 Google 评价时应避免的错误"
 description: "总结按摩店在邀评与回复中最常见的错误，并提供可立即执行的替代做法，降低口碑与合规风险。"
-pubDate: "2026-05-07"
+pubDate: "2026-04-19"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/google-review-mistakes-massage-businesses-should-avoid.jpg
 ---
 

@@ -1,7 +1,9 @@
 ---
 title: "按摩店本地落地页建设指南"
 description: "教你为按摩店搭建高质量本地落地页，在避免薄内容的前提下提升本地搜索与预约转化。"
-pubDate: "2026-05-06"
+pubDate: "2026-04-05"
+updatedDate: "2026-05-06"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/local-landing-pages-for-massage-clinics.jpg
 ---
 

@@ -1,7 +1,9 @@
 ---
 title: "按摩店如何获得更多 Google 评价"
 description: "一套适合按摩店的邀评与回复流程，帮助稳定提升评价数量、时效性与质量。"
-pubDate: "2026-05-06"
+pubDate: "2026-05-04"
+updatedDate: "2026-05-06"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/how-to-get-more-google-reviews-for-a-massage-clinic.jpg
 ---
 

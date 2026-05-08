@@ -1,7 +1,9 @@
 ---
 title: "更容易促成预约的按摩服务页面应该怎么写"
 description: "通过清晰的服务页结构，帮助按摩店用户快速判断是否适合并完成预约。"
-pubDate: "2026-05-06"
+pubDate: "2026-04-14"
+updatedDate: "2026-05-06"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/massage-service-page-examples.jpg
 ---
 

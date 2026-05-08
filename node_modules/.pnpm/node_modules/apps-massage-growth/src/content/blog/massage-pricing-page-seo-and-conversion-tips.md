@@ -1,7 +1,9 @@
 ---
 title: "按摩店价格页面 SEO 与转化建议"
 description: "从价格呈现结构、搜索意图承接到预约动作设计，优化按摩店价格页的可见度与转化效率。"
-pubDate: "2026-05-07"
+pubDate: "2026-03-14"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/massage-pricing-page-seo-and-conversion-tips.jpg
 ---
 

@@ -1,7 +1,9 @@
 ---
 title: "按摩店网站内链结构怎么设计"
 description: "用支柱页-子页-模板页的内链模型提升按摩店网站内容协同，减少孤立页并强化预约承接路径。"
-pubDate: "2026-05-07"
+pubDate: "2026-04-23"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/internal-linking-for-massage-clinic-websites.jpg
 ---
 

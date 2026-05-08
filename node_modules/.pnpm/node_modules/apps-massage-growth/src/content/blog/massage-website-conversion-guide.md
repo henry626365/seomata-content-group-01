@@ -1,7 +1,9 @@
 ---
 title: "按摩店网站预约转化指南"
 description: "从服务信息表达到预约流程优化，系统提升按摩店网站从访问到预约的转化效率。"
-pubDate: "2026-05-06"
+pubDate: "2026-04-17"
+updatedDate: "2026-05-06"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/massage-website-conversion-guide.jpg
 ---
 

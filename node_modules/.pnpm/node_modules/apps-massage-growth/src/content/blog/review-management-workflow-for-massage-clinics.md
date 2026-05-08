@@ -2,6 +2,8 @@
 title: "按摩店评价管理流程"
 description: "建立按摩店可长期执行的评价管理 SOP：从邀评、分发、回复到复盘，提升口碑稳定性与预约信任。"
 pubDate: "2026-05-07"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/review-management-workflow-for-massage-clinics.jpg
 ---
 

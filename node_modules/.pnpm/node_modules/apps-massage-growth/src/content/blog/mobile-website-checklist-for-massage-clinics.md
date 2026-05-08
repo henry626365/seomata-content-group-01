@@ -1,7 +1,9 @@
 ---
 title: "按摩店移动端网站检查清单"
 description: "聚焦手机端预约场景，检查按摩店网站在速度、可用性与提交流程上的关键问题，减少移动端流失。"
-pubDate: "2026-05-07"
+pubDate: "2026-05-05"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/mobile-website-checklist-for-massage-clinics.jpg
 ---
 

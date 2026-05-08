@@ -1,7 +1,9 @@
 ---
 title: "按摩服务关键词地图：Deep Tissue、Sports Massage、Couples Massage 等页面如何布局"
 description: "建立按摩服务关键词到页面的清晰映射，减少关键词内耗，并提升服务页的本地搜索承接能力。"
-pubDate: "2026-05-07"
+pubDate: "2026-04-25"
+updatedDate: "2026-05-07"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/massage-service-keyword-map.jpg
 ---
 

@@ -1,7 +1,9 @@
 ---
 title: "按摩店评价请求短信模板"
 description: "提供可直接使用的按摩店邀评短信模板与发送时机建议，帮助门店稳定获取真实 Google 评价。"
-pubDate: "2026-05-07"
+pubDate: "2026-03-22"
+updatedDate: "2026-05-03"
+author: "按摩店增长指南编辑团队"
 heroImage: ../../assets/blog-heroes/massage-clinic-review-request-sms-templates.jpg
 ---
 

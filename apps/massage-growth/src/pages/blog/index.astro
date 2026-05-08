@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import SiteFooter from '../../components/home/SiteFooter.astro';
@@ -10,78 +9,155 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const categoryByPostId: Record<string, string> = {
+	'google-business-profile-for-massage-therapists': 'Google 地图',
+	'best-google-business-profile-categories-for-massage-clinics': 'Google 地图',
+	'google-maps-ranking-checklist-for-massage-businesses': 'Google 地图',
+	'why-your-massage-clinic-is-not-showing-on-google-maps': 'Google 地图',
+	'massage-clinic-google-maps-photo-guide': 'Google 地图',
+	'how-to-add-massage-services-to-google-business-profile': 'Google 地图',
+	'how-to-write-a-google-business-profile-description-for-a-massage-clinic': 'Google 地图',
+	'how-to-get-more-google-reviews-for-a-massage-clinic': '客户评价',
+	'review-reply-templates-for-massage-businesses': '客户评价',
+	'review-management-workflow-for-massage-clinics': '客户评价',
+	'google-review-mistakes-massage-businesses-should-avoid': '客户评价',
+	'how-to-respond-to-negative-reviews-as-a-massage-therapist': '客户评价',
+	'how-reviews-influence-massage-booking-decisions': '客户评价',
+	'massage-website-conversion-guide': '网站转化',
+	'best-booking-cta-examples-for-massage-clinics': '网站转化',
+	'how-to-improve-online-booking-flow-for-massage-clinics': '网站转化',
+	'mobile-website-checklist-for-massage-clinics': '网站转化',
+	'massage-pricing-page-seo-and-conversion-tips': '网站转化',
+	'massage-service-page-examples': '按摩 SEO',
+	'massage-service-keyword-map': '按摩 SEO',
+	'massage-near-me-keyword-strategy': '按摩 SEO',
+	'massage-seo-checklist': '按摩 SEO',
+	'local-landing-pages-for-massage-clinics': '按摩 SEO',
+	'internal-linking-for-massage-clinic-websites': '按摩 SEO',
+	'how-to-structure-a-massage-clinic-website-for-local-seo': '按摩 SEO',
+	'massage-clinic-review-request-sms-templates': '模板'
+};
+
+const categoryLinks = [
+	{ label: 'Google 地图', href: '/google-maps/' },
+	{ label: '客户评价', href: '/reviews/' },
+	{ label: '网站转化', href: '/website-conversion/' },
+	{ label: '按摩 SEO', href: '/massage-seo/' },
+	{ label: '模板', href: '/templates/' },
+	{ label: '案例拆解', href: '/case-breakdowns/' }
+];
 ---
 
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`全部按摩增长指南｜${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 		<style>
 			main {
-				width: 960px;
+				width: min(960px, calc(100% - 2em));
+				margin: 0 auto;
+				padding: 1.2rem 0 2rem;
 			}
-			ul {
+			.library-hero {
+				background: #f4f9fc;
+				border: 1px solid #d2dfeb;
+				border-radius: 14px;
+				padding: 1.15rem 1.2rem;
+				margin-bottom: 1rem;
+			}
+			.library-hero h1 {
+				margin: 0 0 0.4rem;
+				color: #0b3a53;
+				font-size: 1.85rem;
+			}
+			.library-hero p {
+				margin: 0;
+				color: #3f6279;
+				line-height: 1.6;
+			}
+			.category-links {
 				display: flex;
 				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
+				gap: 0.55rem;
+				margin: 0 0 1.1rem;
 				padding: 0;
+				list-style: none;
 			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
+			.category-links a {
+				display: inline-flex;
+				align-items: center;
+				padding: 0.5rem 0.85rem;
+				border-radius: 999px;
+				border: 1px solid #bfd5e8;
+				background: #fff;
+				color: #0b3a53;
 				text-decoration: none;
-				transition: 0.2s ease;
+				font-weight: 700;
+				font-size: 0.86rem;
+				transition: all 0.2s ease;
 			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
+			.category-links a:hover {
+				color: #2f80ed;
+				border-color: #2f80ed;
+				background: #f4f9ff;
 			}
-			ul li:first-child img {
-				width: 100%;
+			.post-grid {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 1rem;
 			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
+			.post-card {
 				display: block;
+				text-decoration: none;
+				color: inherit;
+				background: #fff;
+				border: 1px solid #d2dfeb;
+				border-radius: 14px;
+				padding: 1rem 1rem 1.05rem;
+				box-shadow: 0 2px 8px rgba(11, 58, 83, 0.05);
+				transition: all 0.2s ease;
 			}
-			.title {
+			.post-card:hover {
+				border-color: #9ec4e8;
+				box-shadow: 0 10px 28px rgba(11, 58, 83, 0.1);
+				transform: translateY(-2px);
+			}
+			.post-card h2 {
 				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
+				color: #0b3a53;
+				font-size: 1.05rem;
+				line-height: 1.35;
+			}
+			.post-card p {
+				margin: 0.55rem 0;
+				color: #46677e;
+				line-height: 1.6;
+				font-size: 0.92rem;
+			}
+			.meta {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				flex-wrap: wrap;
+				font-size: 0.82rem;
+				color: #4a6b82;
+			}
+			.tag {
+				display: inline-flex;
+				align-items: center;
+				padding: 0.2rem 0.55rem;
+				border-radius: 999px;
+				background: #e9f2fb;
+				color: #0b3a53;
+				font-weight: 700;
 			}
 			.date {
 				margin: 0;
-				color: rgb(var(--gray));
 			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
+			@media (max-width: 800px) {
+				.post-grid {
+					grid-template-columns: 1fr;
 				}
 			}
 		</style>
@@ -90,23 +166,38 @@ const posts = (await getCollection('blog')).sort(
 		<Header />
 		<main>
 			<section>
-				<ul>
+				<div class="library-hero">
+					<h1>全部按摩增长指南</h1>
+					<p>
+						围绕 Google 地图、客户评价、网站转化、按摩 SEO、模板与案例拆解整理的资源库。
+						内容以教育和实操参考为主，不承诺排名结果。
+					</p>
+				</div>
+				<ul class="category-links" aria-label="博客分类入口">
 					{
-						posts.map((post) => (
+						categoryLinks.map((item) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt={`${post.data.title} 文章封面图`} />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
+								<a href={item.href} aria-label={`进入${item.label}栏目`}>{item.label}</a>
 							</li>
 						))
 					}
 				</ul>
+				<div class="post-grid">
+					{
+						posts.map((post) => (
+							<a class="post-card" href={`/blog/${post.id}/`} aria-label={`阅读文章：${post.data.title}`}>
+								<h2>{post.data.title}</h2>
+								<p>{post.data.description}</p>
+								<div class="meta">
+									<span class="tag">{categoryByPostId[post.id] ?? '指南'}</span>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+								</div>
+							</a>
+						))
+					}
+				</div>
 			</section>
 		</main>
 		<SiteFooter />

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://massage-growth.pages.dev/sitemap-index.xml
+User-agent: *
+Allow: /
+
+Sitemap: https://massage-growth.pages.dev/sitemap-index.xml
