@@ -2,7 +2,7 @@
 title: "按摩店 Google Business Profile 简介怎么写"
 description: "用清晰、可信、可预约的结构写好按摩店 GBP 简介，避免空泛宣传和不必要的信任损耗。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/google-business-profile-massage-hero.jpg"
+heroImage: ../../assets/blog-heroes/how-to-write-a-google-business-profile-description-for-a-massage-clinic.jpg
 ---
 
 很多门店简介的问题不是“写得少”，而是“写得像广告词”。  

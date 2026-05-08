@@ -2,7 +2,7 @@
 title: "降低预约率的按摩店网站常见问题"
 description: "拆解最常见的按摩店网站转化错误，并给出优先级明确的修复动作，减少访问到预约之间的流失。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/massage-website-conversion-hero.jpg"
+heroImage: ../../assets/blog-heroes/common-massage-website-mistakes-that-reduce-bookings.jpg
 ---
 
 “网站有访问，但预约不稳定”是按摩门店最常见的线上问题。  

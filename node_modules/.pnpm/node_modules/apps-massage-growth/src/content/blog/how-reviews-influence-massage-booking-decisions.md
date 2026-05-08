@@ -2,7 +2,7 @@
 title: "客户评价如何影响按摩预约决策"
 description: "从用户决策心理和门店运营角度，拆解评价内容如何影响按摩店预约转化，并给出可执行优化动作。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/massage-google-reviews-hero.jpg"
+heroImage: ../../assets/blog-heroes/how-reviews-influence-massage-booking-decisions.jpg
 ---
 
 很多门店把评价理解为“口碑展示”，但对预约用户来说，评价是风险判断工具。  

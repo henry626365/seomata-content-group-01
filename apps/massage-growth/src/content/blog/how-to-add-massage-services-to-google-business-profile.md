@@ -1,8 +1,8 @@
-﻿---
+---
 title: "按摩店如何在 Google Business Profile 添加服务项目"
 description: "从服务命名、描述结构到页面承接关系，规范填写按摩店 GBP 服务项目并提升咨询质量。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/google-business-profile-massage-hero.jpg"
+heroImage: ../../assets/blog-heroes/how-to-add-massage-services-to-google-business-profile.jpg
 ---
 
 很多门店把服务项目当“填空题”处理：

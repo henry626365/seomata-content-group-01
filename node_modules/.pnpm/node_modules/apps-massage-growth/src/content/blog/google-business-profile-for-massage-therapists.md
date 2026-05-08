@@ -2,7 +2,7 @@
 title: "按摩师与按摩店的 Google Business Profile 优化指南"
 description: "从资料完整度、服务设置、照片更新到转化入口，系统优化按摩店 Google Business Profile。"
 pubDate: "2026-05-06"
-heroImage: "../../assets/google-business-profile-massage-hero.jpg"
+heroImage: ../../assets/blog-heroes/google-business-profile-for-massage-therapists.jpg
 ---
 
 对绝大多数按摩店来说，Google Business Profile（GBP）不是“可选项”，而是本地获客的第一入口。  

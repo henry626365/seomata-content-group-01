@@ -1,8 +1,8 @@
-﻿---
+---
 title: "按摩店如何选择 Google Business Profile 类别"
 description: "从经营模型、服务边界到用户搜索意图，系统讲清按摩店主类目与副类目该怎么选。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/google-business-profile-massage-hero.jpg"
+heroImage: ../../assets/blog-heroes/best-google-business-profile-categories-for-massage-clinics.jpg
 ---
 
 很多门店把 Google Business Profile 做了，但类目一直“凭感觉填”。

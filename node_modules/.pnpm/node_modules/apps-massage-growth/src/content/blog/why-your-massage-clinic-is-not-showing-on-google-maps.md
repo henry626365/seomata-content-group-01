@@ -1,8 +1,8 @@
-﻿---
+---
 title: "为什么你的按摩店没有出现在 Google 地图上"
 description: "从资料完整性、相关性信号到竞争环境，分步骤排查按摩店地图可见度不足的常见原因。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/google-business-profile-massage-hero.jpg"
+heroImage: ../../assets/blog-heroes/why-your-massage-clinic-is-not-showing-on-google-maps.jpg
 ---
 
 “我明明开了店，也做了资料页，为什么地图上搜不到我？”

@@ -2,7 +2,7 @@
 title: "按摩店网站如何建立适合本地 SEO 的结构"
 description: "从栏目层级、URL 规范到内容承接关系，建立按摩店可长期扩展且有本地搜索能力的网站结构。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/massage-local-landing-pages-hero.jpg"
+heroImage: ../../assets/blog-heroes/how-to-structure-a-massage-clinic-website-for-local-seo.jpg
 ---
 
 很多按摩店网站不是“内容不够多”，而是“结构不清楚”。  

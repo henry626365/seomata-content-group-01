@@ -2,7 +2,7 @@
 title: "按摩店如何布局 “Massage Near Me” 关键词"
 description: "围绕“Massage Near Me”及本地意图关键词制定内容策略，在不堆词的前提下提升本地曝光。"
 pubDate: "2026-05-06"
-heroImage: "../../assets/massage-near-me-keyword-hero.jpg"
+heroImage: ../../assets/blog-heroes/massage-near-me-keyword-strategy.jpg
 ---
 
 “Massage Near Me” 属于高意图搜索，但竞争也最直接。  

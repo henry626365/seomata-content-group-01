@@ -2,7 +2,7 @@
 title: "按摩店评价请求短信模板"
 description: "提供可直接使用的按摩店邀评短信模板与发送时机建议，帮助门店稳定获取真实 Google 评价。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/massage-google-reviews-hero.jpg"
+heroImage: ../../assets/blog-heroes/massage-clinic-review-request-sms-templates.jpg
 ---
 
 评价做不起来，通常不是老板不重视，而是执行动作不稳定。  

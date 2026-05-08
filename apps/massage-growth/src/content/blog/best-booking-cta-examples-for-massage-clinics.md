@@ -2,7 +2,7 @@
 title: "按摩店预约按钮文案示例"
 description: "从页面场景、用户决策阶段和行动阻力出发，设计更容易促成预约的按摩店 CTA 文案。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/massage-website-conversion-hero.jpg"
+heroImage: ../../assets/blog-heroes/best-booking-cta-examples-for-massage-clinics.jpg
 ---
 
 很多按摩店网站的问题，不是没有按钮，而是按钮“存在但不推动行动”。  

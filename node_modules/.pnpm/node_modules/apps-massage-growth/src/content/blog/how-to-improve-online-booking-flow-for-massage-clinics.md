@@ -2,7 +2,7 @@
 title: "按摩店如何优化线上预约流程"
 description: "从预约入口、表单字段到确认页承接，系统优化按摩店线上预约流程并减少中途流失。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/massage-website-conversion-hero.jpg"
+heroImage: ../../assets/blog-heroes/how-to-improve-online-booking-flow-for-massage-clinics.jpg
 ---
 
 很多门店把预约流程理解成“有个表单就行”。  

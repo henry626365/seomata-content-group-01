@@ -2,7 +2,7 @@
 title: "按摩师如何回复负面评价"
 description: "用可执行的公开回复框架处理负面评价，在不激化冲突的前提下保护门店信任与预约转化。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/massage-review-reply-templates-hero.jpg"
+heroImage: ../../assets/blog-heroes/how-to-respond-to-negative-reviews-as-a-massage-therapist.jpg
 ---
 
 负面评价最难的地方，不是“怎么回一句漂亮话”，而是怎么在公开场景里做到三件事：  

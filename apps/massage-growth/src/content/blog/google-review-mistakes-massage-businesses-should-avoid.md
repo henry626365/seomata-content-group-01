@@ -2,7 +2,7 @@
 title: "按摩店获取 Google 评价时应避免的错误"
 description: "总结按摩店在邀评与回复中最常见的错误，并提供可立即执行的替代做法，降低口碑与合规风险。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/massage-google-reviews-hero.jpg"
+heroImage: ../../assets/blog-heroes/google-review-mistakes-massage-businesses-should-avoid.jpg
 ---
 
 评价增长慢并不可怕，可怕的是用错方法。  

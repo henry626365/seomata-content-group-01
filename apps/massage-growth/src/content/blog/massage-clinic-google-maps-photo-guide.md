@@ -2,7 +2,7 @@
 title: "按摩店 Google 地图照片上传指南"
 description: "从照片类型、拍摄标准到更新节奏，建立按摩店可持续执行的地图照片管理机制。"
 pubDate: "2026-05-07"
-heroImage: "../../assets/google-business-profile-massage-hero.jpg"
+heroImage: ../../assets/blog-heroes/massage-clinic-google-maps-photo-guide.jpg
 ---
 
 很多门店把地图照片当成“有就行”的装饰项。  

@@ -2,7 +2,7 @@
 title: "按摩店本地落地页建设指南"
 description: "教你为按摩店搭建高质量本地落地页，在避免薄内容的前提下提升本地搜索与预约转化。"
 pubDate: "2026-05-06"
-heroImage: "../../assets/massage-local-landing-pages-hero.jpg"
+heroImage: ../../assets/blog-heroes/local-landing-pages-for-massage-clinics.jpg
 ---
 
 本地落地页对按摩店有效，但前提是“每一页都有真实本地价值”。  

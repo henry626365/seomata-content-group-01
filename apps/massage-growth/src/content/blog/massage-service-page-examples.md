@@ -2,7 +2,7 @@
 title: "更容易促成预约的按摩服务页面应该怎么写"
 description: "通过清晰的服务页结构，帮助按摩店用户快速判断是否适合并完成预约。"
 pubDate: "2026-05-06"
-heroImage: "../../assets/massage-service-page-examples-hero.jpg"
+heroImage: ../../assets/blog-heroes/massage-service-page-examples.jpg
 ---
 
 很多按摩店服务页写得像百科词条：概念很多，决策信息很少。  

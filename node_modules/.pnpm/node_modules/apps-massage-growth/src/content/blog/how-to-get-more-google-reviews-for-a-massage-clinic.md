@@ -2,7 +2,7 @@
 title: "按摩店如何获得更多 Google 评价"
 description: "一套适合按摩店的邀评与回复流程，帮助稳定提升评价数量、时效性与质量。"
 pubDate: "2026-05-06"
-heroImage: "../../assets/massage-google-reviews-hero.jpg"
+heroImage: ../../assets/blog-heroes/how-to-get-more-google-reviews-for-a-massage-clinic.jpg
 ---
 
 很多按摩店“偶尔邀评”，结果是评价数量看起来不少，但近 30 天几乎没更新。  
