@@ -4,21 +4,45 @@ import type { HTMLAttributes } from 'astro/types';
 type Props = HTMLAttributes<'a'>;
 
 const { href, class: className, ...props } = Astro.props;
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const rawHref = String(href ?? '/');
+const hrefPath = rawHref.replace(/\/$/, '') || '/';
+
+let isActive = false;
+if (hrefPath === '/') {
+	isActive = pathname === '/';
+} else {
+	isActive = pathname === hrefPath || pathname.startsWith(`${hrefPath}/`);
+}
 ---
 
-<a href={href} class:list={[className, { active: isActive }]} {...props}>
+<a href={href} class:list={['nav-link', className, { active: isActive }]} {...props}>
 	<slot />
 </a>
+
 <style>
-	a {
-		display: inline-block;
+	.nav-link {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.38rem 0.28rem;
 		text-decoration: none;
+		color: #224a61;
+		font-size: 0.88rem;
+		font-weight: 600;
+		border-radius: 6px;
+		border-bottom: 2px solid transparent;
+		transition:
+			color 0.15s ease,
+			border-color 0.15s ease,
+			background 0.15s ease;
 	}
-	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
+	.nav-link:hover {
+		color: #0b3555;
+		background: rgba(11, 53, 85, 0.05);
+	}
+	.nav-link.active {
+		color: #0b3555;
+		border-bottom-color: #d4a574;
 	}
 </style>

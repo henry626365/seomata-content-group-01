@@ -1,0 +1,126 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="footer-inner">
+		<div class="brand">
+			<strong class="name">Med Spa Marketing Guide</strong>
+			<p>
+				Local SEO, Maps visibility, reputation, aesthetic service-page structure, and consultation conversion
+				resources for U.S.-based aesthetic practices (not legal or medical advice).
+			</p>
+		</div>
+
+		<div class="cols">
+			<div>
+				<h3>Topics</h3>
+				<ul>
+					<li><a href="/local-seo/">Med Spa Local SEO</a></li>
+					<li><a href="/google-maps/">Google Maps for Med Spas</a></li>
+					<li><a href="/patient-reviews/">Patient Reviews &amp; Reputation</a></li>
+					<li><a href="/website-conversion/">Med Spa Website Conversion</a></li>
+					<li><a href="/service-pages/">Aesthetic Service Page SEO</a></li>
+					<li><a href="/templates/">Med Spa Marketing Templates</a></li>
+					<li><a href="/case-breakdowns/">Marketing Breakdowns</a></li>
+				</ul>
+			</div>
+			<div>
+				<h3>Trust pages</h3>
+				<ul>
+					<li><a href="/reports/">Reports</a></li>
+					<li><a href="/about/">About</a></li>
+					<li><a href="/editorial-policy/">Editorial policy</a></li>
+					<li><a href="/contact/">Contact</a></li>
+					<li><a href="/disclaimer/">Disclaimer</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<p class="copy">© {year} Med Spa Marketing Guide · Educational marketing content — not medical advice.</p>
+</footer>
+
+<style>
+	.site-footer {
+		margin-top: clamp(2.5rem, 6vw, 4rem);
+		padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 4vw, 1.75rem) 1.75rem;
+		background: linear-gradient(180deg, #063248 0%, #041f2e 100%);
+		color: #e8f2f9;
+		border-top: 1px solid #12405a;
+		overflow-x: clip;
+	}
+	.footer-inner {
+		max-width: 1180px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+		gap: clamp(1.75rem, 4vw, 3rem);
+		align-items: start;
+	}
+	.brand .name {
+		display: block;
+		font-size: 1.15rem;
+		margin-bottom: 0.55rem;
+		color: #ffffff;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+	.brand p {
+		margin: 0;
+		max-width: 29rem;
+		font-size: 0.9rem;
+		line-height: 1.6;
+		color: #b8d4e8;
+	}
+	.cols {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: clamp(1.25rem, 3vw, 2rem);
+	}
+	.cols h3 {
+		margin: 0 0 0.75rem;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: #7eb3d4;
+	}
+	.cols ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.5rem;
+	}
+	.cols a {
+		color: #f0f7fc;
+		text-decoration: none;
+		font-size: 0.92rem;
+		font-weight: 500;
+		border-bottom: 1px solid transparent;
+		transition:
+			color 0.15s ease,
+			border-color 0.15s ease;
+	}
+	.cols a:hover {
+		color: #ffffff;
+		border-bottom-color: rgba(255, 255, 255, 0.35);
+	}
+	.copy {
+		margin: 2rem auto 0;
+		max-width: 1180px;
+		padding-top: 1.35rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		font-size: 0.8rem;
+		color: #8eb8d4;
+		text-align: center;
+	}
+	@media (max-width: 720px) {
+		.footer-inner {
+			grid-template-columns: 1fr;
+		}
+		.cols {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+</style>

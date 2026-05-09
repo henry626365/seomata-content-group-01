@@ -1,0 +1,204 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../BaseHead.astro';
+import Header from '../Header.astro';
+import SiteFooter from '../home/SiteFooter.astro';
+import ArticleCard from '../home/ArticleCard.astro';
+import EyebrowLabel from '../home/EyebrowLabel.astro';
+import type { TopicHubDefinition } from '../../data/topicHubs';
+
+type Props = {
+	hub: TopicHubDefinition;
+};
+
+const { hub } = Astro.props;
+
+const posts = await getCollection('blog');
+const postById = new Map(posts.map((p) => [p.id, p]));
+
+const resolvedCards = hub.cards.map((card) => {
+	const src = card.postId
+		? postById.get(card.postId)?.data.heroImage?.src ?? postById.get(card.postId)?.data.heroPhoto
+		: undefined;
+	return {
+		href: card.href,
+		title: card.title,
+		description: card.description,
+		image: src ?? card.fallbackImage,
+		imageAlt: card.imageAlt,
+		category: card.category ?? 'Resource',
+	};
+});
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={hub.seoTitle} description={hub.seoDescription} />
+	</head>
+	<body class="hub-body">
+		<Header />
+		<main class="hub-main">
+			<section class="panel hero">
+				<EyebrowLabel text="Med Spa Marketing Guide" className="hero-eyebrow" />
+				<h1 class="hero-title">{hub.pageTitle}</h1>
+				<p class="hero-desc">{hub.summary}</p>
+			</section>
+
+			<section class="panel">
+				<h2 class="section-title">Who this is for</h2>
+				<ul class="plain-list">
+					{hub.whoFor.map((item) => <li>{item}</li>)}
+				</ul>
+			</section>
+
+			<section class="panel">
+				<h2 class="section-title">Recommended reading path</h2>
+				<ol class="plain-list ordered">
+					{hub.readingPath.map((step) => <li>{step}</li>)}
+				</ol>
+			</section>
+
+			<section class="panel">
+				<h2 class="section-title">Resources</h2>
+				<div class="card-grid">
+					{resolvedCards.map((card) => <ArticleCard {...card} />)}
+				</div>
+			</section>
+
+			<section class="panel">
+				<h2 class="section-title">FAQ</h2>
+				<div class="faq-grid">
+					{
+						hub.faqs.map((faq) => (
+							<article class="faq-item">
+								<h3>{faq.question}</h3>
+								<p>{faq.answer}</p>
+							</article>
+						))
+					}
+				</div>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.hub-body {
+		margin: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		background: linear-gradient(180deg, #f4f9fc 0%, #f0f4f7 35%, #ffffff 100%);
+		color: #1c3a4d;
+		overflow-x: clip;
+	}
+
+	.hub-main {
+		flex: 1;
+		width: min(1180px, calc(100% - clamp(1.5rem, 5vw, 3rem)));
+		margin: 0 auto;
+		padding: clamp(1.25rem, 3vw, 1.75rem) 0 clamp(2rem, 5vw, 3.25rem);
+		display: grid;
+		gap: clamp(1.25rem, 3vw, 2rem);
+	}
+
+	.panel {
+		background: #fff;
+		border: 1px solid rgba(209, 222, 234, 0.95);
+		border-radius: 22px;
+		padding: clamp(1.5rem, 3.5vw, 2.25rem) clamp(1.25rem, 3.5vw, 2rem);
+		box-shadow:
+			0 1px 0 rgba(255, 255, 255, 0.8) inset,
+			0 10px 40px rgba(11, 53, 85, 0.05);
+	}
+
+	.hero {
+		background: #f4f9fc;
+	}
+
+	:global(.hero-eyebrow) {
+		margin: 0 0 0.35rem;
+		color: #0b3555;
+	}
+
+	.hero-title {
+		font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+		color: #0b3555;
+		margin: 0 0 0.55rem;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1.25;
+	}
+
+	.hero-desc {
+		margin: 0;
+		max-width: 58ch;
+		font-size: clamp(0.95rem, 1.5vw, 1.02rem);
+		line-height: 1.65;
+		color: #3f6279;
+	}
+
+	.section-title {
+		margin: 0 0 clamp(1rem, 2.5vw, 1.35rem);
+		font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+		color: #0b3555;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1.25;
+	}
+
+	.plain-list {
+		margin: 0;
+		padding-left: 1.25rem;
+		color: #3f6279;
+		line-height: 1.7;
+		display: grid;
+		gap: 0.35rem;
+	}
+
+	.plain-list.ordered {
+		padding-left: 1.35rem;
+	}
+
+	.faq-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.8rem;
+	}
+
+	.faq-item {
+		border: 1px solid #d2dfeb;
+		border-radius: 12px;
+		padding: 0.8rem 0.85rem;
+		background: #f8fbff;
+	}
+
+	.faq-item h3 {
+		margin: 0 0 0.35rem;
+		font-size: 0.95rem;
+		color: #0b3555;
+	}
+
+	.faq-item p {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.6;
+		color: #4b6a80;
+	}
+
+	.card-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.15rem;
+		align-items: stretch;
+	}
+
+	@media (max-width: 900px) {
+		.faq-grid,
+		.card-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

@@ -1,49 +1,446 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import SiteFooter from '../components/home/SiteFooter.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import FeaturedGuideGrid from '../components/home/FeaturedGuideGrid.astro';
+import SectionHeader from '../components/home/SectionHeader.astro';
+import ArticleCard from '../components/home/ArticleCard.astro';
+import { HOME_META_DESCRIPTION, HOME_META_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const byId = new Map(posts.map((p) => [p.id, p]));
+
+function thumbFor(postId: string, svg: string): string {
+	const p = byId.get(postId);
+	const hi = p?.data.heroImage;
+	return hi?.src ?? p?.data.heroPhoto ?? svg;
+}
+
+const featuredGuide = {
+	href: '/blog/med-spa-local-seo-checklist/',
+	title: byId.get('med-spa-local-seo-checklist')?.data.title ?? 'Med Spa SEO Checklist',
+	description:
+		byId.get('med-spa-local-seo-checklist')?.data.description ??
+		'A recurring audit tying Google Business Profile, flagship treatment pages, and conversion paths.',
+	image: thumbFor('med-spa-local-seo-checklist', '/images/med-spa-seo-checklist-preview.svg'),
+	imageAlt: 'SEO checklist schematic for aesthetic clinics',
+	category: 'Featured guide',
+};
+
+const featuredSide = [
+	{
+		href: '/blog/google-business-profile-med-spa-seo/',
+		title: byId.get('google-business-profile-med-spa-seo')?.data.title ?? 'Google Business Profile Optimization',
+		description:
+			byId.get('google-business-profile-med-spa-seo')?.data.description ??
+			'Categories, modeled services, and operational consistency.',
+		image: thumbFor('google-business-profile-med-spa-seo', '/images/med-spa-google-maps-visibility.svg'),
+		imageAlt: 'Local discovery abstraction',
+		category: 'Maps / GBP',
+	},
+	{
+		href: '/blog/botox-seo-strategy/',
+		title: byId.get('botox-seo-strategy')?.data.title ?? 'Botox SEO Strategy',
+		description:
+			byId.get('botox-seo-strategy')?.data.description ??
+			'Treatment-page structure that communicates expertise without dosing advice.',
+		image: thumbFor('botox-seo-strategy', '/images/med-spa-service-page-wireframe.svg'),
+		imageAlt: 'Service wireframe abstraction',
+		category: 'Service SEO',
+	},
+	{
+		href: '/blog/med-spa-review-seo/',
+		title: byId.get('med-spa-review-seo')?.data.title ?? 'Med Spa Review SEO',
+		description:
+			byId.get('med-spa-review-seo')?.data.description ??
+			'How reviews influence local rankings and patient trust.',
+		image: thumbFor('med-spa-review-seo', '/images/med-spa-consultation-funnel.svg'),
+		imageAlt: 'Patient communications abstraction',
+		category: 'Reputation',
+	},
+	{
+		href: '/blog/med-spa-seo-conversion-rate/',
+		title: byId.get('med-spa-seo-conversion-rate')?.data.title ?? 'Med Spa SEO Conversion',
+		description:
+			byId.get('med-spa-seo-conversion-rate')?.data.description ??
+			'Turning traffic into consults with clearer routes and proof.',
+		image: thumbFor('med-spa-seo-conversion-rate', '/images/med-spa-consultation-funnel.svg'),
+		imageAlt: 'Consultation funnel schematic',
+		category: 'Conversion',
+	},
+];
+
+const pillars = [
+	{
+		href: '/local-seo/',
+		title: 'Local Search Visibility',
+		description:
+			'City pages, modality intent, GBP alignment, and how patients piece together credibility before messaging.',
+		image: '/images/med-spa-local-search-system.svg',
+		imageAlt: 'Local discovery system schematic',
+		category: 'Pillar hub',
+	},
+	{
+		href: '/patient-reviews/',
+		title: 'Patient Reviews & Trust',
+		description:
+			'Reputation cadence rooted in HIPAA-aware communication, clinician tone, and non-manipulative outreach.',
+		image: '/images/med-spa-consultation-funnel.svg',
+		imageAlt: 'Trust and communication abstraction',
+		category: 'Pillar hub',
+	},
+	{
+		href: '/service-pages/',
+		title: 'Aesthetic Service Page SEO',
+		description:
+			'Architect pages for lasers, toxins, peels, body contouring, and combination consult flows without diagnosing.',
+		image: '/images/med-spa-service-page-wireframe.svg',
+		imageAlt: 'Service-page wire schematic',
+		category: 'Pillar hub',
+	},
+	{
+		href: '/website-conversion/',
+		title: 'Consultation Conversion',
+		description:
+			'Tight routing from modality discovery → provider proof → frictionless inquiry or booking workflows.',
+		image: '/images/med-spa-consultation-funnel.svg',
+		imageAlt: 'Consultation conversion funnel',
+		category: 'Pillar hub',
+	},
+];
+
+const funnelSteps = [
+	{
+		title: 'Local search visibility',
+		blurb:
+			'Accurate GBP entities, modality-led keyword paths, and honest photographic signals that match in-office experiences.',
+	},
+	{
+		title: 'Service page trust',
+		blurb:
+			'Clinician scope, candidacy framing, adjacency education, and internal links that match how patients compare options.',
+	},
+	{
+		title: 'Consultation intent',
+		blurb:
+			'Microcopy and CTA placement that respect emotional safety; clear next steps via call, form, or scheduler.',
+	},
+	{
+		title: 'Booking conversion',
+		blurb:
+			'Mobile tap targets, confirmation expectations, intake clarity, and measurement of completions—not vanity visits alone.',
+	},
+];
+
+const collections = [
+	{
+		href: '/google-maps/',
+		title: 'Google Maps for Med Spas',
+		description:
+			'Operational guidance for proximity discovery, modeled services, and review cadence adjacent to GBP.',
+		image: '/images/med-spa-google-maps-visibility.svg',
+		imageAlt: 'Maps visibility illustration',
+		category: 'Collection',
+	},
+	{
+		href: '/blog/botox-seo-strategy/',
+		title: 'Botox & Injectables SEO',
+		description:
+			'Landing patterns for neuromodulators, filler adjacency, and consult cross-links structured for compliance-minded teams.',
+		image: '/images/med-spa-service-page-wireframe.svg',
+		imageAlt: 'Injectables SEO wireframe motif',
+		category: 'Collection',
+	},
+	{
+		href: '/patient-reviews/',
+		title: 'Reviews and Reputation',
+		description:
+			'Earn structured feedback politely, reply with empathy-first templates, and update onsite trust cues in sync.',
+		image: '/images/med-spa-consultation-funnel.svg',
+		imageAlt: 'Reputation workflow motif',
+		category: 'Collection',
+	},
+	{
+		href: '/website-conversion/',
+		title: 'Consultation Booking Conversion',
+		description:
+			'Bridge paid and organic promises with onsite proof, scheduling UX, and pricing transparency guardrails.',
+		image: '/images/med-spa-consultation-funnel.svg',
+		imageAlt: 'Booking conversion illustration',
+		category: 'Collection',
+	},
+];
+
+const templates = [
+	{
+		href: '/templates/med-spa-seo-checklist/',
+		title: 'Med Spa SEO Checklist',
+		description: 'Recurring checks for organic + local integrity across flagship treatment pages.',
+		image: '/images/med-spa-seo-checklist-preview.svg',
+		imageAlt: 'Checklist preview graphic',
+		category: 'Template',
+	},
+	{
+		href: '/templates/google-business-profile-checklist/',
+		title: 'Google Business Profile Checklist',
+		description: 'Category, services, photos, and messaging alignment before seasonal campaigns.',
+		image: '/images/med-spa-google-maps-visibility.svg',
+		imageAlt: 'GBP checklist illustration',
+		category: 'Template',
+	},
+	{
+		href: '/templates/consultation-cta-examples/',
+		title: 'Consultation CTA Examples',
+		description: 'CTA scaffolds you can adapt per modality with counsel-approved disclaimers.',
+		image: '/images/med-spa-consultation-funnel.svg',
+		imageAlt: 'CTA examples motif',
+		category: 'Template',
+	},
+];
+
+const breakdowns = [
+	{
+		href: '/case-breakdowns/med-spa-website-conversion-breakdown/',
+		title: 'Why a Med Spa Website Gets Traffic but Few Consultations',
+		description:
+			'Educational hypotheses on routing friction, modality confusion, and weak proof placement—no client metrics.',
+		image: '/images/med-spa-consultation-funnel.svg',
+		imageAlt: 'Conversion breakdown illustration',
+		category: 'Breakdown',
+	},
+	{
+		href: '/case-breakdowns/botox-service-page-breakdown/',
+		title: 'How a Botox Service Page Builds Trust',
+		description:
+			'Section-level reasoning for injectables education, provider clarity, and ethical expectation setting.',
+		image: '/images/med-spa-service-page-wireframe.svg',
+		imageAlt: 'Service page breakdown illustration',
+		category: 'Breakdown',
+	},
+	{
+		href: '/case-breakdowns/google-maps-visibility-breakdown/',
+		title: 'What to Check When Google Maps Visibility Is Weak',
+		description:
+			'Structured diagnostics before assuming penalties—focus on entity hygiene and competitive density.',
+		image: '/images/med-spa-google-maps-visibility.svg',
+		imageAlt: 'Maps visibility diagnostic illustration',
+		category: 'Breakdown',
+	},
+];
+
+const latest = posts.slice(0, 6).map((p) => ({
+	href: `/blog/${p.id}/`,
+	title: p.data.title,
+	description: p.data.description,
+	image: p.data.heroImage?.src ?? '/images/med-spa-seo-checklist-preview.svg',
+	imageAlt: p.data.title,
+	category: p.data.category,
+}));
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={HOME_META_TITLE} description={HOME_META_DESCRIPTION} />
 	</head>
-	<body>
+	<body class="home-body">
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main class="home-main">
+			<HomeHero
+				title="Help aesthetic practices earn more high-intent consultations through local search"
+				subtitle="Practical resources for Med Spas and aesthetic clinics covering Google Business Profile hygiene, local SEO, patient reviews, aesthetic service pages, and consultation-to-booking conversion."
+				primaryLabel="View the Med Spa SEO checklist"
+				primaryHref="/blog/med-spa-local-seo-checklist/"
+				secondaryLabel="Learn Google Maps optimization"
+				secondaryHref="/blog/google-business-profile-med-spa-seo/"
+				featuredImage="/images/med-spa-local-search-system.svg"
+				featuredImageAlt="System diagram illustrating local discovery for aesthetic practices"
+			/>
+
+			<section class="segment">
+				<SectionHeader
+					title="Featured guides"
+					description="Jump into cornerstone playbooks—we pair operational checklists with realistic expectations (no guaranteed rankings)."
+				/>
+				<FeaturedGuideGrid featured={featuredGuide} items={featuredSide} />
+			</section>
+
+			<section class="segment">
+				<SectionHeader
+					title="Core topic hubs"
+					description="Each hub sequences education for owners, operations, and agency partners supporting U.S. aesthetic practices."
+				/>
+				<div class="card-grid">
+					{pillars.map((p) => <ArticleCard {...p} />)}
+				</div>
+			</section>
+
+			<section class="segment">
+				<SectionHeader
+					title="Patient acquisition funnel"
+					description="Use this mental model when prioritizing roadmaps: fix broken trust before chasing volume."
+					headingId="funnel"
+				/>
+				<div class="funnel-grid" aria-describedby="funnel">
+					{
+						funnelSteps.map((step, i) => (
+							<div class="funnel-card">
+								<span class="funnel-step">Stage {i + 1}</span>
+								<h3>{step.title}</h3>
+								<p>{step.blurb}</p>
+							</div>
+						))
+					}
+				</div>
+			</section>
+
+			<section class="segment">
+				<SectionHeader
+					title="Popular collections"
+					description="Curated entry points for teams that live in Maps, injectables SEO, reviews, or conversion sprints."
+				/>
+				<div class="card-grid">
+					{collections.map((c) => <ArticleCard {...c} />)}
+				</div>
+			</section>
+
+			<section class="segment">
+				<SectionHeader
+					title="Templates & checklists"
+					description="Planning scaffolds—not legal documents. Customize with counsel for HIPAA and advertising rules in your state."
+				/>
+				<div class="card-grid tri">
+					{templates.map((t) => <ArticleCard {...t} />)}
+				</div>
+			</section>
+
+			<section class="segment">
+				<SectionHeader
+					title="Marketing breakdowns"
+					description="Educational hypotheticals for training days—explicitly not anonymized client case studies."
+				/>
+				<div class="card-grid tri">
+					{breakdowns.map((b) => <ArticleCard {...b} />)}
+				</div>
+			</section>
+
+			<section class="segment">
+				<SectionHeader
+					title="Latest guides"
+					description="Fresh updates across local visibility, modality pages, reputation, and consult conversion workflows."
+				/>
+				<div class="card-grid">
+					{latest.map((item) => <ArticleCard {...item} />)}
+				</div>
+				<p class="more-guides">
+					<a class="text-link" href="/blog/">Browse all guides</a>
+				</p>
+			</section>
 		</main>
-		<Footer />
+		<SiteFooter />
 	</body>
 </html>
+
+<style>
+	.home-body {
+		margin: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		background: linear-gradient(180deg, #f4f9fc 0%, #f0f4f7 35%, #ffffff 100%);
+		color: #1c3a4d;
+		overflow-x: clip;
+	}
+	.home-main {
+		flex: 1;
+		width: min(1180px, calc(100% - clamp(1.5rem, 5vw, 3rem)));
+		margin: 0 auto;
+		padding: clamp(1.25rem, 3vw, 1.75rem) 0 clamp(2rem, 5vw, 3.25rem);
+		display: grid;
+		gap: clamp(1.75rem, 4vw, 2.75rem);
+	}
+	.segment {
+		background: #fff;
+		border: 1px solid rgba(209, 222, 234, 0.95);
+		border-radius: 22px;
+		padding: clamp(1.5rem, 3.5vw, 2.25rem) clamp(1.25rem, 3.5vw, 2rem);
+		box-shadow:
+			0 1px 0 rgba(255, 255, 255, 0.8) inset,
+			0 10px 40px rgba(11, 53, 85, 0.05);
+	}
+	.card-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1.15rem;
+		align-items: stretch;
+	}
+	.card-grid.tri {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	.funnel-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.funnel-card {
+		border: 1px solid #d2dfeb;
+		border-radius: 16px;
+		padding: 1rem 1.05rem;
+		background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+	}
+	.funnel-step {
+		display: inline-block;
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: #3f6279;
+		margin-bottom: 0.45rem;
+	}
+	.funnel-card h3 {
+		margin: 0 0 0.55rem;
+		font-size: 1.02rem;
+		color: #0b3555;
+		line-height: 1.3;
+	}
+	.funnel-card p {
+		margin: 0;
+		font-size: 0.91rem;
+		line-height: 1.62;
+		color: #46657c;
+	}
+	.more-guides {
+		margin: 1.35rem 0 0;
+		text-align: center;
+	}
+	.text-link {
+		font-weight: 700;
+		color: #0b3555;
+		text-decoration: none;
+		border-bottom: 2px solid #d4a574;
+		padding-bottom: 0.08rem;
+	}
+	.text-link:hover {
+		color: #072a43;
+	}
+	@media (max-width: 1100px) {
+		.card-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.card-grid.tri {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.funnel-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+	@media (max-width: 640px) {
+		.card-grid,
+		.card-grid.tri,
+		.funnel-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

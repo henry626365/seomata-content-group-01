@@ -1,114 +1,101 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import ArticleCard from '../../components/home/ArticleCard.astro';
+import SiteFooter from '../../components/home/SiteFooter.astro';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const seoTitle = 'Marketing Guides Archive | Med Spa Marketing Guide';
+const seoDesc =
+	'Operational SEO, GBP, modality pages, reputation, and conversion workflows for aesthetic practices—education only (not medical/legal advice).';
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
+		<BaseHead title={seoTitle} description={seoDesc} />
 	</head>
-	<body>
+	<body class="archive-body">
 		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
+		<main class="archive-main">
+			<header class="page-intro">
+				<h1 id="guides">Guides archive</h1>
+				<p>
+					Timeless checklists covering local discovery, modality landing pages, review operations, and
+					consultation capture. Content is directional—not a substitute for HIPAA counsel, clinician oversight,
+					or platform policy review.
+				</p>
+			</header>
+			<div class="grid">
+				{
+					posts.map((post) => (
+						<ArticleCard
+							href={`/blog/${post.id}/`}
+							title={post.data.title}
+							description={post.data.description}
+							image={
+								post.data.heroImage?.src ??
+								post.data.heroPhoto ??
+								'/images/med-spa-seo-checklist-preview.svg'
+							}
+							imageAlt={post.data.title}
+							category={post.data.category}
+						/>
+					))
+				}
+			</div>
 		</main>
-		<Footer />
+		<SiteFooter />
 	</body>
 </html>
+
+<style>
+	.archive-body {
+		margin: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		background: linear-gradient(180deg, #f4f9fc 0%, #f0f4f7 40%, #ffffff 100%);
+		color: #1c3a4d;
+	}
+	.archive-main {
+		flex: 1;
+		width: min(1180px, calc(100% - clamp(1.25rem, 5vw, 3rem)));
+		margin: 0 auto;
+		padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(2.75rem, 6vw, 4rem);
+	}
+	.page-intro {
+		margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+	}
+	.page-intro h1 {
+		margin: 0 0 0.85rem;
+		font-size: clamp(1.5rem, 3vw, 2rem);
+		color: #0b3555;
+		letter-spacing: -0.03em;
+	}
+	.page-intro p {
+		margin: 0;
+		max-width: 68ch;
+		line-height: 1.72;
+		color: #395f78;
+		font-size: clamp(0.96rem, 1.45vw, 1.06rem);
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.2rem;
+		align-items: stretch;
+	}
+	@media (max-width: 1024px) {
+		.grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+	@media (max-width: 660px) {
+		.grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

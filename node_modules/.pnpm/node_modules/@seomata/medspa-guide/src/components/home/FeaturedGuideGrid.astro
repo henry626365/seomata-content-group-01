@@ -1,0 +1,53 @@
+---
+import ArticleCard from './ArticleCard.astro';
+
+type Card = {
+	href: string;
+	title: string;
+	description: string;
+	image: string;
+	imageAlt: string;
+	category: string;
+};
+
+type Props = {
+	featured: Card;
+	items: Card[];
+};
+
+const { featured, items } = Astro.props;
+---
+
+<div class="featured-grid">
+	<div class="featured-main">
+		<ArticleCard variant="featured" {...featured} />
+	</div>
+	<div class="featured-side">
+		{items.map((item) => <ArticleCard {...item} />)}
+	</div>
+</div>
+
+<style>
+	.featured-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+		gap: 1.25rem;
+		align-items: stretch;
+	}
+	.featured-side {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		gap: 1rem;
+		min-width: 0;
+	}
+	@media (max-width: 960px) {
+		.featured-grid {
+			grid-template-columns: 1fr;
+		}
+		.featured-side {
+			grid-template-columns: 1fr;
+			grid-template-rows: none;
+		}
+	}
+</style>
