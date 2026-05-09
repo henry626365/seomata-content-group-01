@@ -1,4 +1,5 @@
 ---
+import type { MarkdownHeading } from '@astrojs/markdown-remark';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
@@ -6,9 +7,19 @@ import SiteFooter from '../components/home/SiteFooter.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	tocEntries?: MarkdownHeading[];
+};
 
-const { title, description, pubDate, updatedDate, heroImage, author = '按摩店增长指南编辑团队' } = Astro.props;
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage,
+	author = '按摩店增长指南编辑团队',
+	tocEntries = []
+} = Astro.props;
 ---
 
 <html lang="zh-CN">
@@ -75,6 +86,36 @@ const { title, description, pubDate, updatedDate, heroImage, author = '按摩店
 				color: #47677f;
 				font-size: 0.92rem;
 			}
+			.toc-list {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				display: grid;
+				gap: 0.35rem;
+			}
+			.toc-list a {
+				display: block;
+				color: #2f80ed;
+				text-decoration: none;
+				font-size: 0.9rem;
+				line-height: 1.45;
+				border-radius: 6px;
+				padding: 0.2rem 0.35rem;
+				margin: 0 -0.35rem;
+			}
+			.toc-list a:hover {
+				background: rgba(47, 128, 237, 0.08);
+				text-decoration: underline;
+			}
+			.toc-item.depth-3 {
+				padding-left: 0.85rem;
+				border-left: 2px solid rgba(11, 58, 83, 0.12);
+				margin-left: 0.15rem;
+			}
+			.prose :global(h2[id]),
+			.prose :global(h3[id]) {
+				scroll-margin-top: 5.5rem;
+			}
 			.related-reading {
 				margin-top: 1.4rem;
 				padding-top: 1rem;
@@ -122,10 +163,20 @@ const { title, description, pubDate, updatedDate, heroImage, author = '按摩店
 						<h1>{title}</h1>
 						<hr />
 					</div>
-					<section class="toc" aria-labelledby="toc-title">
-						<h2 id="toc-title">文章目录</h2>
-						<p>目录区域已预留，后续可按正文标题自动生成锚点导航。</p>
-					</section>
+					{
+						tocEntries.length > 0 && (
+							<nav class="toc" aria-labelledby="toc-title">
+								<h2 id="toc-title">文章目录</h2>
+								<ul class="toc-list">
+									{tocEntries.map((h) => (
+										<li class:list={['toc-item', h.depth === 3 && 'depth-3']}>
+											<a href={`#${h.slug}`}>{h.text}</a>
+										</li>
+									))}
+								</ul>
+							</nav>
+						)
+					}
 					<slot />
 					<section class="related-reading" id="extended-reading" aria-labelledby="related-reading-title">
 						<h2 id="related-reading-title">延伸阅读</h2>
