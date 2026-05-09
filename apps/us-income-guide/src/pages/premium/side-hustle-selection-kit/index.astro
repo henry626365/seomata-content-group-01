@@ -1,0 +1,43 @@
+---
+import PageShell from '../../../layouts/PageShell.astro';
+import PremiumLockedPlaceholder from '../../../components/premium/PremiumLockedPlaceholder.astro';
+import SideHustleStripeUnlock from '../../../components/premium/SideHustleStripeUnlock.astro';
+
+const seoTitle = '美国副业选择工具包 · 付费资源 · 美国赚钱指南';
+const seoDesc =
+	'副业决策结构化工具包：适合谁与免费预览；完整内容在支付后由安全接口返回，不写入静态 HTML。';
+---
+
+<PageShell title={seoTitle} description={seoDesc} showPremiumUpsell={false}>
+	<h1>美国副业选择工具包</h1>
+	<p>
+		本商品使用 <strong>Stripe Checkout</strong> 收款（需在 Cloudflare 部署 Functions 并配置密钥与 D1）。<strong>$19</strong> 为标价指引，以结账页为准。不展示购买人数、评价或收益案例；不保证任何收入结果。
+	</p>
+
+	<h2>适合谁</h2>
+	<ul>
+		<li>已有主职或学业安排，想用<strong>可追溯问题清单</strong>收窄副业选项的人。</li>
+		<li>容易被「速成副业」营销带着走，希望能先对齐<strong>时间与风险上限</strong>的人。</li>
+		<li>愿意自行向学校国际办、雇主 HR 或持证顾问核实工作与身份边界的人。</li>
+	</ul>
+
+	<h2>包含哪些内容（规划）</h2>
+	<p>正式交付形态仍在设计；规划中的方向包括：</p>
+	<ul>
+		<li>可打印的多页决策表（时间盒、停机条件、平台条款核对）；</li>
+		<li>与免费 <a href="/templates/side-hustle-selection-checklist/">副业选择检查清单</a>配套的<strong>扩展字段</strong>说明；</li>
+		<li>「邀请评估」话术备忘（不涉及灰产导流）。</li>
+	</ul>
+	<p><strong>不包含</strong>报税填表教程、内幕渠道、刷单或其他违法步骤。</p>
+
+	<h2>免费预览</h2>
+	<p>
+		你可用站内免费公开资源先建立基础框架：<a href="/side-hustles/">副业栏目</a> ·
+		<a href="/guides/how-to-evaluate-a-side-hustle-invite/">如何评估副业邀请</a> ·
+		<a href="/guides/side-hustle-risk-spectrum/">副业风险谱</a>。
+	</p>
+
+	<PremiumLockedPlaceholder />
+
+	<SideHustleStripeUnlock />
+</PageShell>

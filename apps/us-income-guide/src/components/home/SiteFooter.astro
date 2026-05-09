@@ -1,0 +1,128 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="footer-inner">
+		<div class="brand">
+			<strong class="name">美国赚钱指南</strong>
+			<p>
+				在美合法与现实地探讨收入机会的编辑型资源库：工作、副业、线上、本地服务、自由职业与防骗。不提供法律、税务或投资建议。
+			</p>
+		</div>
+		<div class="cols">
+			<div>
+				<h3>栏目</h3>
+				<ul>
+					<li><a href="/earning-paths/">赚钱路径</a></li>
+					<li><a href="/side-hustles/">副业项目</a></li>
+					<li><a href="/online-income/">线上收入</a></li>
+					<li><a href="/local-services/">本地服务</a></li>
+					<li><a href="/jobs/">找工作</a></li>
+					<li><a href="/tax-compliance/">税务与合规基础</a></li>
+					<li><a href="/scam-prevention/">防骗指南</a></li>
+					<li><a href="/guides/">实用指南</a></li>
+				</ul>
+			</div>
+			<div>
+				<h3>资源 · 信任</h3>
+				<ul>
+					<li><a href="/premium/">付费资源库（原型）</a></li>
+					<li><a href="/guides/">指南总索引</a></li>
+					<li><a href="/templates/">实用模板总览</a></li>
+					<li><a href="/case-breakdowns/">案例拆解</a></li>
+					<li><a href="/reports/">行业报告</a></li>
+					<li><a href="/earnings-disclosure/">收入声明说明</a></li>
+					<li><a href="/disclaimer/">免责声明</a></li>
+					<li><a href="/editorial-policy/">编辑政策</a></li>
+					<li><a href="/privacy/">隐私与数据</a></li>
+					<li><a href="/contact/">联系</a></li>
+					<li><a href="/about/">关于</a></li>
+					<li><a href="/sitemap-index.xml">站点地图（XML）</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<p class="copy">© {year} 美国赚钱指南 · 教育参考 · 请以官方信息与持证专业人士为准</p>
+</footer>
+
+<style>
+	.site-footer {
+		margin-top: clamp(2.25rem, 5vw, 3.5rem);
+		padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1rem, 4vw, 1.75rem) 1.65rem;
+		background: linear-gradient(180deg, #111827 0%, #1f2937 100%);
+		color: #e5e7eb;
+		border-top: 1px solid #374151;
+	}
+	.footer-inner {
+		max-width: 1180px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+		gap: clamp(1.5rem, 3vw, 2.5rem);
+		align-items: start;
+	}
+	.brand .name {
+		display: block;
+		font-size: 1.08rem;
+		margin-bottom: 0.5rem;
+		color: #fff;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+	.brand p {
+		margin: 0;
+		max-width: 32rem;
+		font-size: 0.88rem;
+		line-height: 1.6;
+		color: #9ca3af;
+	}
+	.cols {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: clamp(1rem, 2.5vw, 1.5rem);
+	}
+	.cols h3 {
+		margin: 0 0 0.65rem;
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: #93c5fd;
+	}
+	.cols ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.45rem;
+	}
+	.cols a {
+		color: #f3f4f6;
+		text-decoration: none;
+		font-size: 0.9rem;
+		font-weight: 500;
+		border-bottom: 1px solid transparent;
+		transition:
+			color 0.15s ease,
+			border-color 0.15s ease;
+	}
+	.cols a:hover {
+		color: #fff;
+		border-bottom-color: rgba(255, 255, 255, 0.35);
+	}
+	.copy {
+		margin: 1.85rem auto 0;
+		max-width: 1180px;
+		padding-top: 1.2rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		font-size: 0.78rem;
+		color: #9ca3af;
+		text-align: center;
+	}
+	@media (max-width: 720px) {
+		.footer-inner {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

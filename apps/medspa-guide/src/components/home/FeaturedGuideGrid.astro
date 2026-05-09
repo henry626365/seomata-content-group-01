@@ -23,22 +23,22 @@ const { featured, items } = Astro.props;
 		<ArticleCard variant="featured" {...featured} />
 	</div>
 	<div class="featured-side">
-		{items.map((item) => <ArticleCard {...item} />)}
+		{items.map((item) => <ArticleCard variant="sideFeature" {...item} />)}
 	</div>
 </div>
 
 <style>
 	.featured-grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
-		gap: 1.25rem;
+		grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+		gap: 1.35rem;
 		align-items: stretch;
 	}
 	.featured-side {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: 1fr 1fr;
-		gap: 1rem;
+		gap: 1.05rem;
 		min-width: 0;
 	}
 	@media (max-width: 960px) {

@@ -1,0 +1,41 @@
+---
+import PageShell from '../../../layouts/PageShell.astro';
+
+const seoTitle = '收入与支出记录模板 · 美国赚钱指南';
+const seoDesc =
+	'自检用台账结构：按通道记录金额与备注，便于你与会计师对齐事实；示例数字可自行替换或留空，不是报税表格。';
+---
+
+<PageShell title={seoTitle} description={seoDesc}>
+	<h1>收入与支出记录模板</h1>
+	<p><strong>重要：</strong>本页仅帮助你养成记录习惯；具体报税分类、抵扣与截止日期必须咨询注册会计师并以 IRS / 州立规则为准。</p>
+	<h2>建议的记录维度</h2>
+	<p>可复制到电子表格——每一行一条事件：</p>
+	<ul>
+		<li><strong>日期</strong></li>
+		<li><strong>类型：</strong>收入 / 退款 / 平台费用 / 交通 / 材料 / 外包 / 其他</li>
+		<li><strong>金额（含税与否请注明你自己如何理解）</strong></li>
+		<li><strong>通道：</strong>W-2 雇主平台 / Stripe / Venmo / 现金备注等</li>
+		<li><strong>备注：</strong>客户或项目代号（脱敏）、发票编号、会话链接存档位置</li>
+	</ul>
+	<h2>频率</h2>
+	<ul>
+		<li><strong>周更：</strong>适合副业频繁、票数多的人。</li>
+		<li><strong>月更：</strong>适合项目少但金额大的人——务必在月末核对银行流水。</li>
+	</ul>
+	<h2>与专业人士沟通的姿势</h2>
+	<p>带着「通道清单 + 样例行 + 你已知的未知数」去见 CPA，会比带着混乱截图更有效率。</p>
+	<h2>月末 15 分钟对账 Ritual</h2>
+	<ol>
+		<li>银行流水 PDF 是否与表格行数对齐？如有缺口，补上或标注「遗失原因」。</li>
+		<li>是否存在「个人消费」混入业务卡？拆分或建立规则避免再犯。</li>
+		<li>下一月是否将出现大额设备添置或课程开销？提前记在 forecast 表里。</li>
+	</ol>
+	<h2>常见问题（概念）</h2>
+	<ul>
+		<li><strong>Venmo 标签是朋友转账还是业务收入？</strong>不要凭感觉，按事实咨询 CPA。</li>
+		<li><strong>平台扣费是否单独一行？</strong>建议单列，别让净额掩盖费用结构。</li>
+	</ul>
+	<p>相关：<a href="/tax-compliance/">税务与合规基础</a> · <a href="/guides/juggling-multiple-income-streams-notes/">多收入来源备忘</a></p>
+</PageShell>
+

@@ -1,0 +1,143 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import SiteFooter from '../../components/home/SiteFooter.astro';
+import ResourceCard from '../../components/home/ResourceCard.astro';
+
+const seoTitle = '付费资源库 · 美国赚钱指南';
+const seoDesc =
+	'美国副业、线上收入、本地服务与防骗相关的模板、清单与工具包（前端原型）。当前不接真实付款。';
+const cardImg = '/images/topic-card.svg';
+
+const kits = [
+	{
+		href: '/premium/side-hustle-selection-kit/',
+		title: '美国副业选择工具包',
+		description: '用结构化问题缩小副业选项范围，分清时间与风险边界。',
+		tag: '工具包 · 占位 $19',
+	},
+	{
+		href: '/premium/money-making-scam-checklist/',
+		title: '美国赚钱机会防骗清单',
+		description: '高压销售与资金盘话术下的自检清单（付费增强版占位）。',
+		tag: '清单 · 占位 $9',
+	},
+	{
+		href: '/premium/local-service-starter-kit/',
+		title: '本地服务小生意启动包',
+		description: '范围声明、获客与安全沟通的结构化草稿（须在上线前由专业顾问审阅）。',
+		tag: '工具包 · 占位 $29',
+	},
+	{
+		href: '/premium/freelance-client-communication-templates/',
+		title: '自由职业客户沟通模板',
+		description: '报价、里程碑与争议预防的措辞框架（不包含法律合同）。',
+		tag: '模板 · 占位 $14',
+	},
+	{
+		href: '/premium/income-expense-record-kit/',
+		title: '收入与支出记录模板',
+		description: '多通道收支台账结构，便于与未来会计师对齐（非报税表）。',
+		tag: '模板 · 占位 $12',
+	},
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={seoTitle} description={seoDesc} />
+	</head>
+	<body class="premium-body">
+		<Header />
+		<main class="premium-main">
+			<header class="intro card">
+				<h1>付费资源库</h1>
+				<p class="lede">
+					提供与美国<strong>副业、线上收入、本地服务和防骗</strong>相关的模板、清单与工具包。以下为<strong>产品前端原型</strong>：标价与文案均为占位，
+					<strong>未接入真实支付或用户系统</strong>；不展示购买人数、评价或收益案例。
+				</p>
+				<p class="fineprint">
+					详见 <a href="/earnings-disclosure/">收入声明说明</a> · <a href="/disclaimer/">免责声明</a>
+				</p>
+			</header>
+
+			<section class="card grid-section" aria-labelledby="kits-heading">
+				<h2 id="kits-heading">资源一览</h2>
+				<div class="grid">
+					{kits.map((k) => (
+						<ResourceCard
+							href={k.href}
+							title={k.title}
+							description={k.description}
+							image={cardImg}
+							imageAlt="付费资源示意图"
+							category={k.tag}
+						/>
+					))}
+				</div>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.premium-body {
+		margin: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		background: linear-gradient(180deg, #fafafa 0%, #eef2ff 35%, #fff 100%);
+		color: var(--ink);
+	}
+	.premium-main {
+		flex: 1;
+		width: min(1180px, calc(100% - clamp(1.5rem, 5vw, 3rem)));
+		margin: 0 auto;
+		padding: clamp(1rem, 3vw, 1.65rem) 0 clamp(2rem, 5vw, 3rem);
+		display: grid;
+		gap: clamp(1.25rem, 3vw, 1.75rem);
+	}
+	.card {
+		background: #fff;
+		border: 1px solid var(--card-border);
+		border-radius: 20px;
+		padding: clamp(1.2rem, 3vw, 1.75rem);
+		box-shadow: 0 10px 38px rgba(31, 41, 55, 0.05);
+	}
+	.intro h1 {
+		margin: 0 0 0.65rem;
+		font-size: clamp(1.75rem, 4vw, 2.35rem);
+		font-weight: 900;
+		letter-spacing: -0.03em;
+		line-height: 1.12;
+	}
+	.lede {
+		margin: 0 0 0.75rem;
+		max-width: 68ch;
+		font-size: clamp(1rem, 1.45vw, 1.045rem);
+		line-height: 1.74;
+		color: var(--ink-muted);
+	}
+	.fineprint {
+		margin: 0;
+		font-size: 0.88rem;
+		color: #6b7280;
+	}
+	.fineprint a {
+		font-weight: 600;
+		color: var(--accent-dark);
+	}
+	.grid-section h2 {
+		margin: 0 0 1rem;
+		font-size: 1.2rem;
+		font-weight: 800;
+		color: var(--ink);
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 1rem;
+	}
+</style>

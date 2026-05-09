@@ -1,0 +1,476 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import SiteFooter from '../components/home/SiteFooter.astro';
+import SectionHeader from '../components/home/SectionHeader.astro';
+import ResourceCard from '../components/home/ResourceCard.astro';
+import { HOME_META_DESCRIPTION, HOME_META_TITLE } from '../consts';
+
+const cardImg = '/images/topic-card.svg';
+
+const pillars = [
+	{
+		href: '/earning-paths/',
+		title: '赚钱路径',
+		description: '主职、合同与复合收入之间的取舍，以及如何按阶段设定现实目标。',
+		category: '核心栏目',
+	},
+	{
+		href: '/side-hustles/',
+		title: '副业项目',
+		description: '用时间与风险维度筛项目：避免「轻松副业」话术，重视平台规则与交付边界。',
+		category: '核心栏目',
+	},
+	{
+		href: '/online-income/',
+		title: '线上收入',
+		description: '远程、平台接单与自由职业的常见结构：作品集、沟通与时区管理。',
+		category: '核心栏目',
+	},
+	{
+		href: '/local-services/',
+		title: '本地服务',
+		description: '上门服务与本地需求：成本、安全与个人品牌，不做灰产导流。',
+		category: '核心栏目',
+	},
+	{
+		href: '/jobs/',
+		title: '找工作',
+		description: '投递、面试与薪资沟通的基础框架；不对个人聘用资格下结论。',
+		category: '核心栏目',
+	},
+	{
+		href: '/tax-compliance/',
+		title: '税务与合规基础',
+		description: '应问哪些问题、该找谁核实：概念级说明，不提供填表或避税操作。',
+		category: '核心栏目',
+	},
+	{
+		href: '/scam-prevention/',
+		title: '防骗指南',
+		description: '高发骗局结构、沟通红 flag 与止损动作，强调保留证据与求助渠道。',
+		category: '核心栏目',
+	},
+];
+
+const featuredGuides = [
+	{
+		href: '/guides/legal-income-paths-beginners/',
+		title: '在美国如何赚钱：适合新手的合法收入路径',
+		description: '把「能做什么」拆成可核验步骤：身份边界、时间、技能与记录习惯。',
+		category: '精选指南',
+	},
+	{
+		href: '/guides/common-side-hustles-us/',
+		title: '美国常见副业项目大全',
+		description: '按交付方式分类梳理常见选项，并附上评估问题清单（不承诺回报率）。',
+		category: '精选指南',
+	},
+	{
+		href: '/guides/online-income-us/',
+		title: '在美国如何通过线上方式赚钱',
+		description: '自由职业与平台接单的共同逻辑：报价、合同口径、争议处理意识。',
+		category: '精选指南',
+	},
+	{
+		href: '/guides/local-service-income-us/',
+		title: '美国本地服务类赚钱项目',
+		description: '获客、口碑与出行成本；哪些行业需要执照请先向官方核实。',
+		category: '精选指南',
+	},
+	{
+		href: '/guides/recognize-income-scams-us/',
+		title: '如何识别美国常见赚钱骗局',
+		description: '从承诺结构、收款方式与信息来源三边交叉验证，降低踩坑概率。',
+		category: '精选指南',
+	},
+];
+
+const templates = [
+	{
+		href: '/templates/side-hustle-selection-checklist/',
+		title: '副业选择检查清单',
+		description: '做决定前逐条对照：时间上限、现金流、平台条款与退出条件。',
+		category: '实用模板',
+	},
+	{
+		href: '/templates/income-expense-log/',
+		title: '收入与支出记录模板',
+		description: '自检用记录结构，帮助你与会计师沟通时说得清楚（非报税表格）。',
+		category: '实用模板',
+	},
+	{
+		href: '/templates/income-scam-checklist/',
+		title: '赚钱机会防骗检查清单',
+		description: '遇到「稳赚」话术时按项排查，减少冲动付款与私下转账。',
+		category: '实用模板',
+	},
+];
+
+const cases = [
+	{
+		href: '/case-breakdowns/side-hustle-longtime-no-profit/',
+		title: '为什么一个副业做了很久却赚不到钱',
+		description: '教学向拆解：时间与定价、渠道、合同边界等常见结构性原因。',
+		category: '案例拆解',
+	},
+	{
+		href: '/case-breakdowns/local-service-zero-to-clients/',
+		title: '一个本地服务小生意如何从 0 开始获取客户',
+		description: '从验证需求到可复制获客节奏：虚构合成案例，不涉及可识别真人。',
+		category: '案例拆解',
+	},
+];
+
+const report = {
+	href: '/reports/us-side-gig-local-service-outlook/',
+	title: '美国副业与本地服务收入机会报告',
+	description: '方法论 v1：如何阅读机会与风险并存的市场信息，不出现伪造统计数据。',
+	category: '行业报告',
+};
+
+const latestGuides = [
+	{ title: '如何识别美国常见赚钱骗局', href: '/guides/recognize-income-scams-us/', date: '2026-05-08' },
+	{ title: '美国本地服务类赚钱项目', href: '/guides/local-service-income-us/', date: '2026-05-05' },
+	{ title: '在美国如何通过线上方式赚钱', href: '/guides/online-income-us/', date: '2026-05-01' },
+	{ title: '美国常见副业项目大全', href: '/guides/common-side-hustles-us/', date: '2026-04-28' },
+	{ title: '在美国如何赚钱：适合新手的合法收入路径', href: '/guides/legal-income-paths-beginners/', date: '2026-04-22' },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={HOME_META_TITLE} description={HOME_META_DESCRIPTION} />
+	</head>
+	<body class="page-body">
+		<Header />
+		<main class="page-main">
+			<section class="hero card">
+				<p class="eyebrow">美国赚钱指南 · 合法 · 务实 · 可核验</p>
+				<h1>在美国如何合法、现实地增加收入</h1>
+				<p class="subtitle">
+					面向在美国生活、工作、创业和寻找副业机会的人群，整理工作、副业、线上收入、本地服务、自由职业和防骗指南。
+				</p>
+				<p class="disclaimer-strong">
+					本站不提供法律、税务、移民或投资建议，不承诺任何收入结果。涉及规章与个人情况时，请以官方信息与持证专业人士为准。
+				</p>
+				<div class="cta-row">
+					<a class="btn primary" href="/earning-paths/">查看赚钱路径</a>
+					<a class="btn ghost" href="/side-hustles/">查看副业项目</a>
+				</div>
+			</section>
+
+			<section class="segment card">
+				<SectionHeader
+					title="核心栏目"
+					description="像资源库一样按需进入：每一条线都附带「自检问题」视角，先看框架再谈执行。"
+				/>
+				<div class="grid pillars">
+					{pillars.map((p) => (
+						<ResourceCard
+							href={p.href}
+							title={p.title}
+							description={p.description}
+							image={cardImg}
+							imageAlt="栏目示意图"
+							category={p.category}
+						/>
+					))}
+				</div>
+			</section>
+
+			<section class="segment card">
+				<SectionHeader
+					title="Featured Guides"
+					description="优先阅读：帮助你在美国建立对收入形态与风险边界的共同语言。"
+				/>
+				<div class="grid featured">
+					{featuredGuides.map((g) => (
+						<ResourceCard
+							href={g.href}
+							title={g.title}
+							description={g.description}
+							image={cardImg}
+							imageAlt="指南示意图"
+							category={g.category}
+						/>
+					))}
+				</div>
+			</section>
+
+			<section class="segment card">
+				<SectionHeader title="实用模板" description="纸质或电子表格皆可复用——用于自查与沟通对齐，不构成法定申报格式。" />
+				<div class="grid tri">
+					{templates.map((t) => (
+						<ResourceCard
+							href={t.href}
+							title={t.title}
+							description={t.description}
+							image={cardImg}
+							imageAlt="模板示意图"
+							category={t.category}
+						/>
+					))}
+				</div>
+			</section>
+
+			<section class="segment card">
+				<SectionHeader
+					title="案例拆解"
+					description="教学设计向内容：不出现可识别个人信息，不捏造流水与回本数据。"
+				/>
+				<div class="grid dual">
+					{cases.map((c) => (
+						<ResourceCard
+							href={c.href}
+							title={c.title}
+							description={c.description}
+							image={cardImg}
+							imageAlt="案例拆解示意图"
+							category={c.category}
+						/>
+					))}
+				</div>
+			</section>
+
+			<section class="segment card">
+				<SectionHeader
+					title="行业报告"
+					description="方法论与阅读框架连载；若引用第三方数据会在正文标注来源与时点。"
+				/>
+				<div class="single-card">
+					<ResourceCard
+						href={report.href}
+						title={report.title}
+						description={report.description}
+						image={cardImg}
+						imageAlt="报告示意图"
+						category={report.category}
+					/>
+				</div>
+			</section>
+
+			<section class="segment card">
+				<SectionHeader title="Latest Guides · 最新指南" description="按站内更新排序，条目会随新稿上线持续增补。" />
+				<ul class="latest-list">
+					{
+						latestGuides.map((item) => (
+							<li>
+								<a class="latest-link" href={item.href}>
+									<span class="latest-title">{item.title}</span>
+									<time datetime={item.date}>{item.date}</time>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+				<p class="more-inline">
+					<a href="/guides/">浏览实用指南索引</a>
+				</p>
+			</section>
+
+			<section class="segment card muted">
+				<SectionHeader title="使用须知" />
+				<blockquote>
+					移民与工作资格、州法与联邦法差异、劳动法与自力救济边界等话题高度个体化。请把本站当作地图，而不是判决书；必要时向学校国际办、持证律师或会计师获取书面意见。
+				</blockquote>
+			</section>
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.page-body {
+		margin: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		background: linear-gradient(180deg, #ffffff 0%, #eef2ff 28%, #f9fafb 100%);
+		color: var(--ink);
+	}
+	.page-main {
+		flex: 1;
+		width: min(1180px, calc(100% - clamp(1.5rem, 5vw, 3rem)));
+		margin: 0 auto;
+		padding: clamp(1rem, 2.8vw, 1.65rem) 0 clamp(2rem, 5vw, 3rem);
+		display: grid;
+		gap: clamp(1.25rem, 3.2vw, 1.85rem);
+	}
+	.card {
+		background: #fff;
+		border: 1px solid var(--card-border);
+		border-radius: 22px;
+		padding: clamp(1.25rem, 3.2vw, 1.85rem);
+		box-shadow: 0 12px 44px rgba(31, 41, 55, 0.05);
+	}
+	.segment.muted {
+		background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+	}
+	.hero .eyebrow {
+		margin: 0 0 0.5rem;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--accent-dark);
+	}
+	.hero h1 {
+		margin: 0 0 0.75rem;
+		font-size: clamp(1.85rem, 4.6vw, 2.65rem);
+		line-height: 1.11;
+		font-weight: 900;
+		letter-spacing: -0.03em;
+		color: var(--ink);
+	}
+	.subtitle {
+		margin: 0 0 0.85rem;
+		font-size: clamp(1.02rem, 1.55vw, 1.125rem);
+		line-height: 1.72;
+		color: var(--ink-muted);
+		max-width: 58ch;
+	}
+	.disclaimer-strong {
+		margin: 0 0 1.25rem;
+		padding: 0.75rem 1rem;
+		border-radius: 14px;
+		background: #f9fafb;
+		border: 1px solid #e5e7eb;
+		font-size: 0.9rem;
+		line-height: 1.62;
+		color: var(--ink-muted);
+		max-width: 62ch;
+	}
+	.cta-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		align-items: center;
+	}
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.72rem 1.35rem;
+		border-radius: 999px;
+		font-weight: 700;
+		font-size: 0.93rem;
+		text-decoration: none;
+		border: 2px solid transparent;
+		transition:
+			background 0.18s ease,
+			color 0.18s ease,
+			border-color 0.18s ease,
+			box-shadow 0.18s ease;
+	}
+	.btn.primary {
+		background: var(--accent-dark);
+		color: #fff;
+		box-shadow: 0 6px 20px rgba(37, 99, 235, 0.28);
+	}
+	.btn.primary:hover {
+		background: #1e40af;
+		box-shadow: 0 8px 26px rgba(37, 99, 235, 0.35);
+	}
+	.btn.ghost {
+		background: #fff;
+		color: var(--accent-dark);
+		border-color: rgba(37, 99, 235, 0.45);
+	}
+	.btn.ghost:hover {
+		background: var(--accent-soft);
+		border-color: var(--accent-dark);
+	}
+	.grid {
+		display: grid;
+		gap: 1rem;
+	}
+	.grid.pillars {
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	}
+	.grid.featured {
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	}
+	.grid.tri {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	.grid.dual {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.single-card {
+		max-width: 420px;
+	}
+	.segment blockquote {
+		margin: 0;
+		border-left: 4px solid var(--accent-dark);
+		padding: 0.85rem 1rem;
+		background: #f9fafb;
+		border-radius: 0 14px 14px 0;
+		color: var(--ink-muted);
+		font-size: 0.94rem;
+		line-height: 1.7;
+	}
+	.latest-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+	.latest-link {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem 1rem;
+		padding: 0.65rem 0.85rem;
+		border-radius: 12px;
+		text-decoration: none;
+		color: inherit;
+		border: 1px solid transparent;
+		transition:
+			background 0.15s ease,
+			border-color 0.15s ease;
+	}
+	.latest-link:hover {
+		background: #f9fafb;
+		border-color: #e5e7eb;
+	}
+	.latest-title {
+		font-weight: 650;
+		color: var(--ink);
+	}
+	time {
+		font-size: 0.82rem;
+		color: #9ca3af;
+		font-variant-numeric: tabular-nums;
+	}
+	.more-inline {
+		margin: 1rem 0 0;
+		font-size: 0.92rem;
+	}
+	.more-inline a {
+		font-weight: 700;
+		color: var(--accent-dark);
+		text-decoration: none;
+		border-bottom: 2px solid rgba(37, 99, 235, 0.35);
+	}
+	.more-inline a:hover {
+		color: var(--accent);
+	}
+	@media (max-width: 900px) {
+		.grid.tri {
+			grid-template-columns: 1fr;
+		}
+	}
+	@media (max-width: 640px) {
+		.grid.dual {
+			grid-template-columns: 1fr;
+		}
+		.single-card {
+			max-width: none;
+		}
+	}
+</style>

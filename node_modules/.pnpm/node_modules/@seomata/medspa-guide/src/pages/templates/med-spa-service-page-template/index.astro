@@ -1,24 +1,87 @@
 ---
 import PageShell from '../../../layouts/PageShell.astro';
 
-const seoTitle = 'Med Spa Service Page Template | Med Spa Marketing Guide';
+const seoTitle = 'Med Spa Service Page Template | Treatment Page Brief';
 const seoDesc =
-	'Section scaffolding for modality landing pages emphasizing education-forward narrative, disclaimers-first consult routing.';
+	'A service page template for med spas covering patient concern, candidacy, provider proof, process, FAQs, related services, and CTAs.';
 ---
 
 <PageShell title={seoTitle} description={seoDesc}>
-	<h1>Service landing template (education-first)</h1>
-	<ol>
-		<li><strong>Promise-free hero:</strong>
-			Context + modality name + reassurance about individualized candidacy assessments.</li>
-		<li><strong>Differentiators:</strong>
-			Doctor-led vs nurse-led distinctions (only if verifiable)—avoid comparative attacks.</li>
-		<li><strong>Consult journey:</strong>
-			Prep instructions, timeframe ranges, escalation if contraindications suspected.</li>
-		<li><strong>FAQ cluster:</strong>
-			Patient phrasing seeded from coordinator logs (de-identified).</li>
-		<li><strong>Paired CTAs:</strong>
-			Inquiry capture + lower-friction downloadable education where compliant.</li>
-	</ol>
-	<p>Use internal links tying back to clinician bios without fabricating prestige metrics.</p>
+	<h1>Med Spa Service Page Template</h1>
+	<p>
+		This template is a writing brief for treatment pages. It is meant to keep pages specific enough for
+		patients and structured enough for search without drifting into diagnosis or exaggerated outcomes.
+	</p>
+
+	<h2>Page skeleton</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Section</th>
+				<th>Purpose</th>
+				<th>Questions it should answer</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Hero</td>
+				<td>Confirm the treatment and local clinic context.</td>
+				<td>Am I in the right place, and what is the next step?</td>
+			</tr>
+			<tr>
+				<td>Patient concern</td>
+				<td>Reflect the problem or goal in patient language.</td>
+				<td>Is this page about the concern I am trying to solve?</td>
+			</tr>
+			<tr>
+				<td>Candidacy and boundaries</td>
+				<td>Explain what consultation determines.</td>
+				<td>Who usually asks about this, and what cannot be decided online?</td>
+			</tr>
+			<tr>
+				<td>Process</td>
+				<td>Set expectations for consult, treatment, follow-up, and timing.</td>
+				<td>What happens before, during, and after the appointment?</td>
+			</tr>
+			<tr>
+				<td>Provider proof</td>
+				<td>Show who oversees or performs care where appropriate.</td>
+				<td>Why should I trust this clinic with this service?</td>
+			</tr>
+			<tr>
+				<td>FAQs</td>
+				<td>Answer high-friction questions safely.</td>
+				<td>What do patients ask before they are ready to contact us?</td>
+			</tr>
+			<tr>
+				<td>CTA</td>
+				<td>Move the visitor to a measured next step.</td>
+				<td>Should I call, request a consult, book, or ask a question?</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Example brief: filler page</h2>
+	<div class="example-box">
+		<p>
+			<strong>Patient concern:</strong> facial balancing, volume loss, lip shape, or asymmetry. <strong>Proof
+			needed:</strong> provider training, consultation process, photo policy, and realistic expectation
+			language. <strong>CTA:</strong> "Request a filler consultation" with support copy explaining that the
+			consultation determines product choice, placement, and suitability.
+		</p>
+	</div>
+
+	<h2>Internal links to plan</h2>
+	<ul>
+		<li>Provider biography or clinical team page.</li>
+		<li>Related treatment pages patients naturally compare.</li>
+		<li>Review or testimonial page if it is privacy-safe and compliant.</li>
+		<li>Pricing or financing explanation if the clinic publishes it.</li>
+		<li>Contact, consultation, or booking page with tracking in place.</li>
+	</ul>
+
+	<div class="warning-box">
+		<strong>Clinical review:</strong> claims about candidacy, risks, downtime, outcomes, contraindications,
+		and treatment choice should be reviewed by the clinic's qualified clinical lead.
+	</div>
 </PageShell>

@@ -1,0 +1,32 @@
+---
+import PageShell from '../../../layouts/PageShell.astro';
+import PremiumLockedPlaceholder from '../../../components/premium/PremiumLockedPlaceholder.astro';
+import PremiumCheckoutCTA from '../../../components/premium/PremiumCheckoutCTA.astro';
+
+const seoTitle = '本地服务小生意启动包 · 付费资源（原型）· 美国赚钱指南';
+const seoDesc =
+	'本地服务启动结构化草稿包（占位）。占位价 $29；不含执照法律咨询，当前不接支付。';
+---
+
+<PageShell title={seoTitle} description={seoDesc} showPremiumUpsell={false}>
+	<h1>本地服务小生意启动包</h1>
+	<p><strong>原型说明：</strong>标价 <strong>$29</strong> 为占位；<strong>无真实收款</strong>。交付物不包含「稳接单」承诺。</p>
+
+	<h2>适合谁</h2>
+	<p>
+		准备以<strong>上门/同城履约</strong>为主的小生意试错者：需要先把范围写清、把安全沟通写清，再决定是否印传单或投广告。（执照与合同须另询专业人士。）
+	</p>
+
+	<h2>包含哪些内容（规划）</h2>
+	<ul>
+		<li>服务范围一页纸（中英文抬头可选）、爽约政策草稿、首度上门安全清单；</li>
+		<li>低成本获客实验周计划（可与 <a href="/case-breakdowns/local-service-zero-to-clients/">案例拆解</a> 呼应）；</li>
+		<li>成本计算器结构（不包含替你填税法数字）。</li>
+	</ul>
+
+	<h2>免费预览</h2>
+	<p><a href="/guides/local-service-income-us/">美国本地服务类赚钱项目</a> · <a href="/guides/household-services-and-trust-local/">家政与信任写作</a></p>
+
+	<PremiumLockedPlaceholder />
+	<PremiumCheckoutCTA priceDisplay="$29" buttonLabel="解锁完整启动包" />
+</PageShell>

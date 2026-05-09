@@ -54,6 +54,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 							)}
 							imageAlt={post.data.title}
 							category={post.data.category}
+							variant="archive"
 						/>
 					))
 				}
@@ -129,7 +130,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1.2rem;
+		gap: 1.35rem;
 		align-items: stretch;
 	}
 

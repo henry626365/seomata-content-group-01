@@ -1,0 +1,187 @@
+---
+/**
+ * Stripe Checkout → D1 entitlement → GET /api/income/premium/side-hustle-selection-kit
+ * 完整付费正文仅由边缘函数下发，不写进 Astro 静态 HTML。
+ */
+---
+
+<section class="stripe-checkout" aria-label="Stripe Checkout">
+	<form method="POST" action="/api/income/create-checkout">
+		<p class="price">价格：<strong>$19</strong> USD（结账页以 Stripe 显示为准）</p>
+		<button type="submit" class="checkout-btn">解锁完整工具包</button>
+		<p class="hint">
+			将前往 Stripe 托管收银台；本站不直接收集银行卡号。支付成功后由 Webhook 写入授权，并在下方区域加载完整内容（需已部署
+			Cloudflare Pages Functions 与 D1，并配置环境变量）。
+		</p>
+	</form>
+</section>
+
+<div id="premium-unlock-root" class="premium-unlock-root" data-api-slug="side-hustle-selection-kit"></div>
+
+<script>
+	type Section = { title: string; bodyHtml: string };
+	type PremiumJson =
+		| { entitled: false }
+		| {
+				entitled: true;
+				title: string;
+				sections: Section[];
+				disclaimerHtml: string;
+		  };
+
+	function escapeHtml(t: string) {
+		return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+	}
+
+	function renderUnlocked(data: Extract<PremiumJson, { entitled: true }>, into: HTMLElement) {
+		const body =
+			`<article class="premium-unlocked"><h2 class="premium-unlocked-title">${escapeHtml(data.title)}</h2>` +
+			data.sections
+				.map(
+					(s) =>
+						`<section class="premium-section"><h3>${escapeHtml(s.title)}</h3><div class="premium-body">${s.bodyHtml}</div></section>`,
+				)
+				.join('') +
+			`<div class="premium-disclaimer-wrap">${data.disclaimerHtml}</div></article>`;
+		into.innerHTML = body;
+	}
+
+	async function fetchPremium(slug: string): Promise<PremiumJson> {
+		const res = await fetch(`/api/income/premium/${encodeURIComponent(slug)}`, { credentials: 'include' });
+		const data = (await res.json()) as PremiumJson;
+		if (!res.ok) throw new Error('bad_response');
+		return data;
+	}
+
+	(async () => {
+		const root = document.getElementById('premium-unlock-root');
+		const slug = root?.dataset.apiSlug;
+		if (!root || !slug) return;
+
+		const lockedCopy =
+			'<p class="premium-locked-note">若你已在<strong>同一浏览器</strong>完成支付，完整工具包会出现在此处。首次同步可能需要数秒，可刷新页面。更换浏览器或清除 Cookie 后需重新走结账流程以匹配授权。</p>';
+
+		const qs = new URLSearchParams(window.location.search);
+		if (qs.get('checkout') === 'success') {
+			root.innerHTML = '<p class="premium-pending">正在同步访问权限，请稍候…</p>';
+			for (let i = 0; i < 15; i++) {
+				try {
+					const data = await fetchPremium(slug);
+					if (data.entitled) {
+						renderUnlocked(data, root);
+						return;
+					}
+				} catch {
+					root.innerHTML = '<p class="premium-err">暂时无法连接授权接口，请确认站点已部署 Functions，或稍后重试。</p>';
+					return;
+				}
+				await new Promise((r) => setTimeout(r, 700));
+			}
+			root.innerHTML =
+				'<p class="premium-err">仍未检测到授权。请确认 Stripe Webhook 已指向 <code>/api/income/stripe-webhook</code> 且 D1 已迁移；稍后可刷新重试。</p>';
+			return;
+		}
+
+		if (qs.get('checkout') === 'cancel') {
+			root.innerHTML = '<p class="premium-locked-note">已取消结账。需要时可再次点击上方按钮继续。</p>';
+			return;
+		}
+
+		try {
+			const data = await fetchPremium(slug);
+			if (data.entitled) {
+				renderUnlocked(data, root);
+			} else {
+				root.innerHTML = lockedCopy;
+			}
+		} catch {
+			root.innerHTML =
+				'<p class="premium-err">无法加载授权状态。本地 <code>astro dev</code> 不含 Cloudflare Functions，请使用 <code>pnpm cf:pages</code> 或线上环境测试。</p>';
+		}
+	})();
+</script>
+
+<style>
+	.stripe-checkout {
+		margin-top: 1.5rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--card-border);
+	}
+	.stripe-checkout .price {
+		margin: 0 0 0.65rem;
+		font-size: 1.05rem;
+		color: var(--ink);
+	}
+	.checkout-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.68rem 1.35rem;
+		border-radius: 999px;
+		font-weight: 700;
+		font-size: 0.95rem;
+		border: none;
+		cursor: pointer;
+		background: var(--accent-dark);
+		color: #fff;
+		box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+	}
+	.checkout-btn:hover {
+		background: #1e40af;
+		color: #fff;
+	}
+	.stripe-checkout .hint {
+		margin: 0.75rem 0 0;
+		font-size: 0.85rem;
+		color: #6b7280;
+		line-height: 1.55;
+	}
+	.premium-unlock-root {
+		margin-top: 1.5rem;
+		padding: 1rem;
+		border-radius: 14px;
+		background: rgba(37, 99, 235, 0.04);
+		border: 1px dashed rgba(37, 99, 235, 0.25);
+		min-height: 4rem;
+	}
+	.premium-locked-note,
+	.premium-pending,
+	.premium-err {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: var(--ink);
+	}
+	.premium-err {
+		color: #b45309;
+	}
+	:global(.premium-unlocked-title) {
+		margin-top: 0;
+		font-size: 1.35rem;
+	}
+	:global(.premium-section h3) {
+		margin-bottom: 0.5rem;
+		font-size: 1.1rem;
+	}
+	:global(.premium-table) {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.88rem;
+		margin: 0.75rem 0;
+	}
+	:global(.premium-table th),
+	:global(.premium-table td) {
+		border: 1px solid var(--card-border);
+		padding: 0.45rem 0.5rem;
+		vertical-align: top;
+	}
+	:global(.premium-table th) {
+		background: rgba(0, 0, 0, 0.03);
+		text-align: left;
+	}
+	:global(.premium-disclaimer) {
+		font-size: 0.9rem;
+		color: #4b5563;
+		margin-top: 1.25rem;
+	}
+</style>

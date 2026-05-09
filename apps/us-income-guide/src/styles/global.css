@@ -1,0 +1,50 @@
+:root {
+	--accent: #2563eb;
+	--accent-dark: #1d4ed8;
+	--accent-soft: rgba(37, 99, 235, 0.12);
+	--ink: #1f2937;
+	--ink-muted: #4b5563;
+	--surface: #f9fafb;
+	--card-border: #e5e7eb;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	font-family:
+		system-ui,
+		-apple-system,
+		'Segoe UI',
+		'PingFang SC',
+		'Hiragino Sans GB',
+		'Microsoft YaHei',
+		'Noto Sans SC',
+		sans-serif;
+	font-size: 16px;
+	line-height: 1.65;
+	color: var(--ink);
+	background: var(--surface);
+}
+
+a {
+	color: var(--accent-dark);
+}
+
+a:hover {
+	color: var(--accent);
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}

@@ -6,7 +6,8 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "build:massage": "pnpm --filter ./apps/massage-growth build",
-    "build:medspa": "pnpm --filter ./apps/medspa-guide build"
+    "build:medspa": "pnpm --filter ./apps/medspa-guide build",
+    "build:income": "pnpm --filter ./apps/us-income-guide build"
   },
   "packageManager": "pnpm@10.32.1",
   "devDependencies": {

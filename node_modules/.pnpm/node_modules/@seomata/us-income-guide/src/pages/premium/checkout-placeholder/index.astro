@@ -1,0 +1,27 @@
+---
+import PageShell from '../../../layouts/PageShell.astro';
+
+const seoTitle = '结算占位 · 美国赚钱指南（原型）';
+const seoDesc =
+	'Stripe Checkout 计划接入前的占位页面。当前不处理任何真实付款或个人敏感支付信息。';
+---
+
+<PageShell title={seoTitle} description={seoDesc} showPremiumUpsell={false}>
+	<h1>结算占位</h1>
+	<p>
+		<strong>状态说明：</strong>部分资源已改为在商品页直接创建 Stripe Checkout Session（首包：<a
+			href="/premium/side-hustle-selection-kit/">美国副业选择工具包</a>）。本页保留作说明与其他「尚未接入」商品的指引。
+	</p>
+	<h2>线上流程（已落地的一部分）</h2>
+	<ul>
+		<li>POST <code>/api/income/create-checkout</code> → 302 到 Stripe 托管收银台（需配置环境变量与 D1）。</li>
+		<li>Webhook：<code>/api/income/stripe-webhook</code> → 写入 <code>entitlements</code>。</li>
+		<li>GET <code>/api/income/premium/&lt;slug&gt;</code> → 有 Cookie 授权时返回完整 JSON 正文（不进静态 HTML）。</li>
+	</ul>
+	<h2>现在你可以做什么</h2>
+	<ul>
+		<li>返回 <a href="/premium/">付费资源库</a>浏览产品原型。</li>
+		<li>阅读免费教育内容：<a href="/guides/">实用指南索引</a>。</li>
+	</ul>
+	<p><a href="/earnings-disclosure/">收入声明说明</a></p>
+</PageShell>

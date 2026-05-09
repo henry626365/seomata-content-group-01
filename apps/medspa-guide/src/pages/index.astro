@@ -122,32 +122,32 @@ const pillarCards = [
 		href: '/local-seo/',
 		title: 'Local Search Visibility',
 		description: 'A diagnostic for GBP, city intent, service-to-page alignment, reviews, and consultation routes.',
-		image: '/images/med-spa-local-search-system.svg',
-		imageAlt: 'Local discovery system schematic',
+		image: '/images/home-diagnostic-local-search.webp',
+		imageAlt: 'Med spa local search audit materials on a desk',
 		category: 'Diagnostic hub',
 	},
 	{
 		href: '/google-maps/',
 		title: 'Google Maps Operations',
 		description: 'Monthly profile maintenance for categories, services, photos, Q&A, review themes, and tracking links.',
-		image: '/images/med-spa-google-maps-visibility.svg',
-		imageAlt: 'Google Maps profile workflow',
+		image: '/images/home-diagnostic-google-maps.webp',
+		imageAlt: 'Map profile operation notes for a med spa',
 		category: 'Operations',
 	},
 	{
 		href: '/service-pages/',
 		title: 'Aesthetic Service Pages',
 		description: 'A section-by-section editing approach for treatment pages that need both trust and search visibility.',
-		image: '/images/med-spa-service-page-wireframe.svg',
-		imageAlt: 'Service page wireframe',
+		image: '/images/home-diagnostic-service-pages.webp',
+		imageAlt: 'Service page planning materials for aesthetic treatments',
 		category: 'Page structure',
 	},
 	{
 		href: '/patient-reviews/',
 		title: 'Patient Reviews & Reputation',
 		description: 'Review request timing, response tone, onsite trust signals, and feedback themes for page updates.',
-		image: '/images/med-spa-consultation-funnel.svg',
-		imageAlt: 'Review and trust workflow',
+		image: '/images/home-diagnostic-reviews.webp',
+		imageAlt: 'Review workflow cards for med spa reputation planning',
 		category: 'Trust',
 	},
 ];
@@ -157,24 +157,24 @@ const toolCards = [
 		href: '/templates/med-spa-seo-checklist/',
 		title: 'Med Spa SEO Checklist',
 		description: 'A recurring worksheet for checking entity consistency, service pages, reviews, and consult paths.',
-		image: '/images/med-spa-seo-checklist-preview.svg',
-		imageAlt: 'SEO checklist preview',
+		image: '/images/home-tool-seo-checklist.webp',
+		imageAlt: 'Med spa SEO checklist worksheet on an editorial desk',
 		category: 'Template',
 	},
 	{
 		href: '/templates/consultation-cta-examples/',
 		title: 'Consultation CTA Examples',
 		description: 'CTA examples organized by patient certainty, treatment complexity, and booking friction.',
-		image: '/images/med-spa-consultation-funnel.svg',
-		imageAlt: 'Consultation CTA planning',
+		image: '/images/home-tool-consultation-cta.webp',
+		imageAlt: 'Consultation CTA planning cards and booking path notes',
 		category: 'Template',
 	},
 	{
 		href: '/case-breakdowns/med-spa-website-conversion-breakdown/',
 		title: 'Traffic Without Consultations',
 		description: 'An editorial teardown format for separating observation, likely friction, evidence, and testable edits.',
-		image: '/images/med-spa-consultation-funnel.svg',
-		imageAlt: 'Conversion breakdown',
+		image: '/images/home-tool-conversion-teardown.webp',
+		imageAlt: 'Website conversion teardown notes and analytics cards',
 		category: 'Breakdown',
 	},
 ];
@@ -238,8 +238,8 @@ const latest = latestIds
 				primaryHref="/blog/med-spa-local-seo-checklist/"
 				secondaryLabel="Choose a diagnostic hub"
 				secondaryHref="/local-seo/"
-				featuredImage="/images/med-spa-local-search-system.svg"
-				featuredImageAlt="System diagram illustrating local discovery for aesthetic practices"
+				featuredImage="/images/home-med-spa-editorial-workspace.webp"
+				featuredImageAlt="Editorial med spa search audit workspace with map and service notes"
 			/>
 
 			<section class="editorial-panel">
@@ -262,8 +262,9 @@ const latest = latestIds
 				/>
 				<div class="question-grid">
 					{
-						clinicQuestions.map((item) => (
+						clinicQuestions.map((item, i) => (
 							<article class="question-card">
+								<span class="question-index">Q{String(i + 1).padStart(2, '0')}</span>
 								<h3>{item.question}</h3>
 								<p>{item.answer}</p>
 								<a href={item.href}>{item.label}</a>
@@ -305,7 +306,7 @@ const latest = latestIds
 					description="Choose the hub that matches the bottleneck. The pages are built as field notes, not keyword folders."
 				/>
 				<div class="card-grid">
-					{pillarCards.map((p) => <ArticleCard {...p} />)}
+					{pillarCards.map((p) => <ArticleCard {...p} variant="homeResource" />)}
 				</div>
 			</section>
 
@@ -333,7 +334,7 @@ const latest = latestIds
 					description="Tools for teams that need a concrete artifact at the end of the review."
 				/>
 				<div class="card-grid tri">
-					{toolCards.map((t) => <ArticleCard {...t} />)}
+					{toolCards.map((t) => <ArticleCard {...t} variant="homeResource" />)}
 				</div>
 			</section>
 
@@ -343,7 +344,7 @@ const latest = latestIds
 					description="A short list of newer guides worth reading when quality, competition, or conversion is the current concern."
 				/>
 				<div class="card-grid">
-					{latest.map((item) => item && <ArticleCard {...item} />)}
+					{latest.map((item) => item && <ArticleCard {...item} variant="homeResource" />)}
 				</div>
 				<p class="more-guides">
 					<a class="text-link" href="/blog/">Browse the full guide archive</a>
@@ -428,7 +429,7 @@ const latest = latestIds
 	.card-grid {
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 1.15rem;
+		gap: 1.25rem;
 		align-items: stretch;
 	}
 
@@ -438,22 +439,45 @@ const latest = latestIds
 		border-radius: 16px;
 		padding: 1rem 1.05rem;
 		background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+		transition:
+			border-color 0.2s ease,
+			box-shadow 0.22s ease,
+			transform 0.22s ease;
+	}
+
+	.question-card:hover,
+	.framework-card:hover {
+		border-color: #9ec4e8;
+		box-shadow: 0 10px 28px rgba(11, 53, 85, 0.075);
+		transform: translateY(-2px);
+	}
+
+	.question-index {
+		display: inline-block;
+		margin-bottom: 0.6rem;
+		color: #a26d35;
+		font-size: 0.72rem;
+		font-weight: 850;
+		letter-spacing: 0.1em;
 	}
 
 	.question-card h3,
 	.framework-card h3 {
 		margin: 0 0 0.55rem;
 		color: #0b3555;
-		font-size: 1rem;
-		line-height: 1.32;
+		font-size: clamp(1.05rem, 1.25vw, 1.16rem);
+		line-height: 1.26;
+		font-weight: 800;
+		transition: color 0.2s ease;
 	}
 
 	.question-card p,
 	.framework-card p {
 		margin: 0;
 		color: #4a6b82;
-		font-size: 0.9rem;
-		line-height: 1.62;
+		font-size: clamp(0.92rem, 1.05vw, 0.98rem);
+		line-height: 1.64;
+		transition: color 0.2s ease;
 	}
 
 	.question-card a {
@@ -466,11 +490,19 @@ const latest = latestIds
 		border-bottom: 2px solid #d4a574;
 	}
 
+	.question-card:hover h3,
+	.question-card:hover p,
+	.question-card:hover a,
+	.framework-card:hover h3,
+	.framework-card:hover p {
+		color: #0b63b6;
+	}
+
 	.framework-card span {
 		display: inline-block;
 		margin-bottom: 0.6rem;
 		color: #a26d35;
-		font-size: 0.74rem;
+		font-size: 0.78rem;
 		font-weight: 800;
 		letter-spacing: 0.08em;
 	}

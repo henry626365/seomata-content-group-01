@@ -1,0 +1,57 @@
+---
+
+---
+
+<div class="locked-wrap">
+	<div class="locked-head">
+		<span class="badge">付费正文不在静态 HTML</span>
+		<p class="locked-title">完整内容与可下载资源</p>
+	</div>
+	<p class="locked-body">
+		此处<strong>不写入</strong>完整工具包正文或下载物细节。已在 Cloudflare Pages 部署时，付费用户会通过
+		<code>/api/income/premium/</code>
+		在本次支付绑定的浏览器 Cookie 下有权限时才收到完整段落（见下方解锁区域）。
+	</p>
+	<p class="locked-foot"><strong>不展示</strong>购买人数或用户评价。</p>
+</div>
+
+<style>
+	.locked-wrap {
+		margin: 1.25rem 0;
+		padding: 1rem 1.1rem 1.1rem;
+		border-radius: 14px;
+		border: 1px dashed #9ca3af;
+		background: #f9fafb;
+	}
+	.locked-head {
+		margin-bottom: 0.55rem;
+	}
+	.badge {
+		display: inline-block;
+		font-size: 0.68rem;
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent-dark);
+		background: #e0e7ff;
+		padding: 0.2rem 0.55rem;
+		border-radius: 999px;
+	}
+	.locked-title {
+		margin: 0.45rem 0 0;
+		font-size: 1rem;
+		font-weight: 800;
+		color: var(--ink);
+	}
+	.locked-body,
+	.locked-foot {
+		margin: 0 0 0.5rem;
+		font-size: 0.91rem;
+		line-height: 1.65;
+		color: var(--ink-muted);
+	}
+	.locked-foot {
+		margin-bottom: 0;
+		font-size: 0.86rem;
+	}
+</style>

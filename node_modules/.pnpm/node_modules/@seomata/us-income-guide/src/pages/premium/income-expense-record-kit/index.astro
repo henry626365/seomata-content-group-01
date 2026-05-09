@@ -1,0 +1,30 @@
+---
+import PageShell from '../../../layouts/PageShell.astro';
+import PremiumLockedPlaceholder from '../../../components/premium/PremiumLockedPlaceholder.astro';
+import PremiumCheckoutCTA from '../../../components/premium/PremiumCheckoutCTA.astro';
+
+const seoTitle = '收入与支出记录模板 · 付费资源（原型）· 美国赚钱指南';
+const seoDesc =
+	'多通道收支台账结构化模板包（占位）。占位价 $12；非报税表格，当前不接支付。';
+---
+
+<PageShell title={seoTitle} description={seoDesc} showPremiumUpsell={false}>
+	<h1>收入与支出记录模板</h1>
+	<p><strong>原型说明：</strong><strong>$12</strong> 为占位；<strong>无真实支付</strong>。本模板包旨在帮助你<strong>与会计师对齐事实</strong>，不包含报税指令。</p>
+
+	<h2>适合谁</h2>
+	<p>同时拥有工资、副业平台、零散转账等多通道收支，需要从「记事习惯」升级到「可对账条目」的个人或小团队。</p>
+
+	<h2>包含哪些内容（规划）</h2>
+	<ul>
+		<li>多 sheet 的电子表格脚手架（类目、税率字段仅为占位示例，须经 CPA 调整）；</li>
+		<li>月末对账备忘录；</li>
+		<li>与免费页 <a href="/templates/income-expense-log/">收入与支出记录模板</a> 的递进关系说明。</li>
+	</ul>
+
+	<h2>免费预览</h2>
+	<p><a href="/templates/income-expense-log/">站内免费记录说明</a> · <a href="/tax-compliance/">税务与合规基础</a></p>
+
+	<PremiumLockedPlaceholder />
+	<PremiumCheckoutCTA priceDisplay="$12" buttonLabel="解锁完整模板包" />
+</PageShell>

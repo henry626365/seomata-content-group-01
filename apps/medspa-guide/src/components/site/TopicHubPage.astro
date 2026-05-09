@@ -109,7 +109,7 @@ const resolvedCards = hub.cards.map((card) => {
 					</div>
 				</div>
 				<div class="card-grid">
-					{resolvedCards.map((card) => <ArticleCard {...card} />)}
+					{resolvedCards.map((card) => <ArticleCard {...card} variant="hubResource" />)}
 				</div>
 			</section>
 
@@ -356,7 +356,7 @@ const resolvedCards = hub.cards.map((card) => {
 	.card-grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1.15rem;
+		gap: 1.3rem;
 		align-items: stretch;
 	}
 

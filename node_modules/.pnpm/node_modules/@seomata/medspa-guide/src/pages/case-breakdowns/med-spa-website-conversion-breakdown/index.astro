@@ -1,27 +1,79 @@
 ---
 import PageShell from '../../../layouts/PageShell.astro';
 
-const seoTitle = 'Hypothetical: Traffic vs consultations gap | Educational breakdown';
+const seoTitle = 'Breakdown: Med Spa Traffic Without Consultations';
 const seoDesc =
-	'Teaching narrative exploring routing friction—not a client engagement, no metrics, illustrative reasoning only.';
+	'An educational med spa website conversion breakdown showing how to inspect traffic, trust, CTAs, forms, and inquiry quality.';
 ---
 
 <PageShell title={seoTitle} description={seoDesc}>
-	<h1>Why hypothetical traffic might not yield consults</h1>
+	<h1>Breakdown: Traffic Without Consultations</h1>
 	<p>
-		<strong>Fictional framing:</strong>
-		imagine Practice H with robust Search Console impressions but flat CRM inquiries. Observation often centers on modality
-		overload: lasers, toxins, and membership bundles compete in the hero without prioritized routing.
+		This is an educational teardown, not a client case study. Use it to train the habit of separating
+		observation, hypothesis, evidence, and next action when a clinic says, "The site gets traffic, but
+		consultations are weak."
 	</p>
-	<h2>Interpretive hypotheses</h2>
+
+	<h2>Scenario</h2>
+	<div class="note-box">
+		<p>
+			A single-location med spa receives organic visits to several treatment pages. The owner sees traffic
+			in analytics, but the front desk reports few serious inquiries. The site has multiple CTAs, a booking
+			widget, and long service copy, yet visitors seem to leave before contacting the clinic.
+		</p>
+	</div>
+
+	<h2>Observation vs interpretation</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Observation</th>
+				<th>Possible interpretation</th>
+				<th>Evidence needed</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Visitors land on service pages but do not complete forms.</td>
+				<td>The CTA may be too early, too vague, or too demanding.</td>
+				<td>Form analytics, click tracking, mobile recording, and field drop-off notes.</td>
+			</tr>
+			<tr>
+				<td>Hero copy names several services at once.</td>
+				<td>Patients may not know which path fits their concern.</td>
+				<td>Search query groups, heatmap, and support questions from front desk staff.</td>
+			</tr>
+			<tr>
+				<td>Reviews are on a separate page, not treatment pages.</td>
+				<td>Proof appears too late for high-consideration services.</td>
+				<td>Review themes matched to the target service page.</td>
+			</tr>
+			<tr>
+				<td>Booking button opens a generic scheduler.</td>
+				<td>The next step may not match service complexity.</td>
+				<td>Scheduler path QA and call notes from confused patients.</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Small experiments before a redesign</h2>
+	<ol>
+		<li>Rewrite the top of one service page around patient concern, not the clinic's full service menu.</li>
+		<li>Add a mid-page proof block: provider context, consultation expectations, and two privacy-safe review themes.</li>
+		<li>Replace generic "Book now" with "Request a consultation" plus one sentence explaining what happens next.</li>
+		<li>Track calls, forms, scheduler starts, scheduler completions, and qualified consults separately.</li>
+	</ol>
+
+	<h2>What would make the experiment credible?</h2>
 	<ul>
-		<li>Organic queries land on generalized home carousel → patients stall before modality clarity.</li>
-		<li>Front desk answers faster than asynchronous forms; orphaned forms yield silent drop-off.</li>
-		<li>Incongruence between GBP treatments and onsite hero taxonomy confuses continuity.</li>
+		<li>The same service page is measured before and after the edit.</li>
+		<li>Traffic source and seasonality are noted.</li>
+		<li>Front desk feedback is collected, not just form count.</li>
+		<li>The clinic defines what a useful consultation request looks like.</li>
 	</ul>
-	<h2>Non-data actions teams can still explore</h2>
-	<ul>
-		<li>Conduct five moderated usability journeys with staff roleplaying patient archetypes.</li>
-		<li>Temporarily prune hero carousel to spotlight two flagship intents + consult CTA parity.</li>
-	</ul>
+
+	<div class="warning-box">
+		<strong>Avoid the easy story:</strong> traffic without consults is not automatically a design problem.
+		It may be a measurement, trust, service clarity, pricing, or routing problem.
+	</div>
 </PageShell>

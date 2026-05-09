@@ -1,0 +1,19 @@
+# Cloudflare Pages + D1 + Functions live in apps/us-income-guide
+name = "us-income-guide"
+compatibility_date = "2026-05-09"
+pages_build_output_dir = "dist"
+
+# Replace with your D1 UUID from: wrangler d1 create us-income-guide-db
+[[d1_databases]]
+binding = "DB"
+database_name = "us-income-guide-db"
+database_id = "00000000-0000-0000-0000-000000000001"
+
+# Secrets / vars (dashboard or wrangler secret put):
+#   STRIPE_SECRET_KEY
+#   STRIPE_WEBHOOK_SECRET
+#   STRIPE_PRICE_SIDE_HUSTLE_SELECTION_KIT
+#
+# Preview/local only (do not commit real secrets):
+# [vars]
+# STRIPE_PRICE_SIDE_HUSTLE_SELECTION_KIT = "price_test_xxx"

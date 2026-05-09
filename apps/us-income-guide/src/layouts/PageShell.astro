@@ -1,0 +1,119 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import SiteFooter from '../components/home/SiteFooter.astro';
+import PremiumUpsell from '../components/premium/PremiumUpsell.astro';
+
+type Props = {
+	title: string;
+	description: string;
+	/** 文章页底部是否展示付费资源推荐（付费落地页建议关闭） */
+	showPremiumUpsell?: boolean;
+};
+
+const { title, description, showPremiumUpsell = true } = Astro.props;
+
+const pathnameNorm = Astro.url.pathname.replace(/\/$/, '') || '/';
+/** 免责/结账/付费落地页不出现底部付费推荐（其余文章型页面默认开启） */
+const premiumCtaPathBlocked =
+	pathnameNorm === '/about' ||
+	pathnameNorm.startsWith('/premium') ||
+	pathnameNorm === '/disclaimer' ||
+	pathnameNorm === '/editorial-policy' ||
+	pathnameNorm === '/contact' ||
+	pathnameNorm === '/privacy' ||
+	pathnameNorm === '/earnings-disclosure';
+
+const showPremiumUpsellEffective = premiumCtaPathBlocked ? false : showPremiumUpsell;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body class="shell-body">
+		<Header />
+		<main class="shell-main">
+			<article class="shell-article prose">
+				<slot />
+			</article>
+			{showPremiumUpsellEffective ? <PremiumUpsell /> : null}
+		</main>
+		<SiteFooter />
+	</body>
+</html>
+
+<style>
+	.shell-body {
+		margin: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		background: linear-gradient(180deg, #f9fafb 0%, #f3f4f6 40%, #ffffff 100%);
+		color: var(--ink);
+	}
+	.shell-main {
+		flex: 1;
+		width: min(900px, calc(100% - clamp(1.25rem, 5vw, 2.75rem)));
+		margin: 0 auto;
+		padding: clamp(1.35rem, 3.8vw, 2.35rem) 0 clamp(2.25rem, 6vw, 3.35rem);
+	}
+	.shell-article :global(h1) {
+		margin: 0 0 0.75rem;
+		font-size: clamp(1.5rem, 3vw, 1.95rem);
+		color: var(--ink);
+		line-height: 1.2;
+		font-weight: 850;
+		letter-spacing: -0.02em;
+	}
+	.shell-article :global(p) {
+		margin: 0 0 1rem;
+		line-height: 1.74;
+		color: var(--ink-muted);
+		font-size: clamp(0.97rem, 1.35vw, 1.045rem);
+	}
+	.shell-article :global(h2) {
+		margin: 1.5rem 0 0.65rem;
+		color: var(--ink);
+		font-size: clamp(1.15rem, 2vw, 1.35rem);
+		line-height: 1.28;
+		font-weight: 800;
+	}
+	.shell-article :global(h3) {
+		margin: 1.1rem 0 0.4rem;
+		color: var(--ink);
+		font-size: 1rem;
+		line-height: 1.3;
+		font-weight: 750;
+	}
+	.shell-article :global(ul),
+	.shell-article :global(ol) {
+		margin: 0 0 1rem;
+		padding-left: 1.3rem;
+		color: var(--ink-muted);
+		line-height: 1.68;
+	}
+	.shell-article :global(li) {
+		margin-bottom: 0.35rem;
+	}
+	.shell-article :global(a) {
+		color: var(--accent-dark);
+	}
+	.shell-article {
+		background: #fff;
+		border: 1px solid var(--card-border);
+		border-radius: 18px;
+		padding: clamp(1.2rem, 3vw, 1.85rem);
+		box-shadow: 0 12px 40px rgba(31, 41, 55, 0.055);
+	}
+	.shell-article :global(blockquote) {
+		margin: 0 0 1rem;
+		border-left: 4px solid var(--accent);
+		padding: 0.75rem 1rem;
+		background: #f9fafb;
+		color: var(--ink-muted);
+		border-radius: 0 12px 12px 0;
+		font-size: 0.94rem;
+	}
+</style>

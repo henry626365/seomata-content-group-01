@@ -1,0 +1,32 @@
+---
+import PageShell from '../../../layouts/PageShell.astro';
+import PremiumLockedPlaceholder from '../../../components/premium/PremiumLockedPlaceholder.astro';
+import PremiumCheckoutCTA from '../../../components/premium/PremiumCheckoutCTA.astro';
+
+const seoTitle = '自由职业客户沟通模板 · 付费资源（原型）· 美国赚钱指南';
+const seoDesc =
+	'报价、里程碑与争议沟通的措辞框架占位。占位价 $14；非法律合同，当前不接支付。';
+---
+
+<PageShell title={seoTitle} description={seoDesc} showPremiumUpsell={false}>
+	<h1>自由职业客户沟通模板</h1>
+	<p><strong>原型说明：</strong><strong>$14</strong> 为占位标价；不涉及真实结账。<strong>本包不构成法律协议</strong>，重大合同须由律师审定。</p>
+
+	<h2>适合谁</h2>
+	<p>
+		刚接平台单或直销客户，需要把<strong>范围、里程碑、改动次数</strong>写进邮件/Offer 里的自由职业者；希望降低「口头同意后扯皮」概率。
+	</p>
+
+	<h2>包含哪些内容（规划）</h2>
+	<ul>
+		<li>Cold outreach / 询价回复 / 提价与延期三类邮件骨架；</li>
+		<li>里程碑验收与签字提示语（仍须配合你的报价单结构）；</li>
+		<li>争议升级到平台前的沟通话术（不包含伪造证据教学）。</li>
+	</ul>
+
+	<h2>免费预览</h2>
+	<p><a href="/guides/freelance-client-pipeline-basics/">自由职业客户管道</a> · <a href="/guides/remote-work-communication-and-expectations/">远程沟通</a></p>
+
+	<PremiumLockedPlaceholder />
+	<PremiumCheckoutCTA priceDisplay="$14" buttonLabel="解锁完整模板包" />
+</PageShell>

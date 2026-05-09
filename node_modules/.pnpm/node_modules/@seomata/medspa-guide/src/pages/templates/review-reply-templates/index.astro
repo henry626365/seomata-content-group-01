@@ -1,34 +1,74 @@
 ---
 import PageShell from '../../../layouts/PageShell.astro';
 
-const seoTitle = 'Review Reply Template Pack | Med Spa Marketing Guide';
+const seoTitle = 'Review Reply Templates for Med Spas';
 const seoDesc =
-	'Draft scaffolding for ecstatic, nuanced, dissatisfied patient reviews—finalize with HIPAA counsel prior to publishing.';
+	'Review reply templates for med spas with privacy-safe response patterns for positive, mixed, delayed, and dissatisfied reviews.';
 ---
 
 <PageShell title={seoTitle} description={seoDesc}>
-	<h1>Review reply template pack</h1>
+	<h1>Review Reply Templates for Med Spas</h1>
 	<p>
-		Keep replies short, appreciative, HIPAA-safe—never clinically debate in public forums. Customize voice for brand tonality.
+		Public review replies should sound human without confirming patient details. Use these as drafting
+		patterns, then adapt them to the clinic's voice and compliance process.
 	</p>
-	<h2>Warm-positive</h2>
-	<blockquote>
-		“We’re thankful you entrusted our team—{' '}
-		<code>[modality/context]</code>
-		journeys hinge on teamwork. Warmly inviting you back for future skin health check-ins.”
-	</blockquote>
-	<h2>Constructively mixed</h2>
-	<blockquote>
-		“We hear your experience matters more than optics; we’d value continuing privately at{' '}
-		<code>[secure channel]</code>
-		{' '}
-		to ensure follow-up.”
-	</blockquote>
-	<h2>Urgent dissatisfied</h2>
-	<blockquote>
-		“Our leadership will prioritize understanding your concerns—please expect outreach through{' '}
-		<code>[designated liaison]</code>
-		{' '}
-		within [SLA span]. Patient safety anchors every response.”
-	</blockquote>
+
+	<h2>Reply templates</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Review type</th>
+				<th>Draft reply</th>
+				<th>Why it works</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Warm positive</td>
+				<td>Thank you for sharing this. Our team is grateful for the opportunity to support patients with care, clarity, and follow-through.</td>
+				<td>Appreciative, but does not confirm a service or visit detail.</td>
+			</tr>
+			<tr>
+				<td>Mentions staff</td>
+				<td>We appreciate your kind words about the team. We will share this internally, and we are glad the experience felt supportive.</td>
+				<td>Recognizes staff praise without adding private context.</td>
+			</tr>
+			<tr>
+				<td>Mixed experience</td>
+				<td>Thank you for taking the time to share this. We would value the chance to understand the concern directly through our private follow-up channel.</td>
+				<td>Moves details out of public view while sounding accountable.</td>
+			</tr>
+			<tr>
+				<td>Delay or scheduling issue</td>
+				<td>We are sorry the timing did not meet expectations. Please contact our team directly so we can review what happened and improve the experience.</td>
+				<td>Owns the experience without debating publicly.</td>
+			</tr>
+			<tr>
+				<td>Highly dissatisfied</td>
+				<td>We take concerns seriously and would like to review this through the appropriate private channel. Please contact our office manager so we can follow up.</td>
+				<td>Calm, direct, and avoids clinical discussion.</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Before publishing a reply</h2>
+	<ul>
+		<li>Remove any treatment confirmation, appointment detail, diagnosis, or outcome discussion.</li>
+		<li>Keep the tone appreciative and brief.</li>
+		<li>Use a private channel for details, especially when the review is negative or medically specific.</li>
+		<li>Do not offer incentives, discounts, or public compensation in exchange for edits.</li>
+	</ul>
+
+	<h2>Example adjustment</h2>
+	<div class="example-box">
+		<p>
+			Instead of "We are glad your Botox appointment went well," use "We are glad the experience felt
+			supportive." The second version expresses appreciation without confirming a specific treatment.
+		</p>
+	</div>
+
+	<div class="warning-box">
+		<strong>Privacy note:</strong> these are drafting examples only. Review replies should follow platform
+		rules, HIPAA-aware communication practices, and the clinic's legal/compliance guidance.
+	</div>
 </PageShell>

@@ -1,0 +1,50 @@
+---
+interface Props {
+	/** 占位价格展示，例如 "$19" */
+	priceDisplay: string;
+	buttonLabel?: string;
+}
+
+const { priceDisplay, buttonLabel = '解锁完整资源' } = Astro.props;
+---
+
+<section class="price-row" aria-label="占位结算">
+	<p class="price">占位价格：<strong>{priceDisplay}</strong> USD</p>
+	<a class="checkout-btn" href="/premium/checkout-placeholder/">{buttonLabel}</a>
+	<p class="hint">跳转至 Stripe Checkout 占位页；当前不产生任何费用。</p>
+</section>
+
+<style>
+	.price-row {
+		margin-top: 1.5rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--card-border);
+	}
+	.price-row .price {
+		margin: 0 0 0.65rem;
+		font-size: 1.05rem;
+		color: var(--ink);
+	}
+	.checkout-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.68rem 1.35rem;
+		border-radius: 999px;
+		font-weight: 700;
+		font-size: 0.95rem;
+		text-decoration: none;
+		background: var(--accent-dark);
+		color: #fff;
+		box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+	}
+	.checkout-btn:hover {
+		background: #1e40af;
+		color: #fff;
+	}
+	.price-row .hint {
+		margin: 0.75rem 0 0;
+		font-size: 0.85rem;
+		color: #6b7280;
+	}
+</style>

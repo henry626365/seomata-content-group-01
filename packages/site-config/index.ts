@@ -78,6 +78,26 @@ export const sites = {
       { label: "Guides", href: "/blog" },
       { label: "About", href: "/about" }
     ]
+  },
+  usIncomeGuide: {
+    id: "us-income-guide",
+    name: "美国赚钱指南",
+    domain: "https://us-income-guide.pages.dev",
+    niche: "美国收入机会与副业指南",
+    description:
+      "面向在美国生活、工作、创业和寻找副业机会的人群，提供合法、现实、可执行的赚钱路径、线上收入、本地服务和防骗指南。",
+    primaryColor: "#1F2937",
+    accentColor: "#2563EB",
+    targetServiceUrl: "",
+    navigation: [
+      { label: "赚钱路径", href: "/earning-paths/" },
+      { label: "副业项目", href: "/side-projects/" },
+      { label: "线上收入", href: "/online-income/" },
+      { label: "本地服务", href: "/local-services/" },
+      { label: "找工作", href: "/jobs/" },
+      { label: "实用指南", href: "/guides/" },
+      { label: "关于", href: "/about/" }
+    ]
   }
 } as const;
 

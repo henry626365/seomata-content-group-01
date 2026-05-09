@@ -1,0 +1,30 @@
+---
+import PageShell from '../../../layouts/PageShell.astro';
+import PremiumLockedPlaceholder from '../../../components/premium/PremiumLockedPlaceholder.astro';
+import PremiumCheckoutCTA from '../../../components/premium/PremiumCheckoutCTA.astro';
+
+const seoTitle = '美国赚钱机会防骗清单 · 付费资源（原型）· 美国赚钱指南';
+const seoDesc =
+	'防骗自检增强版（占位）。占位价 $9；完整题库未写入静态 HTML，当前不接支付。';
+---
+
+<PageShell title={seoTitle} description={seoDesc} showPremiumUpsell={false}>
+	<h1>美国赚钱机会防骗清单</h1>
+	<p><strong>原型说明：</strong>标价 <strong>$9</strong> 为占位；<strong>无任何真实结账</strong>。不展示销量或用户评价。</p>
+
+	<h2>适合谁</h2>
+	<p>常常被「限时名额」「熟人带你躺赚」话术打断判断力，希望用<strong>可打印勾选表</strong>强制放慢决策的人。</p>
+
+	<h2>包含哪些内容（规划）</h2>
+	<ul>
+		<li>分层清单：身份核验、资金流、话术压力、社交网络交叉验证扩展题；</li>
+		<li>与公开 <a href="/templates/income-scam-checklist/">防骗清单</a>对齐的升级版字段（未定稿）；</li>
+		<li>止损行动备忘（致电银行、保留证据链路），不涉及报复或灰色操作。</li>
+	</ul>
+
+	<h2>免费预览</h2>
+	<p><a href="/guides/recognize-income-scams-us/">如何识别美国常见赚钱骗局</a> · <a href="/scam-prevention/">防骗指南栏目</a></p>
+
+	<PremiumLockedPlaceholder />
+	<PremiumCheckoutCTA priceDisplay="$9" buttonLabel="解锁完整清单" />
+</PageShell>
