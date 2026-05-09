@@ -1,6 +1,6 @@
 ---
 title: "Med Spa Service Page SEO: How to Build Treatment Pages That Rank and Convert"
-description: 'Learn med spa service page SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to build treatment pages that answer patient concerns, show provider proof, support local search, and guide consultation decisions."
 pubDate: '2025-07-20'
 updatedDate: '2025-07-20'
 category: 'Med Spa SEO Strategy'

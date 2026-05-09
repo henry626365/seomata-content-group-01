@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO vs Social Media: Why Search Captures Different Demand"
-description: 'Learn med spa SEO vs social media with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "Why search and social capture different kinds of demand, and how med spas should avoid measuring them as if they do the same job."
 pubDate: '2025-12-06'
 updatedDate: '2025-12-06'
 category: 'Med Spa SEO Strategy'

@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO in High-Income Markets: Competing Where Every Click Is Expensive"
-description: 'Learn med spa SEO high income markets with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How med spas in high-income markets can compete when patient expectations, ad costs, and proof requirements are all higher."
 pubDate: '2026-04-09'
 updatedDate: '2026-04-09'
 category: "Local SEO & Google Maps"

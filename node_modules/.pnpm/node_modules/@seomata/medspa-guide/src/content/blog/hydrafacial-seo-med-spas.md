@@ -1,6 +1,6 @@
 ---
 title: "HydraFacial SEO for Med Spas: Turning Facial Searches Into Repeat Visits"
-description: 'Learn HydraFacial SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to build HydraFacial visibility with recurring-treatment intent, local proof, membership messaging, and clear booking paths."
 pubDate: '2025-06-21'
 updatedDate: '2025-06-21'
 category: 'Aesthetic Service Page SEO'

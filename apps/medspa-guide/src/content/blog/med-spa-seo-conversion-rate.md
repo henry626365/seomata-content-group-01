@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO Conversion: Turning Organic Traffic Into Booked Consultations"
-description: 'Learn med spa SEO conversion with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to inspect the gap between organic traffic and booked consultations across CTAs, forms, proof, pricing language, and mobile paths."
 pubDate: '2025-09-16'
 updatedDate: '2025-09-16'
 category: 'Website Conversion'

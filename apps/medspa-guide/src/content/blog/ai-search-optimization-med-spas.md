@@ -1,6 +1,6 @@
 ---
 title: "AI Search Optimization for Med Spas: Preparing for Answer Engines and AI Recommendations"
-description: 'Learn AI search optimization for med spas with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How aesthetic practices can prepare content for AI answers by making services, providers, locations, policies, and patient questions easier to verify."
 pubDate: '2025-09-09'
 updatedDate: '2025-09-09'
 category: 'Med Spa SEO Strategy'

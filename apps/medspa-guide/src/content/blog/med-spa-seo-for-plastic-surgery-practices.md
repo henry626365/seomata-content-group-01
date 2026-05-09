@@ -1,6 +1,6 @@
 ---
 title: 'Med Spa SEO for Plastic Surgery Practices With Non-Surgical Services'
-description: 'Learn med spa SEO for plastic surgery with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How plastic surgery practices can organize SEO for non-surgical aesthetic services without blurring clinical and spa intent."
 pubDate: '2026-01-04'
 updatedDate: '2026-01-04'
 category: 'Med Spa SEO Strategy'

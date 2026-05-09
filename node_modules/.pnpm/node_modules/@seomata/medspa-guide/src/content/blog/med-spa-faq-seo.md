@@ -1,6 +1,6 @@
 ---
 title: "Med Spa FAQ SEO: How to Answer Patient Questions and Support Rankings"
-description: 'Learn med spa FAQ SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "A guide to writing med spa FAQs that reduce booking anxiety, support treatment pages, and avoid overstepping into medical advice."
 pubDate: '2026-02-09'
 updatedDate: '2026-02-09'
 category: 'Website Conversion'

@@ -1,6 +1,6 @@
 ---
 title: "Med Spa Image SEO: Photos, Alt Text, Before-and-After Galleries, and Page Speed"
-description: 'Learn med spa image SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How photos, alt text, galleries, before-and-after policies, compression, and captions can support trust without slowing the site down."
 pubDate: '2026-01-26'
 updatedDate: '2026-01-26'
 category: 'Website Conversion'

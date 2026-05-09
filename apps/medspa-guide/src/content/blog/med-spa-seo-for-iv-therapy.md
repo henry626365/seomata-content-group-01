@@ -1,6 +1,6 @@
 ---
 title: "IV Therapy SEO for Med Spas: Local Search Strategy With Medical Trust"
-description: 'Learn IV therapy SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to approach IV therapy SEO with local intent, wellness positioning, medical trust, and careful claims language."
 pubDate: '2026-03-25'
 updatedDate: '2026-03-25'
 category: 'Aesthetic Service Page SEO'

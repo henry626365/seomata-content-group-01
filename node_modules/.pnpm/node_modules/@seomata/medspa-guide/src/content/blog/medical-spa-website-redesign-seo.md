@@ -1,6 +1,6 @@
 ---
 title: "Medical Spa Website Redesign SEO: How to Relaunch Without Losing Rankings"
-description: 'Learn medical spa website redesign SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to plan a med spa website redesign without losing rankings, tracking, local signals, content equity, or conversion paths."
 pubDate: '2026-01-11'
 updatedDate: '2026-01-11'
 category: 'Website Conversion'

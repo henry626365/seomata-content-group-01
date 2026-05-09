@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO for Competitive Cities: How to Stand Out in Crowded Search Results"
-description: 'Learn med spa SEO competitive cities with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How med spas in crowded cities can improve search visibility with sharper service pages, local differentiation, and better trust signals."
 pubDate: '2026-04-23'
 updatedDate: '2026-04-23'
 category: "Local SEO & Google Maps"

@@ -1,6 +1,6 @@
 ---
 title: "Filler SEO for Med Spas: Ranking for Lip Filler, Cheek Filler, and Facial Balancing"
-description: 'Learn filler SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "A search and page-structure guide for filler services, including lip filler, cheek filler, facial balancing, and nearby consult intent."
 pubDate: '2025-05-30'
 updatedDate: '2025-05-30'
 category: 'Aesthetic Service Page SEO'

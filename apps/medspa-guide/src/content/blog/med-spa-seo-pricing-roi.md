@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO ROI: How to Think About Cost, Payback, and Appointment Value"
-description: 'Learn med spa SEO ROI with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to think about SEO cost, payback, appointment value, and attribution for med spas without inventing tidy ROI promises."
 pubDate: '2025-09-24'
 updatedDate: '2025-09-24'
 category: 'Website Conversion'

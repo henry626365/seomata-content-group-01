@@ -1,6 +1,6 @@
 ---
 title: "E-E-A-T for Med Spa SEO: How to Build Trust on Aesthetic Treatment Pages"
-description: 'Learn med spa E-E-A-T with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How med spa websites can show provider expertise, editorial review, policy boundaries, and trust signals on aesthetic treatment content."
 pubDate: '2025-09-02'
 updatedDate: '2025-09-02'
 category: 'Med Spa SEO Strategy'

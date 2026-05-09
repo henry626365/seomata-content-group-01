@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO: The Complete Guide to Ranking Higher and Booking More Consultations"
-description: 'Learn med spa SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "A broad med spa SEO guide tying together local visibility, treatment pages, reviews, technical basics, content planning, and conversion."
 pubDate: '2025-05-01'
 updatedDate: '2025-05-01'
 category: 'Med Spa SEO Strategy'

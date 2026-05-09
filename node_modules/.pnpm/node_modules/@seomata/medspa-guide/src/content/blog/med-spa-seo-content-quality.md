@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO Content Quality: How to Avoid Thin, Generic, AI-Looking Articles"
-description: 'Learn med spa SEO content quality with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to recognize thin, generic, AI-looking med spa content and replace it with pages that show real judgment, proof, and patient awareness."
 pubDate: '2026-05-08'
 updatedDate: '2026-05-08'
 category: 'Med Spa SEO Strategy'

@@ -1,6 +1,6 @@
 ---
 title: 'Botox SEO Strategy for Med Spas That Want More Injectable Appointments'
-description: 'Learn Botox SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to structure Botox pages around local intent, provider credibility, patient questions, and ethical consultation language."
 pubDate: '2025-05-23'
 updatedDate: '2025-05-23'
 category: 'Aesthetic Service Page SEO'

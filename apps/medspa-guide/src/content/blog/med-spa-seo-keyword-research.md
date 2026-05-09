@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO Keyword Research: How to Choose Terms That Actually Book"
-description: 'Learn med spa SEO keyword research with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to map med spa keywords by patient intent, service line, location, and booking likelihood instead of chasing volume alone."
 pubDate: '2025-07-13'
 updatedDate: '2025-07-13'
 category: 'Med Spa SEO Strategy'

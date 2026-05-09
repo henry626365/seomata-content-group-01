@@ -1,6 +1,6 @@
 ---
 title: "SEO for Established Med Spas: How to Grow When Referrals Plateau"
-description: 'Learn SEO for established med spas with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How established med spas can grow beyond referrals by tightening search structure, service explanations, reviews, and conversion paths."
 pubDate: '2025-12-20'
 updatedDate: '2025-12-20'
 category: 'Med Spa SEO Strategy'

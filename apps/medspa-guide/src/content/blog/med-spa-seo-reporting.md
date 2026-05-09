@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO Reporting: Metrics That Matter Beyond Rankings"
-description: 'Learn med spa SEO reporting with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "Which med spa SEO metrics matter after rankings: calls, forms, booked consults, lead quality, page health, and review signals."
 pubDate: '2025-11-21'
 updatedDate: '2025-11-21'
 category: 'Med Spa SEO Strategy'

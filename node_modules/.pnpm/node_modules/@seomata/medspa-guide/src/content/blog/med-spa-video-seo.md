@@ -1,6 +1,6 @@
 ---
 title: "Med Spa Video SEO: Using Treatment Videos to Improve Trust and Search Visibility"
-description: 'Learn med spa video SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How treatment videos can support trust, page clarity, and search visibility when they answer real questions instead of acting as decoration."
 pubDate: '2026-02-02'
 updatedDate: '2026-02-02'
 category: 'Website Conversion'

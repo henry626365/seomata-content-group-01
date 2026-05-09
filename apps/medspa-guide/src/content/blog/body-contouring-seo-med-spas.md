@@ -1,6 +1,6 @@
 ---
 title: "Body Contouring SEO for Med Spas: Ranking for High-Consideration Treatment Searches"
-description: 'Learn body contouring SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "A service-page strategy for body contouring searches where patients compare candidacy, expectations, technology, pricing, and consultation fit."
 pubDate: '2025-06-28'
 updatedDate: '2025-06-28'
 category: 'Aesthetic Service Page SEO'

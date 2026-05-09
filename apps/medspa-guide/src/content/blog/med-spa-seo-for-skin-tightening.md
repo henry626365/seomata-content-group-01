@@ -1,6 +1,6 @@
 ---
 title: "Skin Tightening SEO for Med Spas: Ranking for Non-Surgical Aging Concerns"
-description: 'Learn skin tightening SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to organize skin tightening SEO around aging concerns, modality comparisons, realistic expectations, and consultation intent."
 pubDate: '2026-03-03'
 updatedDate: '2026-03-03'
 category: 'Aesthetic Service Page SEO'

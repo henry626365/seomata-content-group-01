@@ -1,6 +1,6 @@
 ---
 title: "90-Day Med Spa SEO Plan: What to Fix First for Faster Search Momentum"
-description: 'Learn 90-day med spa SEO plan with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "A staged 90-day cleanup plan for med spas that need to fix GBP, service pages, reviews, tracking, and conversion basics before scaling content."
 pubDate: '2025-10-01'
 updatedDate: '2025-10-01'
 category: 'Med Spa SEO Strategy'

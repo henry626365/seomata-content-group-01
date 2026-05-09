@@ -14,8 +14,51 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
+
+function stripTags(value: string): string {
+	return value.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function decodeEntities(value: string): string {
+	return value
+		.replace(/&amp;/g, '&')
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+		.replace(/&quot;/g, '"')
+		.replace(/&#39;/g, "'");
+}
+
+function slugify(value: string): string {
+	return value
+		.toLowerCase()
+		.replace(/&/g, ' and ')
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+}
+
+function extractHeadings(body: string): { depth: number; slug: string; text: string }[] {
+	const found: { depth: number; slug: string; text: string }[] = [];
+	const seen = new Map<string, number>();
+	const pattern = /^(#{2,3})\s+(.+)$|<h([23])[^>]*>(.*?)<\/h\3>/gim;
+	let match: RegExpExecArray | null;
+
+	while ((match = pattern.exec(body))) {
+		const depth = match[1] ? match[1].length : Number(match[3]);
+		const text = decodeEntities(stripTags(match[2] ?? match[4] ?? ''));
+		const baseSlug = slugify(text) || `section-${found.length + 1}`;
+		const count = seen.get(baseSlug) ?? 0;
+		seen.set(baseSlug, count + 1);
+		const slug = count === 0 ? baseSlug : `${baseSlug}-${count + 1}`;
+		found.push({ depth, slug, text });
+	}
+
+	return found;
+}
+
+const extractedHeadings = extractHeadings(post.body);
+const tocHeadings = extractedHeadings.length > 0 ? extractedHeadings : headings;
 ---
 
-<BlogPost {...post.data} headings={headings}>
+<BlogPost {...post.data} headings={tocHeadings}>
 	<Content />
 </BlogPost>

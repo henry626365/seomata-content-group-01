@@ -1,6 +1,6 @@
 ---
 title: "Technical SEO for Med Spa Websites: The Crawl, Speed, and Schema Checklist"
-description: 'Learn technical SEO for med spas with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "The technical SEO checks med spa websites should keep clean: crawl access, speed, schema, redirects, indexation, and media performance."
 pubDate: '2025-08-11'
 updatedDate: '2025-08-11'
 category: 'Med Spa SEO Strategy'

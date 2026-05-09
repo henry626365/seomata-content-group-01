@@ -1,6 +1,6 @@
 ---
 title: "Single-Location Med Spa SEO: How Independent Clinics Can Beat Larger Competitors"
-description: 'Learn single-location med spa SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How independent med spas can compete locally by making the clinic's real providers, services, reviews, and neighborhood proof easier to find."
 pubDate: '2025-10-16'
 updatedDate: '2025-10-16'
 category: "Local SEO & Google Maps"

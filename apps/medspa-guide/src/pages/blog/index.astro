@@ -4,10 +4,11 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import ArticleCard from '../../components/home/ArticleCard.astro';
 import SiteFooter from '../../components/home/SiteFooter.astro';
+import { resolveHeroThumbnail } from '../../utils/publicAsset';
 
 const seoTitle = 'Marketing Guides Archive | Med Spa Marketing Guide';
 const seoDesc =
-	'Operational SEO, GBP, modality pages, reputation, and conversion workflows for aesthetic practices—education only (not medical/legal advice).';
+	'Editorial med spa marketing guides for local search, Google Maps, treatment pages, reviews, technical cleanup, and consultation conversion.';
 
 const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
@@ -21,13 +22,24 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 		<Header />
 		<main class="archive-main">
 			<header class="page-intro">
-				<h1 id="guides">Guides archive</h1>
+				<p class="eyebrow">Guide archive</p>
+				<h1 id="guides">Med spa marketing guides, organized for real review work</h1>
 				<p>
-					Timeless checklists covering local discovery, modality landing pages, review operations, and
-					consultation capture. Content is directional—not a substitute for HIPAA counsel, clinician oversight,
-					or platform policy review.
+					Use this archive when you are auditing a clinic, rewriting a treatment page, cleaning up Google
+					Business Profile details, or trying to understand why search traffic is not becoming useful
+					consultations. The guides are educational and should be adapted with clinician, legal, and platform
+					policy review where needed.
 				</p>
 			</header>
+
+			<section class="archive-note" aria-label="How to use this archive">
+				<strong>Editorial use:</strong>
+				<span>
+					Pick one bottleneck first: local visibility, service-page trust, reputation, technical hygiene, or
+					consultation conversion. Reading everything at once is less useful than improving one patient path.
+				</span>
+			</section>
+
 			<div class="grid">
 				{
 					posts.map((post) => (
@@ -35,11 +47,11 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 							href={`/blog/${post.id}/`}
 							title={post.data.title}
 							description={post.data.description}
-							image={
-								post.data.heroImage?.src ??
-								post.data.heroPhoto ??
-								'/images/med-spa-seo-checklist-preview.svg'
-							}
+							image={resolveHeroThumbnail(
+								post.data.heroImage?.src,
+								post.data.heroPhoto,
+								'/images/med-spa-seo-checklist-preview.svg',
+							)}
 							imageAlt={post.data.title}
 							category={post.data.category}
 						/>
@@ -60,39 +72,73 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 		background: linear-gradient(180deg, #f4f9fc 0%, #f0f4f7 40%, #ffffff 100%);
 		color: #1c3a4d;
 	}
+
 	.archive-main {
 		flex: 1;
 		width: min(1180px, calc(100% - clamp(1.25rem, 5vw, 3rem)));
 		margin: 0 auto;
 		padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(2.75rem, 6vw, 4rem);
 	}
+
 	.page-intro {
-		margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+		margin-bottom: 1rem;
 	}
+
+	.eyebrow {
+		margin: 0 0 0.45rem;
+		color: #a26d35;
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
 	.page-intro h1 {
 		margin: 0 0 0.85rem;
-		font-size: clamp(1.5rem, 3vw, 2rem);
+		max-width: 20ch;
+		font-size: clamp(1.65rem, 3.4vw, 2.35rem);
 		color: #0b3555;
 		letter-spacing: -0.03em;
+		line-height: 1.12;
 	}
+
 	.page-intro p {
 		margin: 0;
-		max-width: 68ch;
+		max-width: 76ch;
 		line-height: 1.72;
 		color: #395f78;
 		font-size: clamp(0.96rem, 1.45vw, 1.06rem);
 	}
+
+	.archive-note {
+		margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
+		padding: 1rem 1.1rem;
+		border: 1px solid #d6e5f0;
+		border-left: 4px solid #d4a574;
+		border-radius: 0 14px 14px 0;
+		background: #fff;
+		color: #385f78;
+		line-height: 1.62;
+	}
+
+	.archive-note strong {
+		color: #0b3555;
+		margin-right: 0.35rem;
+	}
+
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1.2rem;
 		align-items: stretch;
 	}
+
 	@media (max-width: 1024px) {
 		.grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
+
 	@media (max-width: 660px) {
 		.grid {
 			grid-template-columns: 1fr;

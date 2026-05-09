@@ -1,6 +1,6 @@
 ---
 title: "Med Spa Location Page SEO: What Every City Page Needs"
-description: 'Learn med spa location page SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "What city and location pages need beyond swapped place names: staff, logistics, service context, proof, and useful next steps."
 pubDate: '2025-10-23'
 updatedDate: '2025-10-23'
 category: "Local SEO & Google Maps"

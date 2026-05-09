@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO vs Google Ads: How to Balance Organic Growth and Paid Demand"
-description: 'Learn med spa SEO vs Google Ads with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How med spas can balance SEO and Google Ads by matching channel strengths to urgency, competition, service margins, and tracking quality."
 pubDate: '2025-11-28'
 updatedDate: '2025-11-28'
 category: 'Med Spa SEO Strategy'

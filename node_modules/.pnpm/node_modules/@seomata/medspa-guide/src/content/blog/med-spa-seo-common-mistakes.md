@@ -1,6 +1,6 @@
 ---
 title: 'Med Spa SEO Mistakes That Quietly Cost Clinics Appointments'
-description: 'Learn med spa SEO mistakes with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "Common med spa SEO mistakes, from thin city pages and vague treatment copy to disconnected GBP services and weak consultation paths."
 pubDate: '2026-05-01'
 updatedDate: '2026-05-01'
 category: 'Med Spa SEO Strategy'

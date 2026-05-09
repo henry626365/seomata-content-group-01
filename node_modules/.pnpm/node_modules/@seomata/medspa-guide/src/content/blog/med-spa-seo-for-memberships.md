@@ -1,6 +1,6 @@
 ---
 title: "Med Spa Membership SEO: Turning Search Visitors Into Recurring Patients"
-description: 'Learn med spa membership SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How med spas can explain memberships in search content without making recurring care feel like a generic subscription pitch."
 pubDate: '2026-04-01'
 updatedDate: '2026-04-01'
 category: 'Website Conversion'

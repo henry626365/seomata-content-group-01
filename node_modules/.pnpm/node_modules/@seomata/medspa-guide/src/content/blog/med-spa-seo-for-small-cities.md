@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO for Small Cities: How to Win Local Search Without a Huge Market"
-description: 'Learn med spa SEO small cities with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How small-city med spas can win local search with accurate profiles, focused service pages, real community proof, and disciplined expansion."
 pubDate: '2026-04-16'
 updatedDate: '2026-04-16'
 category: "Local SEO & Google Maps"

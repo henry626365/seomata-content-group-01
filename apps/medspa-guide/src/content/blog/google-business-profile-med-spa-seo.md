@@ -1,6 +1,6 @@
 ---
 title: 'Google Business Profile Optimization for Med Spas'
-description: 'Learn Google Business Profile med spa with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "A practical look at GBP categories, services, photos, reviews, Q&A, and profile links for med spas that depend on local discovery."
 pubDate: '2025-05-15'
 updatedDate: '2025-05-15'
 category: "Local SEO & Google Maps"

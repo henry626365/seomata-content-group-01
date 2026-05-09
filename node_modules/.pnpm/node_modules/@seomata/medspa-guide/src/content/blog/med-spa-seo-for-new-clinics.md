@@ -1,6 +1,6 @@
 ---
 title: "SEO for New Med Spas: What to Build Before You Open"
-description: 'Learn SEO for new med spas with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "What new med spas should build before opening: GBP foundations, core service pages, launch content, tracking, and local proof."
 pubDate: '2025-12-13'
 updatedDate: '2025-12-13'
 category: 'Med Spa SEO Strategy'

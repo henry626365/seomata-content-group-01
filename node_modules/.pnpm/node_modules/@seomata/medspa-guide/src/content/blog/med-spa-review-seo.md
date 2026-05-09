@@ -1,6 +1,6 @@
 ---
 title: "Med Spa Review SEO: How Reviews Influence Local Rankings and Patient Trust"
-description: 'Learn med spa review SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How reviews support local trust, what review themes reveal, and how med spas should respond without exposing patient details."
 pubDate: '2025-08-26'
 updatedDate: '2025-08-26'
 category: "Patient Reviews & Trust"

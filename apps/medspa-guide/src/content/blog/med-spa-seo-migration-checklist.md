@@ -1,6 +1,6 @@
 ---
 title: 'Med Spa SEO Migration Checklist for Domain, CMS, and URL Changes'
-description: 'Learn med spa SEO migration with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "A migration checklist for med spas changing domains, CMS platforms, URLs, or designs without losing visibility and tracking continuity."
 pubDate: '2026-01-18'
 updatedDate: '2026-01-18'
 category: 'Website Conversion'

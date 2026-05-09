@@ -6,6 +6,7 @@ import SiteFooter from '../home/SiteFooter.astro';
 import ArticleCard from '../home/ArticleCard.astro';
 import EyebrowLabel from '../home/EyebrowLabel.astro';
 import type { TopicHubDefinition } from '../../data/topicHubs';
+import { resolveHeroThumbnail } from '../../utils/publicAsset';
 
 type Props = {
 	hub: TopicHubDefinition;
@@ -17,14 +18,12 @@ const posts = await getCollection('blog');
 const postById = new Map(posts.map((p) => [p.id, p]));
 
 const resolvedCards = hub.cards.map((card) => {
-	const src = card.postId
-		? postById.get(card.postId)?.data.heroImage?.src ?? postById.get(card.postId)?.data.heroPhoto
-		: undefined;
+	const post = card.postId ? postById.get(card.postId) : undefined;
 	return {
 		href: card.href,
 		title: card.title,
 		description: card.description,
-		image: src ?? card.fallbackImage,
+		image: resolveHeroThumbnail(post?.data.heroImage?.src, post?.data.heroPhoto, card.fallbackImage),
 		imageAlt: card.imageAlt,
 		category: card.category ?? 'Resource',
 	};
@@ -39,35 +38,83 @@ const resolvedCards = hub.cards.map((card) => {
 	<body class="hub-body">
 		<Header />
 		<main class="hub-main">
-			<section class="panel hero">
-				<EyebrowLabel text="Med Spa Marketing Guide" className="hero-eyebrow" />
-				<h1 class="hero-title">{hub.pageTitle}</h1>
-				<p class="hero-desc">{hub.summary}</p>
+			<section class="hero-panel">
+				<div>
+					<EyebrowLabel text={hub.kicker} className="hero-eyebrow" />
+					<h1>{hub.pageTitle}</h1>
+					<p class="hero-desc">{hub.summary}</p>
+				</div>
+				<aside class="editor-note" aria-label="Editorial note">
+					<span>Editor note</span>
+					<p>{hub.editorialNote}</p>
+				</aside>
 			</section>
 
-			<section class="panel">
-				<h2 class="section-title">Who this is for</h2>
-				<ul class="plain-list">
-					{hub.whoFor.map((item) => <li>{item}</li>)}
+			<section class="split-panel">
+				<div class="panel-copy">
+					<h2>{hub.scenariosTitle}</h2>
+					<p>
+						Use this section to decide whether the topic fits the problem in front of the clinic.
+						The most useful page is the one that helps a team say no to the wrong work.
+					</p>
+				</div>
+				<ul class="scenario-list">
+					{hub.scenarios.map((item) => <li>{item}</li>)}
 				</ul>
 			</section>
 
 			<section class="panel">
-				<h2 class="section-title">Recommended reading path</h2>
-				<ol class="plain-list ordered">
-					{hub.readingPath.map((step) => <li>{step}</li>)}
-				</ol>
+				<div class="section-row">
+					<div>
+						<h2>{hub.diagnosticsTitle}</h2>
+						<p>
+							These checks are intentionally operational. They point to things a real team can inspect,
+							assign, and improve without pretending that rankings alone explain performance.
+						</p>
+					</div>
+				</div>
+				<div class="diagnostic-grid">
+					{
+						hub.diagnostics.map((item, i) => (
+							<article class="diagnostic-card">
+								<span>{String(i + 1).padStart(2, '0')}</span>
+								<h3>{item.label}</h3>
+								<p>{item.body}</p>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<section class="workflow-panel">
+				<div>
+					<h2>{hub.workflowTitle}</h2>
+					<ol class="workflow-list">
+						{hub.workflow.map((step) => <li>{step}</li>)}
+					</ol>
+				</div>
+				<aside class="red-flags">
+					<h2>{hub.redFlagsTitle}</h2>
+					<ul>
+						{hub.redFlags.map((flag) => <li>{flag}</li>)}
+					</ul>
+				</aside>
 			</section>
 
 			<section class="panel">
-				<h2 class="section-title">Resources</h2>
+				<div class="section-row">
+					<div>
+						<h2>{hub.cardsTitle}</h2>
+						<p>{hub.cardsIntro}</p>
+					</div>
+				</div>
 				<div class="card-grid">
 					{resolvedCards.map((card) => <ArticleCard {...card} />)}
 				</div>
 			</section>
 
-			<section class="panel">
-				<h2 class="section-title">FAQ</h2>
+			<section class="panel faq-panel">
+				<h2>Questions editors should answer clearly</h2>
 				<div class="faq-grid">
 					{
 						hub.faqs.map((faq) => (
@@ -104,62 +151,217 @@ const resolvedCards = hub.cards.map((card) => {
 		gap: clamp(1.25rem, 3vw, 2rem);
 	}
 
-	.panel {
+	.hero-panel,
+	.panel,
+	.split-panel,
+	.workflow-panel {
 		background: #fff;
 		border: 1px solid rgba(209, 222, 234, 0.95);
 		border-radius: 22px;
-		padding: clamp(1.5rem, 3.5vw, 2.25rem) clamp(1.25rem, 3.5vw, 2rem);
 		box-shadow:
 			0 1px 0 rgba(255, 255, 255, 0.8) inset,
 			0 10px 40px rgba(11, 53, 85, 0.05);
 	}
 
-	.hero {
-		background: #f4f9fc;
+	.hero-panel {
+		display: grid;
+		grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
+		gap: clamp(1.25rem, 4vw, 2.5rem);
+		align-items: end;
+		padding: clamp(1.6rem, 4vw, 2.6rem);
+		background:
+			linear-gradient(145deg, rgba(255, 255, 255, 0.7) 0%, rgba(244, 249, 252, 0.98) 72%),
+			#f4f9fc;
 	}
 
 	:global(.hero-eyebrow) {
-		margin: 0 0 0.35rem;
+		margin: 0 0 0.45rem;
 		color: #0b3555;
 	}
 
-	.hero-title {
-		font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+	h1,
+	h2,
+	h3,
+	p {
+		margin-top: 0;
+	}
+
+	h1 {
+		margin-bottom: 0.75rem;
+		max-width: 18ch;
+		font-size: clamp(1.8rem, 4vw, 2.7rem);
 		color: #0b3555;
-		margin: 0 0 0.55rem;
-		font-weight: 700;
+		font-weight: 800;
 		letter-spacing: -0.03em;
-		line-height: 1.25;
+		line-height: 1.12;
 	}
 
 	.hero-desc {
-		margin: 0;
-		max-width: 58ch;
-		font-size: clamp(0.95rem, 1.5vw, 1.02rem);
-		line-height: 1.65;
-		color: #3f6279;
+		margin-bottom: 0;
+		max-width: 66ch;
+		font-size: clamp(1rem, 1.7vw, 1.12rem);
+		line-height: 1.68;
+		color: #315b74;
 	}
 
-	.section-title {
-		margin: 0 0 clamp(1rem, 2.5vw, 1.35rem);
-		font-size: clamp(1.15rem, 2.2vw, 1.45rem);
-		color: #0b3555;
-		font-weight: 700;
-		letter-spacing: -0.03em;
-		line-height: 1.25;
+	.editor-note {
+		border-left: 4px solid #d4a574;
+		background: rgba(255, 255, 255, 0.75);
+		padding: 1rem 1rem 1.05rem;
+		border-radius: 0 14px 14px 0;
 	}
 
-	.plain-list {
+	.editor-note span {
+		display: block;
+		margin-bottom: 0.35rem;
+		color: #8a5d2f;
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.editor-note p {
 		margin: 0;
-		padding-left: 1.25rem;
-		color: #3f6279;
-		line-height: 1.7;
+		color: #385f78;
+		font-size: 0.94rem;
+		line-height: 1.62;
+	}
+
+	.panel,
+	.split-panel,
+	.workflow-panel {
+		padding: clamp(1.4rem, 3.5vw, 2.15rem);
+	}
+
+	.split-panel,
+	.workflow-panel {
 		display: grid;
-		gap: 0.35rem;
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+		gap: clamp(1.25rem, 4vw, 2rem);
+		align-items: start;
 	}
 
-	.plain-list.ordered {
-		padding-left: 1.35rem;
+	.workflow-panel {
+		grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+	}
+
+	.panel-copy p,
+	.section-row p {
+		margin-bottom: 0;
+		max-width: 66ch;
+		color: #456980;
+		font-size: 0.96rem;
+		line-height: 1.68;
+	}
+
+	h2 {
+		margin-bottom: 0.65rem;
+		color: #0b3555;
+		font-size: clamp(1.25rem, 2.6vw, 1.65rem);
+		font-weight: 800;
+		letter-spacing: -0.025em;
+		line-height: 1.2;
+	}
+
+	.scenario-list,
+	.workflow-list,
+	.red-flags ul {
+		margin: 0;
+		color: #365f78;
+		line-height: 1.66;
+	}
+
+	.scenario-list {
+		display: grid;
+		gap: 0.75rem;
+		padding-left: 1.1rem;
+	}
+
+	.scenario-list li::marker {
+		color: #d4a574;
+	}
+
+	.section-row {
+		margin-bottom: 1.2rem;
+	}
+
+	.diagnostic-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.diagnostic-card {
+		border: 1px solid #d2dfeb;
+		border-radius: 14px;
+		padding: 1rem;
+		background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+	}
+
+	.diagnostic-card span {
+		display: inline-block;
+		margin-bottom: 0.65rem;
+		color: #a26d35;
+		font-size: 0.76rem;
+		font-weight: 800;
+		letter-spacing: 0.08em;
+	}
+
+	.diagnostic-card h3 {
+		margin-bottom: 0.45rem;
+		color: #0b3555;
+		font-size: 1rem;
+		line-height: 1.3;
+	}
+
+	.diagnostic-card p,
+	.faq-item p {
+		margin-bottom: 0;
+		color: #4b6a80;
+		font-size: 0.9rem;
+		line-height: 1.62;
+	}
+
+	.workflow-list {
+		display: grid;
+		gap: 0.65rem;
+		padding-left: 1.45rem;
+	}
+
+	.workflow-list li::marker {
+		color: #0b3555;
+		font-weight: 800;
+	}
+
+	.red-flags {
+		border: 1px solid #ead3bb;
+		border-radius: 16px;
+		background: #fffaf5;
+		padding: 1rem 1.05rem;
+	}
+
+	.red-flags h2 {
+		font-size: 1.05rem;
+	}
+
+	.red-flags ul {
+		display: grid;
+		gap: 0.5rem;
+		padding-left: 1.1rem;
+		color: #6d4b32;
+		font-size: 0.93rem;
+	}
+
+	.card-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.15rem;
+		align-items: stretch;
+	}
+
+	.faq-panel h2 {
+		margin-bottom: 1rem;
 	}
 
 	.faq-grid {
@@ -171,33 +373,33 @@ const resolvedCards = hub.cards.map((card) => {
 	.faq-item {
 		border: 1px solid #d2dfeb;
 		border-radius: 12px;
-		padding: 0.8rem 0.85rem;
+		padding: 0.9rem 0.95rem;
 		background: #f8fbff;
 	}
 
 	.faq-item h3 {
-		margin: 0 0 0.35rem;
-		font-size: 0.95rem;
+		margin-bottom: 0.4rem;
+		font-size: 0.98rem;
 		color: #0b3555;
+		line-height: 1.32;
 	}
 
-	.faq-item p {
-		margin: 0;
-		font-size: 0.9rem;
-		line-height: 1.6;
-		color: #4b6a80;
+	@media (max-width: 980px) {
+		.hero-panel,
+		.split-panel,
+		.workflow-panel {
+			grid-template-columns: 1fr;
+		}
+
+		.diagnostic-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
 
-	.card-grid {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1.15rem;
-		align-items: stretch;
-	}
-
-	@media (max-width: 900px) {
+	@media (max-width: 760px) {
+		.card-grid,
 		.faq-grid,
-		.card-grid {
+		.diagnostic-grid {
 			grid-template-columns: 1fr;
 		}
 	}

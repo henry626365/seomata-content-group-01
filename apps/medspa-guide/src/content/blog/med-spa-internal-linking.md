@@ -1,6 +1,6 @@
 ---
 title: "Internal Linking for Med Spa SEO: How to Connect Services, Blogs, and Locations"
-description: 'Learn internal linking med spa SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to connect service pages, blogs, locations, and comparison content so patients can move through the site without getting lost."
 pubDate: '2025-10-30'
 updatedDate: '2025-10-30'
 category: 'Med Spa SEO Strategy'

@@ -1,6 +1,6 @@
 ---
 title: "PRP SEO for Med Spas: Ranking for Regenerative Aesthetic Searches"
-description: 'Learn PRP SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to structure PRP pages around regenerative aesthetic intent, provider expertise, candidacy questions, and careful expectation setting."
 pubDate: '2026-03-18'
 updatedDate: '2026-03-18'
 category: 'Aesthetic Service Page SEO'

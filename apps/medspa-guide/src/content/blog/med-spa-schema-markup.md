@@ -1,6 +1,6 @@
 ---
 title: "Schema Markup for Med Spas: BlogPosting, FAQ, LocalBusiness, and Service Data"
-description: 'Learn schema markup for med spas with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to think about LocalBusiness, Service, FAQ, and BlogPosting schema for med spa sites without treating markup as a ranking shortcut."
 pubDate: '2025-08-18'
 updatedDate: '2025-08-18'
 category: 'Med Spa SEO Strategy'

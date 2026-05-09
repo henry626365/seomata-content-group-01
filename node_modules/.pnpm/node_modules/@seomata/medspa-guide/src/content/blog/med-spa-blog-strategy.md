@@ -1,6 +1,6 @@
 ---
 title: "Med Spa Blog Strategy: What to Publish When You Need Rankings and Appointments"
-description: 'Learn med spa blog strategy with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to choose med spa blog topics that support treatment pages, answer real patient questions, and lead readers toward useful next steps."
 pubDate: '2025-08-04'
 updatedDate: '2025-08-04'
 category: 'Med Spa SEO Strategy'

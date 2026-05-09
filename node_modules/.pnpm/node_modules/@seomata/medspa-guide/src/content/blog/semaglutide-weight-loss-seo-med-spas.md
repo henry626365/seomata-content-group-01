@@ -1,6 +1,6 @@
 ---
 title: 'Semaglutide and Medical Weight Loss SEO for Med Spas'
-description: 'Learn medical weight loss SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How med spas offering medical weight loss can approach semaglutide SEO with compliance-aware claims, provider trust, and local intent."
 pubDate: '2025-07-06'
 updatedDate: '2025-07-06'
 category: 'Aesthetic Service Page SEO'

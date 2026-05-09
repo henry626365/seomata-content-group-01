@@ -1,6 +1,6 @@
 ---
 title: 'Med Spa SEO for Dermatology Practices Adding Aesthetic Services'
-description: 'Learn med spa SEO for dermatology with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How dermatology practices adding aesthetic services can organize SEO around clinical credibility, service expansion, and patient intent."
 pubDate: '2025-12-28'
 updatedDate: '2025-12-28'
 category: 'Med Spa SEO Strategy'

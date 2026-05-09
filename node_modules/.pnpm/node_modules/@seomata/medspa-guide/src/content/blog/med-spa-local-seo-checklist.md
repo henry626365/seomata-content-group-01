@@ -1,6 +1,6 @@
 ---
 title: "Med Spa Local SEO Checklist: How to Build Visibility in Your City"
-description: 'Learn med spa local SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "A clinic-facing local SEO checklist for GBP hygiene, treatment-page alignment, reviews, local proof, and consultation tracking."
 pubDate: '2025-05-08'
 updatedDate: '2025-05-08'
 category: "Local SEO & Google Maps"

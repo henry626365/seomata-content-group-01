@@ -5,6 +5,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import SiteFooter from '../components/home/SiteFooter.astro';
 import type { CollectionEntry } from 'astro:content';
+import { encodePublicAssetPath } from '../utils/publicAsset';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	headings?: { depth: number; slug: string; text: string }[];
@@ -23,7 +24,9 @@ const {
 } = Astro.props;
 
 const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+const tocSlugs = toc.map((h) => h.slug);
 const heroAlt = title;
+const heroPhotoSrc = heroPhoto ? encodePublicAssetPath(heroPhoto) : undefined;
 ---
 
 <!doctype html>
@@ -107,7 +110,7 @@ const heroAlt = title;
 			}
 			.blog-layout {
 				display: grid;
-				grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+				grid-template-columns: minmax(0, 1fr) minmax(220px, 260px);
 				gap: clamp(1.25rem, 3vw, 2rem);
 				align-items: start;
 			}
@@ -200,6 +203,14 @@ const heroAlt = title;
 				color: #5c7890;
 				font-size: 0.9rem;
 			}
+			.blog-description {
+				margin: -0.65rem auto 1.25rem;
+				max-width: 64ch;
+				text-align: center;
+				color: #385f78;
+				font-size: clamp(0.98rem, 1.5vw, 1.08rem);
+				line-height: 1.65;
+			}
 			@media (max-width: 960px) {
 				.blog-layout {
 					grid-template-columns: 1fr;
@@ -234,6 +245,7 @@ const heroAlt = title;
 					}
 				</p>
 				<h1 class="blog-title">{title}</h1>
+				<p class="blog-description">{description}</p>
 				{author && <p class="byline">{author}</p>}
 				{
 					heroImage ? (
@@ -241,11 +253,11 @@ const heroAlt = title;
 							<Image width={1020} height={510} src={heroImage} alt={heroAlt} />
 						</div>
 					) : (
-						heroPhoto && (
+						heroPhotoSrc && (
 							<div class="blog-hero">
 								<img
 									class="hero-photo"
-									src={heroPhoto}
+									src={heroPhotoSrc}
 									alt={heroAlt}
 									width={1020}
 									height={510}
@@ -257,6 +269,12 @@ const heroAlt = title;
 				}
 
 				<div class:list={['blog-layout', toc.length === 0 && 'blog-layout-single']}>
+					<div class="prose-shell">
+						<div class="prose">
+							<slot />
+						</div>
+					</div>
+
 					{
 						toc.length > 0 && (
 							<nav class="toc" aria-label="On this page">
@@ -275,15 +293,16 @@ const heroAlt = title;
 							</nav>
 						)
 					}
-
-					<div class="prose-shell">
-						<div class="prose">
-							<slot />
-						</div>
-					</div>
 				</div>
 			</article>
 		</main>
 		<SiteFooter />
+		<script define:vars={{ tocSlugs }}>
+			const articleHeadings = Array.from(document.querySelectorAll('.prose h2, .prose h3'));
+			articleHeadings.forEach((heading, index) => {
+				const slug = tocSlugs[index];
+				if (slug) heading.id = slug;
+			});
+		</script>
 	</body>
 </html>

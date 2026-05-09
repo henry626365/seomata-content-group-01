@@ -1,6 +1,6 @@
 ---
 title: 'Acne Scar Treatment SEO for Med Spas and Aesthetic Clinics'
-description: 'Learn acne scar treatment SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How to plan acne scar treatment pages around patient concerns, modalities, expectations, visual proof, and consultation boundaries."
 pubDate: '2026-03-11'
 updatedDate: '2026-03-11'
 category: 'Aesthetic Service Page SEO'

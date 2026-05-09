@@ -1,6 +1,6 @@
 ---
 title: "Med Spa SEO Audit: How to Find the Leaks Costing You Appointments"
-description: 'Learn med spa SEO audit with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "A practical audit path for finding the SEO, trust, tracking, and conversion leaks that can quietly cost med spas appointments."
 pubDate: '2025-11-14'
 updatedDate: '2025-11-14'
 category: 'Med Spa SEO Strategy'

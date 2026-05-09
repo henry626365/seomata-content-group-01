@@ -1,6 +1,6 @@
 ---
 title: "Multi-Location Med Spa SEO: How to Rank Every Clinic Without Duplicating Content"
-description: 'Learn multi-location med spa SEO with a practical, source-backed guide for Med SPA teams. Improve local rankings, trust, service pages, FAQs, and booked appointments.'
+description: "How multi-location med spas can scale local pages and GBP profiles without duplicating thin content across every clinic."
 pubDate: '2025-10-08'
 updatedDate: '2025-10-08'
 category: "Local SEO & Google Maps"

@@ -3,61 +3,78 @@ import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
-<header class="site-header">
-	<nav class="nav-bar" aria-label="Primary">
-		<a class="brand" href="/">{SITE_TITLE}</a>
+<header>
+	<nav aria-label="Primary">
+		<h2><a class="brand" href="/">{SITE_TITLE}</a></h2>
 		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/local-seo/">Local SEO</HeaderLink>
-			<HeaderLink href="/google-maps/">Maps</HeaderLink>
-			<HeaderLink href="/service-pages/">Services</HeaderLink>
+			<HeaderLink href="/google-maps/">Google Maps</HeaderLink>
+			<HeaderLink href="/service-pages/">Service Pages</HeaderLink>
 			<HeaderLink href="/patient-reviews/">Reviews</HeaderLink>
 			<HeaderLink href="/website-conversion/">Conversion</HeaderLink>
-			<HeaderLink href="/templates/">Templates</HeaderLink>
-			<HeaderLink href="/case-breakdowns/">Breakdowns</HeaderLink>
-			<HeaderLink href="/reports/">Reports</HeaderLink>
 			<HeaderLink href="/blog/">Guides</HeaderLink>
-			<HeaderLink href="/about/">About</HeaderLink>
 		</div>
 	</nav>
 </header>
 
 <style>
-	.site-header {
-		position: sticky;
-		top: 0;
-		z-index: 50;
-		background: rgba(255, 255, 255, 0.92);
-		backdrop-filter: blur(10px);
-		border-bottom: 1px solid rgba(14, 59, 86, 0.08);
-		box-shadow: 0 6px 24px rgba(11, 53, 85, 0.04);
+	header {
+		margin: 0;
+		padding: clamp(0.85rem, 2.2vw, 1.15rem) 0 clamp(0.75rem, 1.8vw, 1rem);
+		background: linear-gradient(180deg, #eaf3fb 0%, #f4f9fc 45%, #fbfdff 100%);
+		border-bottom: 1px solid rgba(209, 222, 234, 0.95);
+		box-shadow:
+			0 1px 0 rgba(255, 255, 255, 0.85) inset,
+			0 4px 18px rgba(11, 58, 83, 0.07);
 	}
-	.nav-bar {
-		max-width: 1180px;
-		margin: 0 auto;
-		padding: 0.65rem clamp(1rem, 3vw, 1.75rem);
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem 1.25rem;
-	}
-	.brand {
+	h2 {
+		margin: 0;
+		font-size: 2.2rem;
 		font-weight: 800;
-		letter-spacing: -0.02em;
-		color: #0b3555;
+		line-height: 1;
+		flex-shrink: 0;
+	}
+	.brand,
+	.brand.active {
+		display: inline-flex;
+		align-items: center;
+		color: #2f80ed;
+		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75), 0 0 10px rgba(47, 128, 237, 0.12);
+		padding: 0 0 0.12rem;
 		text-decoration: none;
-		font-size: 1rem;
 		white-space: nowrap;
 	}
-	.brand:hover {
-		color: #072a43;
+	nav {
+		display: flex;
+		align-items: flex-end;
+		gap: 1.35rem;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		width: min(1180px, calc(100% - clamp(1.5rem, 5vw, 3rem)));
+		box-sizing: border-box;
+		margin-inline: auto;
+		padding: 0.55rem 0 0;
 	}
 	.internal-links {
 		display: flex;
+		align-items: flex-end;
 		flex-wrap: wrap;
-		gap: 0.2rem 0.65rem;
-		align-items: center;
 		justify-content: flex-end;
+		gap: 0.45rem;
+	}
+	@media (max-width: 720px) {
+		h2 {
+			font-size: 1.7rem;
+		}
+		nav {
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+		}
+		.internal-links {
+			align-items: flex-start;
+			justify-content: flex-end;
+		}
 	}
 </style>
