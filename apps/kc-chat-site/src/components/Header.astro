@@ -324,16 +324,21 @@ const githubIcon =
 </script>
 
 <script is:inline>
-  // Reflect Google login state in the header (Sign in → Account).
+  // Reflect Google login state in the header: show the user's name, and send
+  // admins to the admin backend instead of the customer account page.
   (function () {
     fetch('/api/auth/me', { credentials: 'same-origin' })
       .then((r) => r.json())
       .then((d) => {
         if (!d || !d.user) return;
-        const label = d.user.name ? 'Account' : 'Account';
+        const u = d.user;
+        const name = (u.name && u.name.trim()) || (u.email ? u.email.split('@')[0] : 'Account');
+        const isAdmin = u.role === 'admin';
+        const href = isAdmin ? '/admin' : '/account';
+        const label = isAdmin ? (name + ' · Admin') : name;
         for (const id of ['account-link', 'm-account-link']) {
           const el = document.getElementById(id);
-          if (el) { el.textContent = label; el.setAttribute('href', '/account'); }
+          if (el) { el.textContent = label; el.setAttribute('href', href); }
         }
       })
       .catch(() => {});

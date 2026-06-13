@@ -51,10 +51,14 @@ import '../styles/global.css';
         const btn = document.getElementById('google-btn');
         btn.href = '/api/auth/google/start?redirect=' + encodeURIComponent(redirect);
       }
-      // If already logged in, skip straight to the account page.
+      // If already logged in, skip straight in — admins to the backend, others to account.
       fetch('/api/auth/me', { credentials: 'same-origin' })
         .then((r) => r.json())
-        .then((d) => { if (d && d.user) location.replace(redirect && redirect.startsWith('/') ? redirect : '/account'); })
+        .then((d) => {
+          if (!d || !d.user) return;
+          const fallback = d.user.role === 'admin' ? '/admin' : '/account';
+          location.replace(redirect && redirect.startsWith('/') && !redirect.startsWith('//') ? redirect : fallback);
+        })
         .catch(() => {});
     })();
   </script>

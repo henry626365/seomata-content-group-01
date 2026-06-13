@@ -58,8 +58,11 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     const user = await upsertUserFromGoogle(env, info);
     const sess = await createSession(env, user.id, { ip: clientIp(request), ua: clientUa(request) });
 
+    // Admins land in the admin backend by default (unless a specific target was requested).
+    const dest = user.role === "admin" && redirectTo === "/account" ? "/admin" : redirectTo;
+
     const secure = isHttps(request);
-    const headers = new Headers({ location: redirectTo });
+    const headers = new Headers({ location: dest });
     headers.append(
       "set-cookie",
       serializeCookie(SESSION_COOKIE, sess.id, {
