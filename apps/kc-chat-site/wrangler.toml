@@ -12,7 +12,7 @@
 # ── Deploy (production) ──────────────────────────────────────────────────────
 #   pnpm wrangler d1 create kc-cards-prod              # one-time; paste the id below
 #   pnpm db:migrate:prod                               # applies ALL migrations (remote)
-#   pnpm deploy                                        # astro build + wrangler deploy --env production
+#   pnpm run release                                   # astro build + wrangler deploy --env production
 #
 # ── Payment secrets (Lemon Squeezy / Merchant of Record) — NEVER commit ──────
 #   pnpm wrangler secret put LEMONSQUEEZY_API_KEY        --env production

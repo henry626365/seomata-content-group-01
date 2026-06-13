@@ -93,8 +93,8 @@ pnpm db:migrate:prod
 #    ADMIN_TOKEN  (>= 16 chars)   RESEND_API_KEY / MAIL_FROM (optional email)
 pnpm wrangler secret put ADMIN_TOKEN --env production
 
-# 4. Deploy
-pnpm deploy
+# 4. Deploy  (script is "release" — `pnpm deploy` collides with a pnpm builtin)
+pnpm run release
 
 # 5. LS Dashboard → Webhooks → https://<domain>/api/checkout/webhook  (event: order_created)
 ```
