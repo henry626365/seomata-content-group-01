@@ -33,6 +33,7 @@ const githubIcon =
     </nav>
 
     <div class="header-actions">
+      <a class="nav-link account-link" id="account-link" href="/login">Sign in</a>
       <a class="btn-ghost" href={GITHUB_URL} target="_blank" rel="noopener" aria-label="KC Chat on GitHub">
         <Fragment set:html={githubIcon} />
       </a>
@@ -64,6 +65,7 @@ const githubIcon =
       ))}
     </nav>
     <div class="mobile-cta">
+      <a class="btn-ghost-link" id="m-account-link" href="/login">Sign in</a>
       <a class="btn-primary block" href="/docs">Get Started</a>
       <a class="mobile-gh" href={GITHUB_URL} target="_blank" rel="noopener">
         <Fragment set:html={githubIcon} />
@@ -245,6 +247,18 @@ const githubIcon =
     font-size: 0.9rem;
     text-decoration: none;
   }
+  .btn-ghost-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
   .menu-backdrop {
     position: fixed;
     inset: var(--header-height) 0 0;
@@ -307,4 +321,21 @@ const githubIcon =
       if (window.innerWidth > 768 && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
     });
   }
+</script>
+
+<script is:inline>
+  // Reflect Google login state in the header (Sign in → Account).
+  (function () {
+    fetch('/api/auth/me', { credentials: 'same-origin' })
+      .then((r) => r.json())
+      .then((d) => {
+        if (!d || !d.user) return;
+        const label = d.user.name ? 'Account' : 'Account';
+        for (const id of ['account-link', 'm-account-link']) {
+          const el = document.getElementById(id);
+          if (el) { el.textContent = label; el.setAttribute('href', '/account'); }
+        }
+      })
+      .catch(() => {});
+  })();
 </script>

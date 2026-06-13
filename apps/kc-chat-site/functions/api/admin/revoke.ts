@@ -8,7 +8,7 @@ import { ok, err, readJson } from "../../lib/http";
 import { requireAdmin } from "../../lib/auth";
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
-  const authFail = requireAdmin(request, env);
+  const authFail = await requireAdmin(request, env);
   if (authFail) return authFail;
 
   const body = await readJson<{ code?: string }>(request);

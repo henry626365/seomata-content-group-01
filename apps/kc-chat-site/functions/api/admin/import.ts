@@ -19,7 +19,7 @@ function parseCodes(input: unknown): string[] {
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
-  const authFail = requireAdmin(request, env);
+  const authFail = await requireAdmin(request, env);
   if (authFail) return authFail;
 
   const body = await readJson<{ tier?: string; codes?: unknown; notes?: string; batchId?: string }>(request);

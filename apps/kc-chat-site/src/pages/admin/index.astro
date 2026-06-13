@@ -9,15 +9,40 @@ import '../../styles/global.css';
       <h1>Admin · Cards</h1>
 
       <div class="card auth" id="auth-panel">
-        <label class="field">
-          <span class="field__label">Admin token</span>
-          <input type="password" id="token-input" placeholder="Bearer token" autocomplete="off" />
-        </label>
-        <div class="row">
-          <button id="auth-save" class="btn-primary">Save & load</button>
-          <button id="auth-clear" class="btn-ghost" type="button">Clear stored</button>
+        <div id="signed-in" class="signed-in" hidden>
+          <img id="si-pic" class="si-pic" alt="" hidden />
+          <div class="si-meta">
+            <strong id="si-name">Signed in</strong>
+            <span id="si-email" class="field__hint"></span>
+          </div>
+          <button id="si-logout" class="btn-ghost" type="button">Sign out</button>
         </div>
-        <p class="field__hint">Token is stored in <code>localStorage.kc_admin_token</code> on your browser.</p>
+
+        <div id="signin-options">
+          <a id="google-signin" class="google-btn" href="/api/auth/google/start?redirect=/admin">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+              <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.71-1.57 2.68-3.88 2.68-6.62z"/>
+              <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+              <path fill="#FBBC05" d="M3.97 10.72a5.41 5.41 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/>
+              <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+            </svg>
+            <span>Sign in with Google</span>
+          </a>
+          <p class="field__hint" style="margin:0.6rem 0 1rem;">Admins (emails in <code>ADMIN_EMAILS</code>) sign in with Google — no token needed.</p>
+
+          <details class="token-fallback">
+            <summary>Use admin token instead</summary>
+            <label class="field" style="margin-top:0.75rem;">
+              <span class="field__label">Admin token</span>
+              <input type="password" id="token-input" placeholder="Bearer token" autocomplete="off" />
+            </label>
+            <div class="row" style="margin-top:0.6rem;">
+              <button id="auth-save" class="btn-primary">Save & load</button>
+              <button id="auth-clear" class="btn-ghost" type="button">Clear stored</button>
+            </div>
+            <p class="field__hint">Token is stored in <code>localStorage.kc_admin_token</code> on your browser.</p>
+          </details>
+        </div>
       </div>
 
       <section class="card" id="gen-panel" hidden>
@@ -60,6 +85,8 @@ import '../../styles/global.css';
               <option value="sold">Sold</option>
               <option value="revoked">Revoked</option>
             </select>
+            <button id="del-selected" class="btn-ghost btn-ghost--danger" type="button" disabled>Delete selected (0)</button>
+            <button id="del-filtered" class="btn-ghost btn-ghost--danger" type="button" hidden>Delete all filtered</button>
             <button id="list-reload" class="btn-ghost" type="button">Reload</button>
           </div>
         </header>
@@ -68,6 +95,7 @@ import '../../styles/global.css';
           <table id="list-table" class="table">
             <thead>
               <tr>
+                <th class="col-sel"><input type="checkbox" id="sel-all" title="Select all" /></th>
                 <th>Code</th><th>Tier</th><th>Status</th>
                 <th>Imported</th><th>Sold</th>
                 <th>Notes</th><th>Action</th>
@@ -84,17 +112,50 @@ import '../../styles/global.css';
     const $ = (id) => document.getElementById(id);
     const STORAGE = 'kc_admin_token';
     let token = localStorage.getItem(STORAGE) || '';
+    let googleUser = null;
+
+    function authed() { return !!token || !!googleUser; }
 
     function reveal() {
-      $('gen-panel').hidden = !token;
-      $('list-panel').hidden = !token;
+      const on = authed();
+      $('gen-panel').hidden = !on;
+      $('list-panel').hidden = !on;
+      // Swap the sign-in options ↔ the signed-in summary.
+      $('signin-options').hidden = on;
+      $('signed-in').hidden = !on;
     }
-    if (token) { $('token-input').value = token; reveal(); loadList(); }
+
+    function showGoogleSignedIn(u) {
+      $('si-name').textContent = u.name || 'Signed in (admin)';
+      $('si-email').textContent = u.email || '';
+      if (u.picture) { $('si-pic').src = u.picture; $('si-pic').hidden = false; }
+    }
+
+    function showTokenSignedIn() {
+      $('si-name').textContent = 'Signed in with admin token';
+      $('si-email').textContent = '';
+      $('si-pic').hidden = true;
+    }
+
+    async function init() {
+      if (token) { $('token-input').value = token; showTokenSignedIn(); reveal(); loadList(); return; }
+      // No token → check for a Google admin session.
+      try {
+        const me = await (await fetch('/api/auth/me', { credentials: 'same-origin' })).json();
+        if (me && me.user && me.user.role === 'admin') {
+          googleUser = me.user;
+          showGoogleSignedIn(me.user);
+          reveal();
+          loadList();
+        }
+      } catch {}
+    }
 
     $('auth-save').onclick = () => {
       token = $('token-input').value.trim();
       if (!token) return alert('paste a token');
       localStorage.setItem(STORAGE, token);
+      showTokenSignedIn();
       reveal();
       loadList();
     };
@@ -102,19 +163,19 @@ import '../../styles/global.css';
       localStorage.removeItem(STORAGE);
       token = '';
       $('token-input').value = '';
-      $('gen-panel').hidden = true;
-      $('list-panel').hidden = true;
+      reveal();
+    };
+    $('si-logout').onclick = async () => {
+      // Clear the local token (if any) and the server session (if any), then reload.
+      if (token) { localStorage.removeItem(STORAGE); token = ''; }
+      if (googleUser) { try { await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' }); } catch {} }
+      location.reload();
     };
 
     async function api(path, opts = {}) {
-      const res = await fetch(path, {
-        ...opts,
-        headers: {
-          'authorization': 'Bearer ' + token,
-          'content-type': 'application/json',
-          ...(opts.headers || {}),
-        },
-      });
+      const headers = { 'content-type': 'application/json', ...(opts.headers || {}) };
+      if (token) headers['authorization'] = 'Bearer ' + token; // else rely on session cookie
+      const res = await fetch(path, { ...opts, credentials: 'same-origin', headers });
       let data = {};
       try { data = await res.json(); } catch {}
       if (!res.ok) throw new Error((data && (data.message || data.code)) || ('HTTP ' + res.status));
@@ -149,6 +210,64 @@ import '../../styles/global.css';
     $('list-status').onchange = loadList;
     $('list-reload').onclick = loadList;
 
+    function selectedCodes() {
+      return Array.from(document.querySelectorAll('.row-sel:checked')).map((b) => b.dataset.code);
+    }
+    function updateSelection() {
+      const boxes = Array.from(document.querySelectorAll('.row-sel'));
+      const checked = boxes.filter((b) => b.checked);
+      const btn = $('del-selected');
+      btn.textContent = 'Delete selected (' + checked.length + ')';
+      btn.disabled = checked.length === 0;
+      const all = $('sel-all');
+      all.checked = boxes.length > 0 && checked.length === boxes.length;
+      all.indeterminate = checked.length > 0 && checked.length < boxes.length;
+    }
+
+    $('sel-all').onchange = () => {
+      const on = $('sel-all').checked;
+      document.querySelectorAll('.row-sel').forEach((b) => { b.checked = on; });
+      updateSelection();
+    };
+
+    $('del-selected').onclick = async () => {
+      const codes = selectedCodes();
+      if (codes.length === 0) return;
+      if (!confirm('Permanently DELETE ' + codes.length + ' selected card-key(s)? This cannot be undone.')) return;
+      try {
+        let data = await api('/api/admin/delete', { method: 'POST', body: JSON.stringify({ codes }) });
+        // Sold cards are skipped unless forced — offer a second pass.
+        if (data.skipped_sold && data.skipped_sold.length) {
+          if (confirm(data.deleted + ' deleted. ' + data.skipped_sold.length +
+            ' are SOLD (linked to orders) and were skipped. Force delete those too?')) {
+            const d2 = await api('/api/admin/delete', { method: 'POST', body: JSON.stringify({ codes: data.skipped_sold, force: true }) });
+            data = { deleted: data.deleted + d2.deleted, skipped_sold: [], not_found: (data.not_found || []).concat(d2.not_found || []) };
+          }
+        }
+        const nf = (data.not_found && data.not_found.length) ? ('  ·  not found: ' + data.not_found.length) : '';
+        alert('Deleted ' + data.deleted + ' card-key(s)' + nf);
+        await loadList();
+      } catch (e) { alert(e.message); }
+    };
+
+    $('del-filtered').onclick = async () => {
+      const status = $('del-filtered').dataset.status;
+      if (!status) return;
+      const lbl = { unused: 'In stock', sold: 'Sold', revoked: 'Revoked' };
+      const name = lbl[status] || status;
+      if (!confirm("Permanently DELETE ALL cards with status '" + name + "'? This cannot be undone.")) return;
+      const payload = { status };
+      if (status === 'sold') {
+        if (!confirm('These are SOLD cards linked to orders. Force delete ALL of them?')) return;
+        payload.force = true;
+      }
+      try {
+        const data = await api('/api/admin/delete', { method: 'POST', body: JSON.stringify(payload) });
+        alert("Deleted " + data.deleted + " card-key(s) with status '" + name + "'");
+        await loadList();
+      } catch (e) { alert(e.message); }
+    };
+
     async function loadList() {
       try {
         const status = $('list-status').value;
@@ -157,8 +276,22 @@ import '../../styles/global.css';
         $('list-stats').textContent =
           'Total: ' + data.total + '  ·  ' +
           Object.entries(data.stats || {}).map(([k, v]) => k + ': ' + v).join('  ·  ');
+        // "Delete all filtered" — only when a concrete status filter is active.
+        const delF = $('del-filtered');
+        const statusLbl = { unused: 'In stock', sold: 'Sold', revoked: 'Revoked' };
+        if (status) {
+          delF.hidden = false;
+          delF.disabled = !data.total;
+          delF.textContent = "Delete all '" + (statusLbl[status] || status) + "' (" + data.total + ')';
+          delF.dataset.status = status;
+        } else {
+          delF.hidden = true;
+          delF.dataset.status = '';
+        }
         const tbody = $('list-table').querySelector('tbody');
         tbody.innerHTML = '';
+        $('sel-all').checked = false;
+        $('sel-all').indeterminate = false;
         for (const c of data.items) {
           const tr = document.createElement('tr');
           const cell = (txt, mono) => {
@@ -169,6 +302,15 @@ import '../../styles/global.css';
           };
           const fmt = (t) => (t ? new Date(t).toISOString().slice(0, 16).replace('T', ' ') : '—');
           const statusLabel = { unused: 'In stock', sold: 'Sold', revoked: 'Revoked' };
+          const selTd = document.createElement('td');
+          selTd.className = 'col-sel';
+          const selBox = document.createElement('input');
+          selBox.type = 'checkbox';
+          selBox.className = 'row-sel';
+          selBox.dataset.code = c.code;
+          selBox.onchange = updateSelection;
+          selTd.appendChild(selBox);
+          tr.appendChild(selTd);
           tr.appendChild(cell(c.code, true));
           tr.appendChild(cell(c.tier));
           tr.appendChild(cell(statusLabel[c.status] || c.status));
@@ -191,13 +333,41 @@ import '../../styles/global.css';
             };
             td.appendChild(b2);
           }
+          // Delete = permanently remove the card-key row (any status).
+          const bDel = document.createElement('button');
+          bDel.className = 'btn-tiny btn-tiny--danger';
+          bDel.textContent = 'Delete';
+          bDel.onclick = async () => {
+            if (!confirm('Permanently DELETE ' + c.code + '? This cannot be undone.')) return;
+            try {
+              await api('/api/admin/delete', { method: 'POST', body: JSON.stringify({ code: c.code }) });
+              await loadList();
+            } catch (e) {
+              // Sold cards are linked to an order — backend asks for explicit force.
+              if (/sold/i.test(e.message)) {
+                if (confirm(c.code + ' is SOLD (linked to an order). Force delete anyway?')) {
+                  try {
+                    await api('/api/admin/delete', { method: 'POST', body: JSON.stringify({ code: c.code, force: true }) });
+                    await loadList();
+                    return;
+                  } catch (e2) { alert(e2.message); return; }
+                }
+                return;
+              }
+              alert(e.message);
+            }
+          };
+          td.appendChild(bDel);
           tr.appendChild(td);
           tbody.appendChild(tr);
         }
+        updateSelection();
       } catch (e) {
         alert('List failed: ' + e.message);
       }
     }
+
+    init();
   </script>
 
   <style>
@@ -241,6 +411,11 @@ import '../../styles/global.css';
       background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle);
       padding: 0.5rem 0.9rem; border-radius: var(--radius-sm); cursor: pointer;
     }
+    .btn-ghost--danger { color: #B91C1C; border-color: #FECACA; }
+    .btn-ghost--danger:hover:not(:disabled) { background: #FEF2F2; }
+    .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
+    .col-sel { width: 1%; text-align: center; white-space: nowrap; }
+    .col-sel input { width: auto; }
     .btn-tiny {
       background: var(--color-accent-subtle); color: var(--color-accent);
       border: 1px solid var(--border-accent);
@@ -255,6 +430,18 @@ import '../../styles/global.css';
       font-size: 0.78rem; max-height: 280px; overflow: auto; white-space: pre-wrap; word-break: break-all;
       margin-top: 1rem;
     }
+    .google-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      padding: 0.6rem 1.1rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+      background: #fff; color: #1f2937; font-weight: 600; font-size: 0.92rem;
+      text-decoration: none; transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .google-btn:hover { box-shadow: var(--shadow-card); border-color: var(--text-muted); }
+    .token-fallback summary { cursor: pointer; font-size: 0.82rem; color: var(--text-secondary); }
+    .token-fallback[open] summary { margin-bottom: 0.25rem; }
+    .signed-in { display: flex; align-items: center; gap: 0.75rem; }
+    .si-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .si-meta { display: flex; flex-direction: column; line-height: 1.3; margin-right: auto; }
     .stats { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
     .table-wrap { overflow-x: auto; }
     .table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }

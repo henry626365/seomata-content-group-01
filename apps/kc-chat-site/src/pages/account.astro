@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/global.css';
+---
+
+<BaseLayout title="My account — KC Chat" description="View your KC Chat orders and card-keys.">
+  <section class="section">
+    <div class="container account-page">
+      <div id="loading" class="muted">Loading…</div>
+
+      <div id="account" hidden>
+        <header class="acct-head">
+          <div class="acct-id">
+            <img id="acct-pic" class="acct-pic" alt="" hidden />
+            <div>
+              <h1 id="acct-name">My account</h1>
+              <p id="acct-email" class="muted"></p>
+            </div>
+          </div>
+          <div class="acct-actions">
+            <a id="admin-link" class="btn-ghost" href="/admin" hidden>Admin</a>
+            <button id="logout-btn" class="btn-ghost" type="button">Sign out</button>
+          </div>
+        </header>
+
+        <section class="card">
+          <h2>Your orders</h2>
+          <div id="orders-empty" class="muted" hidden>
+            No orders yet. <a href="/pricing">Browse plans →</a>
+          </div>
+          <div class="table-wrap">
+            <table id="orders-table" class="table" hidden>
+              <thead>
+                <tr><th>Date</th><th>Plan</th><th>Status</th><th>Card-key</th><th>Amount</th><th></th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    const $ = (id) => document.getElementById(id);
+    const TIER_LABEL = { day: 'Day Pass', month: 'Monthly', year: 'Yearly', lifetime: 'Lifetime', lite: 'Lite' };
+
+    async function init() {
+      let me;
+      try {
+        me = await (await fetch('/api/auth/me', { credentials: 'same-origin' })).json();
+      } catch { me = { user: null }; }
+
+      if (!me || !me.user) {
+        location.replace('/login?redirect=/account');
+        return;
+      }
+
+      const u = me.user;
+      $('acct-name').textContent = u.name || 'My account';
+      $('acct-email').textContent = u.email || '';
+      if (u.picture) { $('acct-pic').src = u.picture; $('acct-pic').hidden = false; }
+      if (u.role === 'admin') $('admin-link').hidden = false;
+
+      $('loading').hidden = true;
+      $('account').hidden = false;
+
+      try {
+        const data = await (await fetch('/api/account/orders', { credentials: 'same-origin' })).json();
+        const items = (data && data.items) || [];
+        if (!items.length) { $('orders-empty').hidden = false; return; }
+
+        const fmt = (t) => (t ? new Date(t).toISOString().slice(0, 10) : '—');
+        const money = (cents, cur) => (cents == null ? '—' : (cents / 100).toLocaleString(undefined, { style: 'currency', currency: (cur || 'usd').toUpperCase() }));
+        const statusLabel = { pending: 'Pending', paid: 'Paid', refunded: 'Refunded', failed: 'Failed' };
+
+        const tbody = $('orders-table').querySelector('tbody');
+        for (const o of items) {
+          const tr = document.createElement('tr');
+          const td = (txt, mono) => { const c = document.createElement('td'); if (mono) c.className = 'mono'; c.textContent = txt; return c; };
+          tr.appendChild(td(fmt(o.created_at)));
+          tr.appendChild(td(TIER_LABEL[o.tier] || o.tier));
+          const st = document.createElement('td');
+          const badge = document.createElement('span');
+          badge.className = 'badge badge--' + o.status;
+          badge.textContent = statusLabel[o.status] || o.status;
+          st.appendChild(badge);
+          tr.appendChild(st);
+          tr.appendChild(td(o.status === 'paid' && o.card_code ? o.card_code : '—', true));
+          tr.appendChild(td(money(o.amount_cents, o.currency)));
+          const actTd = document.createElement('td');
+          if (o.status === 'paid' && o.card_code) {
+            const rb = document.createElement('button');
+            rb.className = 'btn-tiny';
+            rb.textContent = 'Resend email';
+            rb.onclick = async () => {
+              const orig = rb.textContent;
+              rb.disabled = true; rb.textContent = 'Sending…';
+              try {
+                const r = await fetch('/api/account/resend', {
+                  method: 'POST', credentials: 'same-origin',
+                  headers: { 'content-type': 'application/json' },
+                  body: JSON.stringify({ orderId: o.id }),
+                });
+                const d = await r.json().catch(() => ({}));
+                if (!r.ok) throw new Error(d.message || d.code || ('HTTP ' + r.status));
+                alert('Card-key email re-sent to ' + (d.to || 'your email') + '.');
+              } catch (e) {
+                alert('Resend failed: ' + e.message);
+              } finally {
+                rb.disabled = false; rb.textContent = orig;
+              }
+            };
+            actTd.appendChild(rb);
+          }
+          tr.appendChild(actTd);
+          tbody.appendChild(tr);
+        }
+        $('orders-table').hidden = false;
+      } catch {
+        $('orders-empty').hidden = false;
+        $('orders-empty').textContent = 'Could not load your orders. Please refresh.';
+      }
+    }
+
+    $('logout-btn').onclick = async () => {
+      try { await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' }); } catch {}
+      location.replace('/login');
+    };
+
+    init();
+  </script>
+
+  <style>
+    .account-page { max-width: 880px; }
+    .muted { color: var(--text-secondary); }
+    .acct-head {
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      flex-wrap: wrap; margin-bottom: 1.5rem;
+    }
+    .acct-id { display: flex; align-items: center; gap: 0.9rem; }
+    .acct-pic { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .acct-head h1 { margin: 0; font-size: 1.4rem; }
+    .acct-head p { margin: 0.1rem 0 0; font-size: 0.9rem; }
+    .acct-actions { display: flex; gap: 0.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: clamp(1rem, 2.5vw, 1.75rem); box-shadow: var(--shadow-card);
+    }
+    .card h2 { font-size: 1.1rem; margin: 0 0 1rem; }
+    .btn-ghost {
+      background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle);
+      padding: 0.5rem 0.9rem; border-radius: var(--radius-sm); cursor: pointer; text-decoration: none;
+      font-size: 0.88rem; font-weight: 600;
+    }
+    .btn-ghost:hover { color: var(--text-primary); background: var(--color-accent-subtle); }
+    .table-wrap { overflow-x: auto; }
+    .table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .table th, .table td { padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--border-subtle); text-align: left; white-space: nowrap; }
+    .table th { background: #F8FAFC; font-weight: 600; }
+    .mono { font-family: var(--font-mono); }
+    .btn-tiny {
+      background: var(--color-accent-subtle); color: var(--color-accent);
+      border: 1px solid var(--border-accent);
+      padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    }
+    .btn-tiny:hover:not(:disabled) { background: var(--color-accent); color: #fff; }
+    .btn-tiny:disabled { opacity: 0.6; cursor: not-allowed; }
+    .badge { padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+    .badge--paid { background: #DCFCE7; color: #166534; }
+    .badge--pending { background: #FEF9C3; color: #854D0E; }
+    .badge--refunded { background: #F1F5F9; color: #475569; }
+    .badge--failed { background: #FEE2E2; color: #991B1B; }
+  </style>
+</BaseLayout>

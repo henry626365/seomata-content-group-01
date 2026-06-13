@@ -19,6 +19,13 @@ import * as orderStatus from "../functions/api/order/status";
 import * as adminImport from "../functions/api/admin/import";
 import * as adminCards from "../functions/api/admin/cards";
 import * as adminRevoke from "../functions/api/admin/revoke";
+import * as adminDelete from "../functions/api/admin/delete";
+import * as authGoogleStart from "../functions/api/auth/google/start";
+import * as authGoogleCallback from "../functions/api/auth/google/callback";
+import * as authMe from "../functions/api/auth/me";
+import * as authLogout from "../functions/api/auth/logout";
+import * as accountOrders from "../functions/api/account/orders";
+import * as accountResend from "../functions/api/account/resend";
 
 type Handler = PagesFunction<Env>;
 
@@ -41,6 +48,13 @@ const routes: Record<string, RouteModule> = {
   "/api/admin/import": adminImport,
   "/api/admin/cards": adminCards,
   "/api/admin/revoke": adminRevoke,
+  "/api/admin/delete": adminDelete,
+  "/api/auth/google/start": authGoogleStart,
+  "/api/auth/google/callback": authGoogleCallback,
+  "/api/auth/me": authMe,
+  "/api/auth/logout": authLogout,
+  "/api/account/orders": accountOrders,
+  "/api/account/resend": accountResend,
 };
 
 function pickHandler(mod: RouteModule, method: string): Handler | undefined {

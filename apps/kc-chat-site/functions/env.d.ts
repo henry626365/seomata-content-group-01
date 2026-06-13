@@ -23,6 +23,11 @@ export interface Env {
   // Email delivery (Resend) — optional; card is still shown on the success page if unset
   RESEND_API_KEY?: string;
   MAIL_FROM?: string;         // e.g. "KC Chat <noreply@h540.com>"
+  // Google OAuth (Sign in with Google) — set via `wrangler secret put ...`
+  GOOGLE_CLIENT_ID?: string;
+  GOOGLE_CLIENT_SECRET?: string;
+  // Comma-separated email whitelist that gets role='admin' on login (e.g. "me@gmail.com,boss@h540.com")
+  ADMIN_EMAILS?: string;
 }
 
 declare global {
