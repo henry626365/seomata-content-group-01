@@ -21,7 +21,11 @@ import '../../styles/global.css';
       </div>
 
       <section class="card" id="gen-panel" hidden>
-        <h2>Generate batch</h2>
+        <h2>Import card-keys</h2>
+        <p class="field__hint" style="margin:-0.5rem 0 1rem;">
+          Paste card-keys <strong>generated on kk-license</strong> to add them as sellable stock.
+          h540 never generates codes — it only sells imported ones. Existing codes are skipped.
+        </p>
         <div class="grid">
           <label class="field">
             <span class="field__label">Tier</span>
@@ -34,15 +38,15 @@ import '../../styles/global.css';
             </select>
           </label>
           <label class="field">
-            <span class="field__label">Count</span>
-            <input type="number" id="gen-count" value="10" min="1" max="1000" />
-          </label>
-          <label class="field">
             <span class="field__label">Notes (optional)</span>
-            <input type="text" id="gen-notes" placeholder="bulk for april promo" />
+            <input type="text" id="gen-notes" placeholder="e.g. kk-license batch 2026-06" />
           </label>
         </div>
-        <button id="gen-btn" class="btn-primary">Generate</button>
+        <label class="field" style="margin-top:1rem;">
+          <span class="field__label">Card-keys <small>(one per line, or comma/space separated)</small></span>
+          <textarea id="gen-codes" rows="8" placeholder="KC-A1B2-C3D4-E5F6&#10;KC-G7H8-J9K0-L1M2&#10;..."></textarea>
+        </label>
+        <button id="gen-btn" class="btn-primary">Import</button>
         <pre id="gen-out" class="codeblock" hidden></pre>
       </section>
 
@@ -52,10 +56,9 @@ import '../../styles/global.css';
           <div class="row" style="gap:0.5rem;">
             <select id="list-status">
               <option value="">All status</option>
-              <option value="unused">Unused</option>
-              <option value="active">Active</option>
+              <option value="unused">In stock</option>
+              <option value="sold">Sold</option>
               <option value="revoked">Revoked</option>
-              <option value="expired">Expired</option>
             </select>
             <button id="list-reload" class="btn-ghost" type="button">Reload</button>
           </div>
@@ -66,8 +69,8 @@ import '../../styles/global.css';
             <thead>
               <tr>
                 <th>Code</th><th>Tier</th><th>Status</th>
-                <th>Generated</th><th>Activated</th><th>Expires</th>
-                <th>Device</th><th>Notes</th><th>Action</th>
+                <th>Imported</th><th>Sold</th>
+                <th>Notes</th><th>Action</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -119,20 +122,27 @@ import '../../styles/global.css';
     }
 
     $('gen-btn').onclick = async () => {
+      const codes = $('gen-codes').value || '';
+      if (!codes.trim()) { alert('Paste some card-keys first'); return; }
       try {
-        const data = await api('/api/admin/generate', {
+        const data = await api('/api/admin/import', {
           method: 'POST',
           body: JSON.stringify({
             tier: $('gen-tier').value,
-            count: parseInt($('gen-count').value, 10),
+            codes,
             notes: $('gen-notes').value || undefined,
           }),
         });
         $('gen-out').hidden = false;
-        $('gen-out').textContent = data.codes.join('\n');
+        $('gen-out').textContent =
+          `Imported ${data.imported} ${data.tier_label || data.tier} card(s)` +
+          `  ·  duplicates skipped: ${data.duplicates}` +
+          `  ·  invalid: ${data.invalid}` +
+          `  ·  batch: ${data.batch_id}`;
+        $('gen-codes').value = '';
         await loadList();
       } catch (e) {
-        alert('Generate failed: ' + e.message);
+        alert('Import failed: ' + e.message);
       }
     };
 
@@ -158,34 +168,22 @@ import '../../styles/global.css';
             return td;
           };
           const fmt = (t) => (t ? new Date(t).toISOString().slice(0, 16).replace('T', ' ') : '—');
+          const statusLabel = { unused: 'In stock', sold: 'Sold', revoked: 'Revoked' };
           tr.appendChild(cell(c.code, true));
           tr.appendChild(cell(c.tier));
-          tr.appendChild(cell(c.status));
+          tr.appendChild(cell(statusLabel[c.status] || c.status));
           tr.appendChild(cell(fmt(c.generated_at)));
-          tr.appendChild(cell(fmt(c.activated_at)));
-          tr.appendChild(cell(fmt(c.expires_at)));
-          tr.appendChild(cell(c.device_hash ? c.device_hash.slice(0, 6) + '…' : '—', true));
+          tr.appendChild(cell(fmt(c.sold_at)));
           tr.appendChild(cell(c.notes || '—'));
           const td = document.createElement('td');
-          if (c.status === 'active') {
-            const b1 = document.createElement('button');
-            b1.className = 'btn-tiny';
-            b1.textContent = 'Transfer';
-            b1.onclick = async () => {
-              if (!confirm('Unbind ' + c.code + ' from current device?')) return;
-              try {
-                await api('/api/admin/transfer', { method: 'POST', body: JSON.stringify({ code: c.code }) });
-                await loadList();
-              } catch (e) { alert(e.message); }
-            };
-            td.appendChild(b1);
-          }
-          if (c.status !== 'revoked') {
+          // h540 doesn't activate cards, so there's no device-transfer here.
+          // Revoke = pull an unsold card from sale.
+          if (c.status === 'unused') {
             const b2 = document.createElement('button');
             b2.className = 'btn-tiny btn-tiny--danger';
             b2.textContent = 'Revoke';
             b2.onclick = async () => {
-              if (!confirm('Revoke ' + c.code + '?')) return;
+              if (!confirm('Pull ' + c.code + ' from sale (revoke)?')) return;
               try {
                 await api('/api/admin/revoke', { method: 'POST', body: JSON.stringify({ code: c.code }) });
                 await loadList();
@@ -224,7 +222,7 @@ import '../../styles/global.css';
     .field { display: grid; gap: 0.35rem; }
     .field__label { font-weight: 600; font-size: 0.9rem; }
     .field__hint { font-size: 0.78rem; color: var(--text-muted); }
-    input, select {
+    input, select, textarea {
       padding: 0.55rem 0.7rem;
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
@@ -232,7 +230,8 @@ import '../../styles/global.css';
       font-family: inherit;
       background: #fff;
     }
-    input[type='password'], input[type='text'] { font-family: var(--font-mono); }
+    input[type='password'], input[type='text'], textarea { font-family: var(--font-mono); }
+    textarea { width: 100%; resize: vertical; line-height: 1.5; }
     .btn-primary {
       background: var(--color-accent); color: #fff; border: 0;
       padding: 0.55rem 1rem; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer;

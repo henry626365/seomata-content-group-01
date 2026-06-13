@@ -5,26 +5,20 @@
 // Migrated from Cloudflare Pages Functions (file-based `functions/` routing) to a
 // Workers + Static Assets deployment:
 //   - The static Astro output (./dist) is served via the [assets] binding.
-//   - All /api/* endpoints are dispatched here to the original handlers. Those
-//     handlers are UNCHANGED and still authored in the Pages `PagesFunction` style,
-//     so the business logic (D1 issuance, license activation, LS webhook) is identical.
+//   - All /api/* endpoints are dispatched here to the original handlers, authored
+//     in the Pages `PagesFunction` style (health, LS checkout/webhook, order status,
+//     admin import/list/revoke). Card activation/verification is NOT handled here —
+//     that lives on the separate kk-license service; h540 only sells imported stock.
 //
-// NOTE: the legacy GET /i-kc Cursor-patch installer route is intentionally NOT wired
-// into this Worker (it is the extension-patching delivery mechanism, dropped as part
-// of moving to a legitimate product surface). See the migration report for details.
-
 import type { Env } from "../functions/env.d";
 
 import * as health from "../functions/api/health";
 import * as checkoutCreate from "../functions/api/checkout/create";
 import * as checkoutWebhook from "../functions/api/checkout/webhook";
 import * as orderStatus from "../functions/api/order/status";
-import * as cardStatus from "../functions/api/card/status";
-import * as cardActivate from "../functions/api/card/activate";
-import * as adminGenerate from "../functions/api/admin/generate";
+import * as adminImport from "../functions/api/admin/import";
 import * as adminCards from "../functions/api/admin/cards";
 import * as adminRevoke from "../functions/api/admin/revoke";
-import * as adminTransfer from "../functions/api/admin/transfer";
 
 type Handler = PagesFunction<Env>;
 
@@ -36,17 +30,17 @@ interface RouteModule {
 }
 
 // Exact-path → handler module map. Keep paths in sync with the front-end fetch calls.
+// h540 is a pure distribution front: it sells imported card-keys and never
+// activates them (activation/verification lives on kk-license). So there are no
+// /api/card/* routes here; admin imports stock instead of generating it.
 const routes: Record<string, RouteModule> = {
   "/api/health": health,
   "/api/checkout/create": checkoutCreate,
   "/api/checkout/webhook": checkoutWebhook,
   "/api/order/status": orderStatus,
-  "/api/card/status": cardStatus,
-  "/api/card/activate": cardActivate,
-  "/api/admin/generate": adminGenerate,
+  "/api/admin/import": adminImport,
   "/api/admin/cards": adminCards,
   "/api/admin/revoke": adminRevoke,
-  "/api/admin/transfer": adminTransfer,
 };
 
 function pickHandler(mod: RouteModule, method: string): Handler | undefined {

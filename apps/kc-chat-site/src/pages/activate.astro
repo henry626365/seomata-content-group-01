@@ -5,309 +5,137 @@ import '../styles/global.css';
 
 <BaseLayout
   title="Activate your card | KC Chat"
-  description="Enter your activation card and bind it to your device to receive a 100-year license token."
+  description="Paste your KC Chat card-key into the plugin's Activation panel to activate your license."
 >
   <section class="section">
     <div class="container activate-page">
       <header class="hero">
         <p class="eyebrow">Activation</p>
-        <h1>Activate your KC Chat license</h1>
+        <h1>Activate your card in the KC&nbsp;Chat plugin</h1>
         <p class="lead">
-          Enter the card code you received, paste the <code>device_hash</code> shown in the
-          extension's Settings → Activation panel, and click activate.
-        </p>
-        <p class="tier-tags">
-          <span class="tag">Day Pass · 24 h</span>
-          <span class="tag">Monthly · 30 days</span>
-          <span class="tag">Yearly · 365 days</span>
-          <span class="tag">Lifetime · 100 years</span>
-          <span class="tag">Lite · 30 days</span>
+          Your card-key activates <strong>inside Cursor</strong> — there's no website form.
+          Copy your code, then paste it into the KC&nbsp;Chat panel.
         </p>
       </header>
 
-      <form id="activate-form" class="card">
-        <label class="field">
-          <span class="field__label">Card code</span>
-          <input
-            type="text"
-            name="code"
-            placeholder="KC-XXXX-XXXX-XXXX"
-            autocomplete="off"
-            spellcheck="false"
-            required
-          />
-        </label>
+      <div class="card code-card" id="code-card" hidden>
+        <span class="field__label">Your card-key</span>
+        <div class="code-row">
+          <code class="card-code" id="card-code">KC-XXXX-XXXX-XXXX</code>
+          <button class="copy-btn" id="copy-btn" type="button">Copy</button>
+        </div>
+        <p class="field__hint">Keep this safe — it binds to one device on first activation.</p>
+      </div>
 
-        <label class="field">
-          <span class="field__label">Device hash <small>(16 hex chars)</small></span>
-          <input
-            type="text"
-            name="device_hash"
-            placeholder="bd40c926370d9072"
-            pattern="[0-9a-fA-F]{16}"
-            autocomplete="off"
-            spellcheck="false"
-            required
-          />
-          <span class="field__hint">
-            Find this in the extension panel under <em>Settings → Activation → Device hash</em>.
-          </span>
-        </label>
+      <ol class="steps">
+        <li><strong>Copy your card-key.</strong> It's in your purchase email and on the order-success page (format <code>KC-XXXX-XXXX-XXXX</code>).</li>
+        <li>Open <strong>Cursor</strong> and show the <strong>KC&nbsp;Chat</strong> panel.</li>
+        <li>Go to <strong>Settings → Activation</strong> inside the panel.</li>
+        <li>Paste your card-key and click <strong>Activate</strong>.</li>
+        <li>The panel shows <em>Activated · expires YYYY-MM-DD</em> — you're done. <span class="muted">(Day pass = 24&nbsp;h from activation.)</span></li>
+      </ol>
 
-        <button type="submit" class="btn-primary">Activate</button>
-
-        <div id="msg" class="msg" hidden></div>
-      </form>
-
-      <details class="howto" open>
-        <summary>🚀 One-click activator (recommended)</summary>
-        <p>The script auto-detects your device hash, calls our server, closes Cursor, and writes the token to <code>state.vscdb</code>.</p>
-        <ol>
-          <li>
-            <a href="/kc-activate.cjs" download class="dl-btn">⬇ Download kc-activate.cjs</a>
-          </li>
-          <li>Open <strong>PowerShell</strong> (or terminal) in the folder you saved it to.</li>
-          <li>
-            Run:
-            <pre class="cmd">node kc-activate.cjs https://cursor.h540.com YOUR-CARD-CODE</pre>
-          </li>
-          <li>Done — relaunch Cursor.</li>
-        </ol>
-        <p class="hint">
-          Requires <a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js 18+</a> installed. Card-codes look like <code>KC-A1B2-C3D4-E5F6</code>.
-        </p>
-      </details>
-
-      <details class="howto">
-        <summary>Manual activation (advanced)</summary>
-        <ol>
-          <li>Find your <code>device_hash</code> — run this in PowerShell:
-            <pre class="cmd">node -e "const c=require('crypto'),f=require('fs'),p=require('path'),h=process.env.APPDATA+'/Cursor/User/globalStorage/storage.json';const j=JSON.parse(f.readFileSync(h));console.log(c.createHash('sha256').update(String(j['telemetry.machineId'])).digest('hex').slice(0,16))"</pre>
-          </li>
-          <li>Paste the printed 16-hex string into the form above + your card code.</li>
-          <li>Copy the <code>token</code> from the green result panel.</li>
-          <li>Fully close Cursor (check Task Manager — no <code>Cursor.exe</code> running).</li>
-          <li>
-            In PowerShell:
-            <pre class="cmd">cd $env:APPDATA\Cursor\User\globalStorage
-# back up first
-copy state.vscdb state.vscdb.backup
-# manual insert — use forge-token.js or the activator script (preferred)</pre>
-          </li>
-          <li>Reopen Cursor — extension should report <em>Activated · expires YYYY-MM-DD</em>.</li>
-        </ol>
-      </details>
+      <div class="howto">
+        <p><strong>Don't have the plugin yet?</strong> Follow the <a href="/tutorial">setup guide</a> to install KC&nbsp;Chat first, then come back and activate.</p>
+        <p>Lost your card-key, or need to move it to a new device? <a href="/contact">Contact support</a>.</p>
+      </div>
     </div>
   </section>
 
   <script is:inline>
-    const form = document.getElementById('activate-form');
-    const msg = document.getElementById('msg');
-
-    // Prefill the card code when arriving from the order-success page (?code=KC-…).
-    try {
-      const pre = new URLSearchParams(location.search).get('code');
-      if (pre) {
-        const ci = form && form.querySelector('input[name="code"]');
-        if (ci) ci.value = pre.trim().toUpperCase();
-      }
-    } catch (_) { /* noop */ }
-
-    function show(html, kind) {
-      msg.hidden = false;
-      msg.className = 'msg msg--' + kind;
-      msg.innerHTML = html;
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const fd = new FormData(form);
-      const payload = {
-        code: String(fd.get('code') || '').trim().toUpperCase(),
-        device_hash: String(fd.get('device_hash') || '').trim().toLowerCase(),
-      };
-      show('Activating…', 'pending');
+    (function () {
+      // Prefill the buyer's card code when arriving from the email / order-success page (?code=KC-…).
       try {
-        const res = await fetch('/api/card/activate', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        if (!data.ok) {
-          show(
-            '<strong>' + (data.code || 'error') + '</strong> · ' + (data.message || 'unknown'),
-            'error',
-          );
-          return;
+        var pre = new URLSearchParams(location.search).get('code');
+        if (pre) {
+          var card = document.getElementById('code-card');
+          var code = document.getElementById('card-code');
+          if (card && code) { code.textContent = pre.trim().toUpperCase(); card.hidden = false; }
         }
-        const expires = new Date(data.ea).toISOString().slice(0, 19).replace('T', ' ');
-        show(
-          '<p><strong>✓ Activated</strong> — tier <code>' +
-            data.tier_label +
-            '</code>, expires <strong>' +
-            expires +
-            ' UTC</strong>.</p>' +
-            '<p>Copy your token:</p>' +
-            '<pre class="token">' +
-            data.token +
-            '</pre>' +
-            '<p><small>install_secret (keep safe): <code>' +
-            data.install_secret +
-            '</code></small></p>',
-          'ok',
-        );
-      } catch (err) {
-        show('Network error: ' + err.message, 'error');
+      } catch (_) { /* noop */ }
+
+      var btn = document.getElementById('copy-btn');
+      if (btn) {
+        btn.addEventListener('click', async function () {
+          var el = document.getElementById('card-code');
+          var c = (el && el.textContent) || '';
+          try {
+            await navigator.clipboard.writeText(c);
+            btn.textContent = 'Copied ✓';
+            setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+          } catch (_) {
+            var r = document.createRange();
+            r.selectNode(el);
+            var sel = window.getSelection();
+            sel.removeAllRanges(); sel.addRange(r);
+          }
+        });
       }
-    });
+    })();
   </script>
 
   <style>
-    .activate-page {
-      max-width: 720px;
-    }
-    .hero {
-      text-align: center;
-      margin-block: 0 2rem;
-    }
-    .hero h1 {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      margin: 0.5rem 0 0.75rem;
-    }
+    .activate-page { max-width: 720px; }
+    .hero { text-align: center; margin-block: 0 2rem; }
+    .hero h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin: 0.5rem 0 0.75rem; }
     .eyebrow {
       display: inline-flex; align-items: center;
-      font-family: var(--font-mono);
-      text-transform: none;
-      font-size: 0.78rem;
-      letter-spacing: 0.01em;
-      color: var(--color-accent);
-      font-weight: 500;
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--color-accent); font-weight: 500;
     }
     .eyebrow::before { content: '> '; white-space: pre; opacity: 0.55; font-weight: 700; }
-    .lead {
-      color: var(--text-secondary);
-      max-width: 36em;
-      margin-inline: auto;
-    }
-    .tier-tags {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 0.75rem 0 0;
-    }
-    .tag {
-      background: var(--color-accent-subtle);
-      color: var(--color-accent);
-      padding: 0.25rem 0.7rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      border: 1px solid var(--border-accent);
-    }
+    .lead { color: var(--text-secondary); max-width: 38em; margin-inline: auto; line-height: 1.6; }
+
     .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: clamp(1.25rem, 3vw, 2rem);
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: clamp(1.25rem, 3vw, 1.75rem);
       box-shadow: var(--shadow-card);
-      display: grid;
-      gap: 1.25rem;
     }
-    .field {
-      display: grid;
-      gap: 0.4rem;
-    }
-    .field__label {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    .field__hint {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-    input[type='text'] {
-      width: 100%;
-      padding: 0.7rem 0.9rem;
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      font-family: var(--font-mono);
-      font-size: 1rem;
-      background: #fff;
-    }
-    input[type='text']:focus {
-      outline: 2px solid var(--color-accent);
-      outline-offset: 1px;
-    }
-    .btn-primary {
-      background: var(--color-accent);
-      color: #fff;
-      border: 0;
-      padding: 0.8rem 1.2rem;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .btn-primary:hover {
-      background: var(--color-accent-hover);
-    }
-    .msg {
-      border-radius: var(--radius-sm);
-      padding: 0.9rem 1rem;
-      font-size: 0.95rem;
-    }
-    .msg--pending { background: #F1F5F9; color: var(--text-secondary); }
-    .msg--ok      { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
-    .msg--error   { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
-    .token {
-      background: var(--bg-code);
-      color: #E2E8F0;
-      padding: 0.75rem;
-      border-radius: var(--radius-sm);
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-all;
-    }
-    .howto {
-      margin-top: 1.5rem;
-      padding: 1rem 1.25rem;
+    .code-card { display: grid; gap: 0.6rem; margin-bottom: 1.75rem; }
+    .field__label { font-weight: 600; font-size: 0.95rem; }
+    .field__hint { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
+    .code-row { display: flex; gap: 0.6rem; align-items: stretch; flex-wrap: wrap; }
+    .card-code {
+      flex: 1; min-width: 220px;
+      font-family: var(--font-mono); font-size: clamp(1.05rem, 3vw, 1.4rem); font-weight: 700;
+      letter-spacing: 0.04em; color: var(--color-accent);
       background: var(--color-accent-subtle);
+      border: 1px dashed var(--border-accent); border-radius: var(--radius-md);
+      padding: 0.8rem 1rem; display: flex; align-items: center; justify-content: center; user-select: all;
+    }
+    .copy-btn {
+      font-family: var(--font-mono); font-weight: 600; font-size: 0.85rem;
+      color: #fff; background: var(--color-accent); border: none;
+      border-radius: var(--radius-md); padding: 0 1.1rem; cursor: pointer; transition: background 0.2s;
+    }
+    .copy-btn:hover { background: var(--color-accent-hover); }
+
+    .steps {
+      counter-reset: step; list-style: none; padding: 0; margin: 0 0 2rem;
+      display: grid; gap: 0.85rem;
+    }
+    .steps li {
+      position: relative; padding: 0.9rem 1rem 0.9rem 3.1rem;
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); color: var(--text-secondary); line-height: 1.55;
+    }
+    .steps li::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; left: 0.85rem; top: 0.85rem;
+      width: 1.6rem; height: 1.6rem; border-radius: 50%;
+      background: var(--color-accent); color: #fff;
+      font-weight: 700; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .steps strong { color: var(--text-primary); }
+    .steps .muted { color: var(--text-muted); font-size: 0.88em; }
+
+    .howto {
+      padding: 1rem 1.25rem; background: var(--color-accent-subtle);
       border-radius: var(--radius-md);
     }
-    .howto + .howto { margin-top: 0.75rem; }
-    .howto summary {
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--color-accent);
-    }
-    .howto ol { margin: 0.75rem 0 0 1.25rem; line-height: 1.85; }
-    .howto p  { margin: 0.4rem 0; color: var(--text-secondary); font-size: 0.93rem; }
-    .howto .hint { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.5rem; }
-    .dl-btn {
-      display: inline-block;
-      background: var(--color-accent);
-      color: #fff !important;
-      padding: 0.45rem 0.95rem;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      margin: 0.25rem 0;
-    }
-    .dl-btn:hover { background: var(--color-accent-hover); }
-    .cmd {
-      background: var(--bg-code);
-      color: #E2E8F0;
-      padding: 0.55rem 0.7rem;
-      border-radius: var(--radius-sm);
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      overflow-x: auto;
-      margin: 0.4rem 0;
-      white-space: pre;
-    }
+    .howto p { margin: 0.4rem 0; color: var(--text-secondary); font-size: 0.93rem; }
+    .howto a { color: var(--color-accent); font-weight: 600; }
     code { font-family: var(--font-mono); font-size: 0.9em; background: #F1F5F9; padding: 0 0.25em; border-radius: 4px; }
   </style>
 </BaseLayout>

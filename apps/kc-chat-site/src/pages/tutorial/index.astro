@@ -5,7 +5,7 @@ import '../../styles/global.css';
 
 <BaseLayout
   title="How it works — KC Chat for Cursor"
-  description="Buy a card, run one install command, activate. Five minutes from purchase to unlimited Cursor conversations."
+  description="Buy a card, install the KC Chat extension, and activate it in the panel — about five minutes from purchase to a working multi-agent setup."
 >
   <section class="section">
     <div class="container tutorial">
@@ -34,7 +34,7 @@ import '../../styles/global.css';
           <li><a href="#why">Why KC Chat (the math)</a></li>
           <li><a href="#prereq">Prerequisites</a>
             <ol>
-              <li><a href="#cursor">Cursor 2.4.37 (specific version)</a></li>
+              <li><a href="#cursor">Cursor 3.5.38 (recommended version)</a></li>
               <li><a href="#account">Account setup</a></li>
               <li><a href="#network">Network reliability check</a></li>
             </ol>
@@ -81,14 +81,14 @@ import '../../styles/global.css';
         <h2>🛠️ Prerequisites</h2>
 
         <section id="cursor">
-          <h3>2.1 Cursor IDE — version <code>2.4.37</code> (important)</h3>
+          <h3>2.1 Cursor IDE — version <code>3.5.38</code> (recommended)</h3>
           <p>Open Cursor → menu → <em>About</em>, or press <code>Ctrl/Cmd+Shift+P</code> → type <code>About</code>.</p>
           <div class="warning">
-            <strong>⚠️ Don't use the latest Cursor.</strong>
+            <strong>⚠️ Recommended Cursor version: 3.5.38.</strong>
             <p>
-              Newer builds auto-switch to <code>compose 2</code>, which does not work in unlimited mode. You
-              must <strong>downgrade to 2.4.37</strong>. Reach out to support if you need help locating the
-              installer for your platform.
+              KC Chat is tested against <strong>Cursor 3.5.38</strong>. If a much newer build behaves
+              differently, install 3.5.38 — reach out to support if you need help locating the installer for
+              your platform.
             </p>
           </div>
         </section>
@@ -151,55 +151,35 @@ import '../../styles/global.css';
       <!-- 4. Install -->
       <article id="install" class="block">
         <h2>📦 Install the extension</h2>
+        <p>KC Chat is a standard Cursor / VS Code extension — no system patching, no install scripts.</p>
 
-        <h3>4.1 One-liner (Windows)</h3>
-        <p>Open PowerShell as Administrator, paste & enter:</p>
-        <pre class="cmd">irm https://cursor.h540.com/i-kc | iex</pre>
+        <h3>4.1 From the marketplace</h3>
+        <ol>
+          <li>Open <strong>Cursor</strong> → <strong>Extensions</strong> (<code>Ctrl/Cmd+Shift+X</code>)</li>
+          <li>Search <strong>&ldquo;KC Chat&rdquo;</strong> → click <strong>Install</strong></li>
+          <li>Reload Cursor when prompted — the KC Chat panel appears in the sidebar</li>
+        </ol>
 
-        <h3>4.2 One-liner (macOS / Linux)</h3>
-        <pre class="cmd">curl -fsSL https://cursor.h540.com/i-kc | bash</pre>
-
-        <p>The script:</p>
-        <ul>
-          <li>Checks for Cursor + Node 18+</li>
-          <li>Downloads the patcher and activator into <code>~/.kc-chat/</code> (or <code>%LOCALAPPDATA%\kc-chat\</code>)</li>
-          <li>Runs the patcher (NOPs the in-extension defense matrix so token validation is purely local)</li>
-          <li>Prints the activation command template — you just paste your card code</li>
-        </ul>
-
-        <h3>4.3 Manual install (if the one-liner fails)</h3>
+        <h3>4.2 From a VSIX (manual)</h3>
         <ol>
           <li>Get the <code>kc.kc-chat-panel-X.Y.Z.vsix</code> file from <a href="#support">support</a></li>
           <li>Cursor → Extensions → top-right <code>···</code> → <em>Install from VSIX…</em></li>
-          <li>Restart Cursor</li>
+          <li>Reload Cursor</li>
         </ol>
       </article>
 
       <!-- 5. Activate -->
       <article id="activate" class="block">
-        <h2>🔑 Activate with your card (one command)</h2>
+        <h2>🔑 Activate with your card</h2>
+        <p>Activation happens <strong>inside the KC Chat panel</strong> — no scripts, no terminal.</p>
         <ol>
-          <li>Go to <a href="/activate">cursor.h540.com/activate</a> → download
-            <a href="/kc-activate.cjs" download class="dl-btn-inline">⬇ kc-activate.cjs</a>
-          </li>
-          <li>Save it anywhere (e.g. <code>~/kc</code> or <code>D:\kc</code>)</li>
-          <li>
-            From that folder:
-            <pre class="cmd">node kc-activate.cjs https://cursor.h540.com YOUR-CARD-CODE</pre>
-          </li>
-          <li>The script:
-            <ul>
-              <li>Reads your hardware fingerprint (wmic on Windows, ioreg on macOS, /etc/machine-id on Linux)</li>
-              <li>Computes <code>device_hash</code> the exact same way the extension does</li>
-              <li>Calls our backend → receives a 100-year cryptographic token</li>
-              <li>Closes Cursor cleanly</li>
-              <li>Writes the token into your local <code>state.vscdb</code></li>
-            </ul>
-          </li>
-          <li>Restart Cursor — the KC Chat panel reports <em>Activated · expires YYYY-MM-DD</em></li>
+          <li>Open the <strong>KC Chat</strong> panel in Cursor</li>
+          <li>Go to <strong>Settings → Activation</strong></li>
+          <li>Paste your card-key (<code>KC-XXXX-XXXX-XXXX</code>) and click <strong>Activate</strong></li>
+          <li>The panel shows <em>Activated · expires YYYY-MM-DD</em> — you're ready to go</li>
         </ol>
-        <p class="hint">Needs <a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js 18+</a>.
-        If you don't have Node installed, ask support for the alternative <code>.exe</code> installer.</p>
+        <p class="hint">The card binds to one device on first activation. Day pass = 24&nbsp;h from activation;
+        other tiers run for their full duration. Need to move to a new device? <a href="/contact">Contact support</a>.</p>
       </article>
 
       <!-- 6. Use -->
@@ -249,9 +229,8 @@ import '../../styles/global.css';
 
         <details>
           <summary>What if I switch laptops?</summary>
-          <p>Email or ping support with proof of purchase. We unbind your card from the old device via the
-            <code>/admin/transfer</code> endpoint, and you can re-activate on the new one. There's a cooldown to
-            prevent abuse — frequent transfers will be flagged.</p>
+          <p>Email or ping support with proof of purchase and we'll move your card to the new device so you can
+            re-activate it. There's a cooldown to prevent abuse — frequent transfers will be flagged.</p>
         </details>
 
         <details>

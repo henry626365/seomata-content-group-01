@@ -46,74 +46,74 @@ export function isValidTier(t: string): t is keyof typeof TIERS {
   return n !== null && Object.prototype.hasOwnProperty.call(TIERS, n);
 }
 
-/** Generate a single human-typable card code like KC-A7H2-9KM3-WX4P (no 0/O/1/I/L). */
-const ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
-function block(n: number): string {
-  const u = new Uint8Array(n);
-  crypto.getRandomValues(u);
-  let s = "";
-  for (const b of u) s += ALPHABET[b % ALPHABET.length];
-  return s;
-}
-export function newCardCode(prefix: string): string {
-  return `${prefix}-${block(4)}-${block(4)}-${block(4)}`;
-}
-
 export interface CardRow {
   code: string;
   tier: string;
   duration_days: number;
-  status: string;
-  generated_at: number;
-  activated_at: number | null;
-  expires_at: number | null;
-  device_hash: string | null;
-  install_secret: string | null;
+  status: string;            // unused (in stock) / sold / revoked
+  generated_at: number;      // unix ms when imported into h540
+  activated_at: number | null;  // (kk-license concern — unused on h540)
+  expires_at: number | null;    // (kk-license concern — unused on h540)
+  device_hash: string | null;   // (kk-license concern — unused on h540)
+  install_secret: string | null;// (kk-license concern — unused on h540)
   notes: string | null;
   batch_id: string | null;
+  sold_at: number | null;    // unix ms when allocated to a paid order
+  source: string | null;     // 'import' (from kk-license)
 }
 
-export async function generateBatch(
-  env: Env,
-  args: { tier: string; count: number; notes?: string; batchId?: string },
-): Promise<CardRow[]> {
-  const tier = normalizeTier(args.tier);
-  if (!tier || !isValidTier(tier)) throw new Error(`unknown tier: ${args.tier} (allowed: ${Object.keys(TIERS).join(", ")})`);
-  if (!(args.count >= 1 && args.count <= 1000)) throw new Error("count must be 1..1000");
+export interface ImportResult {
+  tier: string;
+  imported: number;     // newly inserted
+  duplicates: number;   // codes already present (INSERT OR IGNORE skipped)
+  invalid: number;      // codes that failed the shape guard
+  batchId: string;
+}
 
-  const prefix = env.CARD_PREFIX || "KC";
+/**
+ * Import externally-generated (kk-license) card codes as sellable inventory.
+ * h540 never generates codes itself — it only takes what kk-license issued and
+ * stores them as `unused` stock for sale. Existing codes are skipped (idempotent).
+ */
+export async function importCards(
+  env: Env,
+  args: { tier: string; codes: string[]; notes?: string; batchId?: string },
+): Promise<ImportResult> {
+  const tier = normalizeTier(args.tier);
+  if (!tier || !isValidTier(tier)) {
+    throw new Error(`unknown tier: ${args.tier} (allowed: ${Object.keys(TIERS).join(", ")})`);
+  }
+
   const days = TIERS[tier].days;
   const now = Date.now();
   const batchId = args.batchId || randomHex(8);
-  const codes: string[] = [];
 
-  // Generate with collision retry (extremely rare given alphabet size 31^12 ≈ 7.9e17)
-  for (let i = 0; i < args.count; i++) {
-    let attempts = 0;
-    while (attempts < 5) {
-      const code = newCardCode(prefix);
-      try {
-        await env.DB.prepare(
-          `INSERT INTO cards (code, tier, duration_days, status, generated_at, notes, batch_id)
-           VALUES (?, ?, ?, 'unused', ?, ?, ?)`,
-        )
-          .bind(code, tier, days, now, args.notes || null, batchId)
-          .run();
-        codes.push(code);
-        break;
-      } catch (e) {
-        attempts++;
-        if (attempts >= 5) throw e;
-      }
-    }
+  // Normalize → validate shape → dedupe within the batch.
+  const seen = new Set<string>();
+  const codes: string[] = [];
+  let invalid = 0;
+  for (const raw of args.codes) {
+    const code = String(raw ?? "").trim().toUpperCase();
+    if (!code) continue;
+    if (!/^[A-Z0-9][A-Z0-9-]{5,63}$/.test(code)) { invalid++; continue; }
+    if (seen.has(code)) continue;
+    seen.add(code);
+    codes.push(code);
+  }
+  if (codes.length > 5000) throw new Error("too many codes in one import (max 5000)");
+
+  let imported = 0;
+  for (const code of codes) {
+    const r = await env.DB.prepare(
+      `INSERT OR IGNORE INTO cards (code, tier, duration_days, status, generated_at, notes, batch_id, source)
+       VALUES (?, ?, ?, 'unused', ?, ?, ?, 'import')`,
+    )
+      .bind(code, tier, days, now, args.notes || null, batchId)
+      .run();
+    if ((r.meta?.changes ?? 0) > 0) imported++;
   }
 
-  // Read them back so we return full rows (including auto-set fields)
-  const placeholders = codes.map(() => "?").join(",");
-  const rs = await env.DB.prepare(`SELECT * FROM cards WHERE code IN (${placeholders})`)
-    .bind(...codes)
-    .all<CardRow>();
-  return rs.results || [];
+  return { tier, imported, duplicates: codes.length - imported, invalid, batchId };
 }
 
 export async function getCard(env: Env, code: string): Promise<CardRow | null> {

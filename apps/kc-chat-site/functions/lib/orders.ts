@@ -2,7 +2,7 @@
 
 import type { Env } from "../env.d";
 import { randomHex } from "./signing";
-import { TIERS, normalizeTier, newCardCode } from "./cards";
+import { TIERS, normalizeTier } from "./cards";
 
 export interface OrderRow {
   id: string;
@@ -76,49 +76,75 @@ export async function claimEmailSend(env: Env, id: string): Promise<boolean> {
 }
 
 /**
- * Idempotently mark an order paid and issue a fresh card-key.
- * Safe against duplicate webhook deliveries: the card is only generated once;
- * a re-fetch guards the tiny race window between concurrent deliveries.
+ * Idempotently mark an order paid and ALLOCATE a card from inventory.
+ *
+ * h540 is a pure distribution front: it never generates codes. Cards are
+ * generated on kk-license, imported here as `unused` stock, then allocated to a
+ * paid order (status `unused` -> `sold`).
+ *
+ * Returns the allocated card code, or `null` when this tier is out of stock
+ * (the order is still marked paid so the buyer can be fulfilled later — the
+ * caller should alert an operator to import more codes for that tier).
+ *
+ * Safe against duplicate webhook deliveries: an already-attached order short
+ * circuits; a card claimed in a lost order-attach race is released back to stock.
  */
-export async function markPaidAndIssueCard(env: Env, order: OrderRow): Promise<string> {
+export async function allocateCardForOrder(env: Env, order: OrderRow): Promise<string | null> {
   if (order.card_code) return order.card_code;
 
-  // Guard against a concurrent webhook that already issued.
   const fresh = await getOrder(env, order.id);
   if (fresh?.card_code) return fresh.card_code;
 
   const tier = normalizeTier(order.tier);
   if (!tier || !TIERS[tier]) throw new Error(`unknown tier on order: ${order.tier}`);
 
-  const prefix = env.CARD_PREFIX || "KC";
-  const days = TIERS[tier].days;
   const now = Date.now();
 
-  let code = "";
-  let attempts = 0;
-  while (attempts < 5) {
-    code = newCardCode(prefix);
-    try {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    // Atomically claim the oldest unused card of this tier (D1 serializes writes).
+    const claimed = await env.DB.prepare(
+      `UPDATE cards
+          SET status='sold', sold_at=?, notes = COALESCE(notes,'') || ?
+        WHERE code = (
+          SELECT code FROM cards
+           WHERE tier = ? AND status = 'unused'
+           ORDER BY generated_at ASC
+           LIMIT 1
+        )
+      RETURNING code`,
+    )
+      .bind(now, `\n[sold order:${order.id} @ ${new Date(now).toISOString()}]`, tier)
+      .first<{ code: string }>();
+
+    if (!claimed?.code) {
+      // Out of stock for this tier → keep the order paid but unfulfilled.
       await env.DB.prepare(
-        `INSERT INTO cards (code, tier, duration_days, status, generated_at, notes, batch_id)
-         VALUES (?, ?, ?, 'unused', ?, ?, 'paid')`,
+        "UPDATE orders SET status='paid', paid_at=COALESCE(paid_at, ?) WHERE id=? AND card_code IS NULL",
       )
-        .bind(code, tier, days, now, `order:${order.id}`)
+        .bind(now, order.id)
         .run();
-      break;
-    } catch (e) {
-      attempts++;
-      if (attempts >= 5) throw e;
+      return null;
     }
+
+    // Attach the claimed card to the order (winner-takes-all if two webhooks race).
+    const attach = await env.DB.prepare(
+      "UPDATE orders SET status='paid', card_code=?, paid_at=? WHERE id=? AND card_code IS NULL",
+    )
+      .bind(claimed.code, now, order.id)
+      .run();
+
+    if ((attach.meta?.changes ?? 0) > 0) return claimed.code;
+
+    // Lost the race: release the card we claimed back into stock, return the winner's.
+    await env.DB.prepare(
+      "UPDATE cards SET status='unused', sold_at=NULL WHERE code=? AND status='sold'",
+    )
+      .bind(claimed.code)
+      .run();
+
+    const winner = await getOrder(env, order.id);
+    if (winner?.card_code) return winner.card_code;
   }
 
-  // Attach the card to the order only if not already set (winner-takes-all on the race).
-  await env.DB.prepare(
-    "UPDATE orders SET status='paid', card_code=?, paid_at=? WHERE id=? AND card_code IS NULL",
-  )
-    .bind(code, now, order.id)
-    .run();
-
-  const after = await getOrder(env, order.id);
-  return after?.card_code || code;
+  return null;
 }

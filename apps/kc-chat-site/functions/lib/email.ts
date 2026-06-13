@@ -81,7 +81,7 @@ function buildHtml(a: CardEmailArgs): string {
               </td></tr>
             </table>
             <p style="margin:24px 0 0;font-size:12px;line-height:1.6;color:#79839a;">
-              Or go to the activation page and paste the code above. The card binds to one device on first activation.
+              Activate inside Cursor: open the KC&nbsp;Chat panel &rarr; Settings &rarr; Activation, then paste the code above. It binds to one device on first activation.
             </p>
           </td></tr>
           <tr><td style="padding:16px 24px;border-top:1px solid rgba(255,255,255,0.06);font-size:11px;color:#5b6472;">

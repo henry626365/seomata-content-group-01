@@ -1,4 +1,5 @@
-// GET /api/admin/cards?status=unused|active|revoked|expired&limit=100&offset=0&batch=...
+// GET /api/admin/cards?status=unused|sold|revoked&limit=100&offset=0&batch=...
+//   status: unused = in stock · sold = allocated to a paid order · revoked = pulled from sale
 // Auth: Bearer <ADMIN_TOKEN>
 
 import type { Env } from "../../env.d";
@@ -32,8 +33,8 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     .first<{ n: number }>();
 
   const rs = await env.DB.prepare(
-    `SELECT code, tier, duration_days, status, generated_at, activated_at, expires_at,
-            device_hash, notes, batch_id
+    `SELECT code, tier, duration_days, status, generated_at, sold_at, source,
+            notes, batch_id
      FROM cards ${whereSql}
      ORDER BY generated_at DESC
      LIMIT ? OFFSET ?`,

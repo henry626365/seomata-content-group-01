@@ -9,7 +9,7 @@
 
 import type { Env } from "../../env.d";
 import { verifyWebhookSignature, type LSWebhookPayload } from "../../lib/lemonsqueezy";
-import { getOrder, markPaidAndIssueCard, setOrderEmail, claimEmailSend } from "../../lib/orders";
+import { getOrder, allocateCardForOrder, setOrderEmail, claimEmailSend } from "../../lib/orders";
 import { sendCardEmail } from "../../lib/email";
 import { TIERS } from "../../lib/cards";
 
@@ -41,13 +41,23 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env, waitUnti
     if (paid && orderId) {
       const order = await getOrder(env, orderId);
       if (order) {
-        let code: string;
+        let code: string | null;
         try {
-          code = await markPaidAndIssueCard(env, order);
+          code = await allocateCardForOrder(env, order);
         } catch (e) {
-          // Return 500 so Lemon Squeezy retries; issuance is idempotent.
-          console.error("[webhook] issue card failed:", (e as Error).message);
-          return new Response("issue failed", { status: 500 });
+          // Return 500 so Lemon Squeezy retries; allocation is idempotent.
+          console.error("[webhook] allocate card failed:", (e as Error).message);
+          return new Response("allocate failed", { status: 500 });
+        }
+
+        if (!code) {
+          // Out of stock for this tier: order is paid but unfulfilled. Return 200 so
+          // LS stops retrying (payment succeeded) — an operator must import more codes
+          // for this tier and fulfil the order manually.
+          console.error(
+            `[webhook] OUT OF STOCK tier="${order.tier}" order=${order.id} — import more card-keys`,
+          );
+          return new Response("ok (out of stock, pending fulfilment)", { status: 200 });
         }
 
         // Best-effort email delivery (LS always collects the buyer email).
