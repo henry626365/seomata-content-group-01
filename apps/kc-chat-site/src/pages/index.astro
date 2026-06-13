@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import FeatureGrid from '../components/home/FeatureGrid.astro';
+import HowItWorks from '../components/home/HowItWorks.astro';
+import Testimonials from '../components/home/Testimonials.astro';
+import FinalCTA from '../components/home/FinalCTA.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <Hero />
+  <FeatureGrid />
+  <HowItWorks />
+  <Testimonials />
+  <FinalCTA />
+</BaseLayout>

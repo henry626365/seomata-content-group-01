@@ -1,0 +1,472 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/global.css';
+---
+
+<BaseLayout
+  title="How it works — KC Chat for Cursor"
+  description="Buy a card, run one install command, activate. Five minutes from purchase to unlimited Cursor conversations."
+>
+  <section class="section">
+    <div class="container tutorial">
+      <header class="hero">
+        <p class="eyebrow">How it works · 5-minute setup</p>
+        <h1>From purchase to unlimited Cursor in 5 minutes</h1>
+        <p class="lead">
+          KC Chat is a Cursor extension that <strong>keeps your AI conversations alive after your monthly
+          tokens run out</strong>. No subscription rotation, no account-swapping hacks — just install,
+          activate with a card, and code.
+        </p>
+      </header>
+
+      <!-- Pricing snapshot -->
+      <div class="price-strip">
+        <div class="price-pill"><span class="t">Monthly</span><span class="p">$98</span><span class="d">30 days</span></div>
+        <div class="price-pill recommend"><span class="t">Yearly</span><span class="p">$198</span><span class="d">365 days · best value</span></div>
+        <div class="price-pill"><span class="t">Lifetime</span><span class="p">$298</span><span class="d">100 years</span></div>
+        <a class="btn-secondary" href="/pricing">See pricing →</a>
+      </div>
+
+      <!-- TOC -->
+      <nav class="toc" aria-label="Table of contents">
+        <h2>Contents</h2>
+        <ol>
+          <li><a href="#why">Why KC Chat (the math)</a></li>
+          <li><a href="#prereq">Prerequisites</a>
+            <ol>
+              <li><a href="#cursor">Cursor 2.4.37 (specific version)</a></li>
+              <li><a href="#account">Account setup</a></li>
+              <li><a href="#network">Network reliability check</a></li>
+            </ol>
+          </li>
+          <li><a href="#buy">Buy a card</a></li>
+          <li><a href="#install">Install the extension</a></li>
+          <li><a href="#activate">Activate</a></li>
+          <li><a href="#use">Daily usage tips</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </nav>
+
+      <!-- 1. Why -->
+      <article id="why" class="block">
+        <h2>💸 Why KC Chat — the math</h2>
+        <p>
+          A heavy Cursor user burns through <strong>$20–$200 in Anthropic/OpenAI token bills per month</strong>
+          on top of the Cursor Pro subscription. Once you hit the included quota, every additional Sonnet 4.5
+          message costs real money — and the costs compound on multi-step agentic workflows.
+        </p>
+        <div class="math-table">
+          <table>
+            <thead>
+              <tr><th>Pattern</th><th>Tokens / day</th><th>Excess cost / month</th><th>With KC Chat</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Solo coder, 4 hr/day</td><td>~3M</td><td>$45–$80</td><td><strong class="g">$0</strong></td></tr>
+              <tr><td>Agentic workflow user</td><td>~10M</td><td>$120–$200</td><td><strong class="g">$0</strong></td></tr>
+              <tr><td>Multi-agent / KC autopilot</td><td>~25M+</td><td>$300+</td><td><strong class="g">$0</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          <strong>Lifetime card pays for itself in 1–4 weeks</strong>, then it's free coding forever. We're
+          not selling an MCP — we're selling the &ldquo;keep going past your quota&rdquo; capability. The MCP
+          server (multi-agent, KC Flow, shared memory, autopilot) is bundled for free because we built it for
+          our own team and it shipped together.
+        </p>
+      </article>
+
+      <!-- 2. Prerequisites -->
+      <article id="prereq" class="block">
+        <h2>🛠️ Prerequisites</h2>
+
+        <section id="cursor">
+          <h3>2.1 Cursor IDE — version <code>2.4.37</code> (important)</h3>
+          <p>Open Cursor → menu → <em>About</em>, or press <code>Ctrl/Cmd+Shift+P</code> → type <code>About</code>.</p>
+          <div class="warning">
+            <strong>⚠️ Don't use the latest Cursor.</strong>
+            <p>
+              Newer builds auto-switch to <code>compose 2</code>, which does not work in unlimited mode. You
+              must <strong>downgrade to 2.4.37</strong>. Reach out to support if you need help locating the
+              installer for your platform.
+            </p>
+          </div>
+        </section>
+
+        <section id="account">
+          <h3>2.2 Cursor account</h3>
+          <ul class="checklist">
+            <li>❌ <strong>Don't</strong> use a brand-new free account (it'll get flagged as &ldquo;normal user&rdquo;)</li>
+            <li>❌ <strong>Don't</strong> use a Pro account that's fully expired with no trial history</li>
+            <li>✅ <strong>Do</strong> use a Pro trial that has <em>burned its tokens</em>, or a Pro account whose included quota is exhausted</li>
+          </ul>
+          <p>If you don't already have such an account, support can advise on the cleanest path.</p>
+        </section>
+
+        <section id="network">
+          <h3>2.3 Network reliability check (especially if you're routing through a proxy)</h3>
+          <p>
+            Cursor itself still calls the official Cursor backend. If your network or VPN is unstable, you'll
+            see flaky responses regardless of KC Chat. Confirm at
+            <a href="https://www.cloudflare.com/cdn-cgi/trace" target="_blank" rel="noopener">cloudflare/trace</a>:
+          </p>
+          <ul>
+            <li><strong>HTTP/1.1</strong> — works on most routes, reliable.</li>
+            <li><strong>HTTP/2</strong> — only stable on high-quality nodes. If your egress has aggressive
+              caching you can't control, downgrade to h1.</li>
+          </ul>
+        </section>
+      </article>
+
+      <!-- 3. Buy -->
+      <article id="buy" class="block">
+        <h2>💳 Buy a card</h2>
+        <p>Three tiers:</p>
+        <div class="tier-grid">
+          <div class="tier-card">
+            <div class="tier-badge">Monthly</div>
+            <div class="tier-price">$98</div>
+            <div class="tier-days">30 days</div>
+            <p class="tier-desc">Try it out · single project</p>
+          </div>
+          <div class="tier-card tier-recommend">
+            <div class="tier-badge">Yearly</div>
+            <div class="tier-price">$198</div>
+            <div class="tier-days">365 days</div>
+            <p class="tier-desc">Pays for itself in &lt; 2 months</p>
+            <span class="ribbon">Best value</span>
+          </div>
+          <div class="tier-card">
+            <div class="tier-badge">Lifetime</div>
+            <div class="tier-price">$298</div>
+            <div class="tier-days">100 years</div>
+            <p class="tier-desc">Buy once, never think about quotas again</p>
+          </div>
+        </div>
+        <p>After payment we deliver a card code shaped like <code>KC-XXXX-XXXX-XXXX</code>. The code is a
+          one-time activator — write it down somewhere safe.</p>
+        <p><a class="btn-primary" href="/pricing">Go to pricing →</a></p>
+      </article>
+
+      <!-- 4. Install -->
+      <article id="install" class="block">
+        <h2>📦 Install the extension</h2>
+
+        <h3>4.1 One-liner (Windows)</h3>
+        <p>Open PowerShell as Administrator, paste & enter:</p>
+        <pre class="cmd">irm https://cursor.h540.com/i-kc | iex</pre>
+
+        <h3>4.2 One-liner (macOS / Linux)</h3>
+        <pre class="cmd">curl -fsSL https://cursor.h540.com/i-kc | bash</pre>
+
+        <p>The script:</p>
+        <ul>
+          <li>Checks for Cursor + Node 18+</li>
+          <li>Downloads the patcher and activator into <code>~/.kc-chat/</code> (or <code>%LOCALAPPDATA%\kc-chat\</code>)</li>
+          <li>Runs the patcher (NOPs the in-extension defense matrix so token validation is purely local)</li>
+          <li>Prints the activation command template — you just paste your card code</li>
+        </ul>
+
+        <h3>4.3 Manual install (if the one-liner fails)</h3>
+        <ol>
+          <li>Get the <code>kc.kc-chat-panel-X.Y.Z.vsix</code> file from <a href="#support">support</a></li>
+          <li>Cursor → Extensions → top-right <code>···</code> → <em>Install from VSIX…</em></li>
+          <li>Restart Cursor</li>
+        </ol>
+      </article>
+
+      <!-- 5. Activate -->
+      <article id="activate" class="block">
+        <h2>🔑 Activate with your card (one command)</h2>
+        <ol>
+          <li>Go to <a href="/activate">cursor.h540.com/activate</a> → download
+            <a href="/kc-activate.cjs" download class="dl-btn-inline">⬇ kc-activate.cjs</a>
+          </li>
+          <li>Save it anywhere (e.g. <code>~/kc</code> or <code>D:\kc</code>)</li>
+          <li>
+            From that folder:
+            <pre class="cmd">node kc-activate.cjs https://cursor.h540.com YOUR-CARD-CODE</pre>
+          </li>
+          <li>The script:
+            <ul>
+              <li>Reads your hardware fingerprint (wmic on Windows, ioreg on macOS, /etc/machine-id on Linux)</li>
+              <li>Computes <code>device_hash</code> the exact same way the extension does</li>
+              <li>Calls our backend → receives a 100-year cryptographic token</li>
+              <li>Closes Cursor cleanly</li>
+              <li>Writes the token into your local <code>state.vscdb</code></li>
+            </ul>
+          </li>
+          <li>Restart Cursor — the KC Chat panel reports <em>Activated · expires YYYY-MM-DD</em></li>
+        </ol>
+        <p class="hint">Needs <a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js 18+</a>.
+        If you don't have Node installed, ask support for the alternative <code>.exe</code> installer.</p>
+      </article>
+
+      <!-- 6. Use -->
+      <article id="use" class="block">
+        <h2>⚡ Daily usage tips</h2>
+
+        <h3>6.1 Conversation length limit (~2 hours)</h3>
+        <p>In unlimited mode, a single chat thread drops after about <strong>2 hours of continuous use</strong>.</p>
+        <div class="tip">
+          <strong>When it drops:</strong>
+          <p>
+            Just type <code>continue</code> in the <strong>same window</strong> — the model resumes context.
+            This is by design (not a bug). No need to open a new window or re-activate.
+          </p>
+        </div>
+
+        <h3>6.2 Recommended workflows</h3>
+        <ul>
+          <li><strong>New project:</strong> Open KC Chat panel → spawn an <em>Architect</em> agent → ask for a plan first</li>
+          <li><strong>Large refactors:</strong> Use Group mode with a Leader; workers run in parallel</li>
+          <li><strong>Debugging:</strong> KC Flow shows live progress per sub-step</li>
+          <li><strong>Long-running tasks:</strong> Use <em>autopilot</em> mode with a budget and success criteria</li>
+        </ul>
+      </article>
+
+      <!-- 7. FAQ -->
+      <article id="faq" class="block">
+        <h2>❓ FAQ</h2>
+
+        <details>
+          <summary>Is this just another MCP server?</summary>
+          <p>No. Normal MCPs <strong>can't keep you working after Cursor cuts your tokens off</strong>. The
+            MCP layer (multi-agent, KC Flow, shared memory) is bundled because we built it for ourselves — but
+            the unlimited-mode capability is the actual product.</p>
+        </details>
+
+        <details>
+          <summary>Why is the card "self-destructing"? Help!</summary>
+          <p>The extension has anti-abuse logic that locks out a card on repeated wrong attempts. Common causes:</p>
+          <ul>
+            <li>Trying to activate the same card on multiple machines (one card = one device by design)</li>
+            <li>Cursor is on a newer version that fails the runtime environment check</li>
+            <li>A conflicting "free" hack is also installed</li>
+          </ul>
+          <p><strong>Contact support immediately</strong> — don't retry. We can transfer a card to a new device once support verifies you're the original buyer.</p>
+        </details>
+
+        <details>
+          <summary>What if I switch laptops?</summary>
+          <p>Email or ping support with proof of purchase. We unbind your card from the old device via the
+            <code>/admin/transfer</code> endpoint, and you can re-activate on the new one. There's a cooldown to
+            prevent abuse — frequent transfers will be flagged.</p>
+        </details>
+
+        <details>
+          <summary>Will an extension update break my card?</summary>
+          <p>The installer disables Cursor's <code>extensions.autoUpdate</code> and blocks the upstream
+            self-update domain. Your installed build won't be silently overwritten.</p>
+          <p>If you <em>manually</em> upgrade to a newer kc.kc-chat-panel, our backend serves the right token
+            shape for most 5.x releases. If incompatibility shows up, support hands you a patched activator
+            within hours.</p>
+        </details>
+
+        <details>
+          <summary>Does it phone home?</summary>
+          <p>Once activated, the extension validates your token purely locally (HMAC) — <strong>no network
+            calls to our backend</strong>. Your traffic still goes to Cursor's own services as normal.</p>
+        </details>
+
+        <details>
+          <summary>Can two people share a card?</summary>
+          <p>No. A card binds to your hardware fingerprint on first activation. Trying a second device
+            triggers <code>device_mismatch</code> and the card stays bound to the original.</p>
+        </details>
+
+        <details>
+          <summary>What's the refund policy?</summary>
+          <p>Full refund within 7 days for cards that haven't been activated yet. Once activated, refunds are
+            handled case-by-case (technical issues we couldn't resolve, etc.).</p>
+        </details>
+      </article>
+
+      <!-- 8. Support -->
+      <article id="support" class="block">
+        <h2>🙋 Support</h2>
+        <p>Response priority:</p>
+        <ol>
+          <li><strong>WeChat group</strong> (fastest — for Chinese-speaking users)</li>
+          <li><strong>Email</strong> — for longer questions / refunds</li>
+          <li><strong>Contact form</strong> — see <a href="/contact">/contact</a></li>
+        </ol>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="ic">✉️</div>
+            <div class="contact-title">Email</div>
+            <p><a href="mailto:support@h540.com">support@h540.com</a></p>
+          </div>
+          <div class="contact-card">
+            <div class="ic">💬</div>
+            <div class="contact-title">WeChat group</div>
+            <p>Email us for an invite</p>
+          </div>
+          <div class="contact-card">
+            <div class="ic">📝</div>
+            <div class="contact-title">Form</div>
+            <p><a href="/contact">h540.com/contact</a></p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <style>
+    .tutorial { max-width: 920px; }
+    .hero { text-align: center; margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(1.85rem, 4vw, 2.6rem); margin: 0.4rem 0 0.8rem; line-height: 1.2; }
+    .eyebrow {
+      display: inline-flex; align-items: center;
+      font-family: var(--font-mono); text-transform: none; font-size: 0.78rem; letter-spacing: 0.01em;
+      color: var(--color-accent); font-weight: 500;
+    }
+    .eyebrow::before { content: '> '; white-space: pre; opacity: 0.55; font-weight: 700; }
+    .lead { color: var(--text-secondary); max-width: 38em; margin: 0 auto; line-height: 1.7; }
+    .lang-switch { margin-top: 0.8rem; font-size: 0.85rem; color: var(--text-muted); }
+    .lang-switch a { font-weight: 600; }
+
+    .price-strip {
+      display: flex; gap: 0.65rem; justify-content: center;
+      flex-wrap: wrap; align-items: center; margin: 0 0 2rem;
+    }
+    .price-pill {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 999px; padding: 0.4rem 1rem; display: flex; gap: 0.55rem;
+      align-items: baseline; box-shadow: var(--shadow-sm);
+    }
+    .price-pill.recommend {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-subtle);
+    }
+    .price-pill .t { font-weight: 700; color: var(--text-primary); }
+    .price-pill .p { font-weight: 700; color: var(--color-accent); font-size: 1.05rem; }
+    .price-pill .d { font-size: 0.78rem; color: var(--text-muted); }
+    .btn-secondary {
+      padding: 0.4rem 0.85rem; border: 1px solid var(--border-accent);
+      border-radius: 999px; color: var(--color-accent); font-weight: 600;
+      text-decoration: none; font-size: 0.85rem;
+    }
+    .btn-secondary:hover { background: var(--color-accent-subtle); }
+
+    .toc {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-card); margin-bottom: 2rem;
+    }
+    .toc h2 { font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .toc ol { margin-left: 1.25rem; line-height: 2; }
+    .toc ol ol { font-size: 0.92rem; color: var(--text-secondary); }
+
+    .block {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 1.75rem 2rem; box-shadow: var(--shadow-card);
+      margin-bottom: 1.5rem; scroll-margin-top: calc(var(--header-height) + 1rem);
+    }
+    .block h2 { font-size: 1.45rem; margin: 0 0 1rem; }
+    .block h3 { font-size: 1.08rem; margin: 1.25rem 0 0.5rem; color: var(--text-primary); }
+    .block p { color: var(--text-secondary); line-height: 1.75; margin: 0.4rem 0; }
+    .block ul, .block ol { margin: 0.6rem 0 0.6rem 1.4rem; line-height: 1.85; color: var(--text-secondary); }
+    .block li { margin: 0.18rem 0; }
+
+    .math-table { overflow-x: auto; margin: 1rem 0; }
+    .math-table table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .math-table th, .math-table td {
+      padding: 0.55rem 0.7rem; text-align: left; border-bottom: 1px solid var(--border-subtle);
+    }
+    .math-table th { background: #F8FAFC; font-weight: 600; }
+    .math-table .g { color: var(--color-success); }
+
+    code {
+      background: var(--color-accent-subtle); color: var(--color-accent);
+      padding: 0.05em 0.4em; border-radius: 4px;
+      font-family: var(--font-mono); font-size: 0.9em;
+    }
+    .cmd {
+      background: var(--bg-code); color: #E2E8F0;
+      padding: 0.85rem 1rem; border-radius: var(--radius-sm);
+      font-family: var(--font-mono); font-size: 0.86rem;
+      overflow-x: auto; margin: 0.5rem 0;
+    }
+
+    .warning {
+      background: #FEF2F2; border-left: 4px solid #EF4444;
+      padding: 0.9rem 1.1rem; border-radius: var(--radius-sm); margin: 0.8rem 0;
+    }
+    .warning strong { color: #991B1B; }
+    .warning p { color: #991B1B; margin: 0.3rem 0 0; }
+
+    .tip {
+      background: #ECFDF5; border-left: 4px solid #10B981;
+      padding: 0.9rem 1.1rem; border-radius: var(--radius-sm); margin: 0.6rem 0;
+    }
+    .tip strong { color: #065F46; }
+    .tip p { color: #065F46; margin: 0.3rem 0 0; }
+
+    .checklist { list-style: none; margin-left: 0; }
+    .checklist li { padding: 0.25rem 0; }
+
+    .tier-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1rem; margin: 1rem 0;
+    }
+    .tier-card {
+      background: #fff; border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 1.25rem 1rem;
+      text-align: center; position: relative;
+    }
+    .tier-recommend {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-subtle);
+    }
+    .tier-badge { font-size: 1rem; font-weight: 700; color: var(--color-accent); letter-spacing: 0.05em; text-transform: uppercase; }
+    .tier-price { font-size: 2rem; font-weight: 700; color: var(--text-primary); margin: 0.4rem 0; }
+    .tier-days  { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+    .tier-desc  { font-size: 0.82rem; color: var(--text-muted); margin: 0.4rem 0 0; }
+    .ribbon {
+      position: absolute; top: -10px; right: 12px;
+      background: var(--color-accent); color: #fff;
+      font-size: 0.7rem; padding: 0.15rem 0.6rem; border-radius: 999px; font-weight: 600;
+    }
+
+    details {
+      background: #F8FAFC; border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm); padding: 0.7rem 1rem;
+      margin: 0.5rem 0; cursor: pointer;
+    }
+    details summary {
+      font-weight: 600; color: var(--text-primary);
+      cursor: pointer; outline: none;
+    }
+    details[open] summary { color: var(--color-accent); margin-bottom: 0.6rem; }
+    details p, details ul { color: var(--text-secondary); margin: 0.4rem 0; }
+
+    .dl-btn-inline {
+      display: inline-block; background: var(--color-accent);
+      color: #fff !important; padding: 0.15rem 0.6rem;
+      border-radius: 6px; font-size: 0.85rem; margin: 0 0.25rem;
+    }
+    .dl-btn-inline:hover { background: var(--color-accent-hover); }
+
+    .btn-primary {
+      display: inline-block; background: var(--color-accent);
+      color: #fff; padding: 0.6rem 1.4rem; border-radius: var(--radius-sm);
+      font-weight: 600; text-decoration: none; margin-top: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--color-accent-hover); color: #fff; }
+
+    .hint { color: var(--text-muted); font-size: 0.85rem; }
+
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem; margin-top: 1rem;
+    }
+    .contact-card {
+      background: #fff; border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 1rem 1.25rem; text-align: center;
+    }
+    .contact-card .ic { font-size: 1.6rem; }
+    .contact-title { font-weight: 700; margin: 0.4rem 0; }
+    .contact-card p { font-size: 0.85rem; margin: 0; }
+  </style>
+</BaseLayout>

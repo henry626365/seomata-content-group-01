@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL } from '../../consts';
+
+const updated = 'June 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy — KC Chat"
+  description="How KC Chat handles your data. Cards are anonymous, the extension runs locally, and your conversations stay between you and Cursor."
+>
+  <section class="section legal">
+    <div class="container">
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: {updated}</p>
+
+      <p class="intro">
+        KC Chat is built around a simple principle: collect as little as possible. Cards are anonymous
+        bearer credentials, and once your extension is activated it validates licenses locally — it does
+        not phone home with your prompts or code.
+      </p>
+
+      <h2>What we collect</h2>
+      <ul>
+        <li><strong>Card code</strong> — to issue and validate your license token.</li>
+        <li><strong>Device fingerprint (hash)</strong> — a one-way hash used to bind a card to a single machine and prevent sharing. We cannot reverse it to identify your hardware.</li>
+        <li><strong>Minimal activation logs</strong> — timestamp and tier of an activation, for fraud prevention and support.</li>
+      </ul>
+
+      <h2>What we do <em>not</em> collect</h2>
+      <ul>
+        <li>Your conversations, prompts, or source code — these never leave your machine through us.</li>
+        <li>Your name, address, or a user account — cards require no signup.</li>
+        <li>Payment card numbers — payments are handled by third-party processors, not stored by us.</li>
+      </ul>
+
+      <h2>Cookies &amp; analytics</h2>
+      <p>
+        The marketing site uses no advertising cookies. If privacy-friendly, aggregate analytics are
+        enabled, they record page views without personally identifying you.
+      </p>
+
+      <h2>Data retention</h2>
+      <p>
+        Activation records are retained only as long as needed to operate licenses and prevent abuse.
+        You may request deletion of records tied to your card by contacting us.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about privacy? Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+
+      <p class="disclaimer">
+        This page is a plain-language summary provided for transparency and is not legal advice.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal .container { max-width: 760px; }
+  .eyebrow {
+    display: inline-flex; align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.01em;
+    text-transform: none; color: var(--color-accent);
+  }
+  .eyebrow::before { content: '> '; white-space: pre; opacity: 0.55; font-weight: 700; }
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em;
+    color: var(--text-primary); margin: 0.5rem 0 0.4rem;
+  }
+  .updated { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.75rem; }
+  .intro { font-size: 1.02rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem; }
+  h2 {
+    font-size: 1.25rem; font-weight: 700; color: var(--text-primary);
+    margin: 2rem 0 0.75rem; letter-spacing: -0.01em;
+  }
+  p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.9rem; }
+  ul { margin: 0 0 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  li { color: var(--text-secondary); line-height: 1.6; }
+  strong { color: var(--text-primary); }
+  .disclaimer {
+    margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-subtle);
+    font-size: 0.85rem; color: var(--text-muted); font-style: italic;
+  }
+</style>

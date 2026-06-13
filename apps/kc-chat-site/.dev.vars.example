@@ -1,0 +1,9 @@
+# Local secrets — copy to .dev.vars (NEVER commit)
+# Pages dev (wrangler) loads these automatically.
+
+# Bearer token required for all /api/admin/* endpoints.
+# Generate one with: node -e "console.log(require('crypto').randomBytes(24).toString('hex'))"
+ADMIN_TOKEN=replace-with-random-48-hex
+
+# Optional: comma-separated CIDRs allowed to call /api/admin/*. Empty = any IP.
+ADMIN_ALLOW_CIDR=

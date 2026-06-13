@@ -1,0 +1,81 @@
+---
+import SectionHeader from '../shared/SectionHeader.astro';
+import FeatureCard from './FeatureCard.astro';
+
+const features = [
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8M12 6v2m0 8v2"/></svg>',
+    title: 'No more "out of tokens"',
+    description: 'Keep chatting with Cursor IDE long after your monthly Anthropic / OpenAI quota runs out. A heavy user typically saves $50–$200 every month in token overage.',
+    color: 'var(--color-accent)',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>',
+    title: 'Pay once, save forever',
+    description: 'Lifetime card is $298 — breaks even in 1–4 weeks for active Cursor users. No subscription. Token is valid until 2126.',
+    color: 'var(--color-gold)',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+    title: '5-minute setup',
+    description: 'One PowerShell or bash line installs the patcher. One Node command activates your card. Restart Cursor — done. Detailed guide at /tutorial.',
+    color: 'var(--color-accent)',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>',
+    title: 'Multi-Agent bundled (free)',
+    description: 'Spawn parallel agents — Architect, Frontend, Backend, QA — each in its own Cursor chat. Built originally for our team, included with every card.',
+    color: 'var(--color-accent)',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
+    title: 'Autopilot mode',
+    description: 'Leader orchestrates, workers execute, watchdog monitors. Set a budget and success criteria, walk away, return to a reviewed codebase.',
+    color: 'var(--color-accent)',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+    title: 'KC Flow + TaskCard',
+    description: 'Visual stepper above every chat shows live progress; dedicated TaskCard panels track findings and status transitions on complex jobs.',
+    color: 'var(--color-accent)',
+  },
+];
+---
+
+<section class="features-section section">
+  <div class="container">
+    <SectionHeader
+      eyebrow="What you get"
+      title="Save real money. Then enjoy the bundled extras."
+      subtitle="The core value is keeping Cursor alive past your token quota. Multi-agent / KC Flow / autopilot ride along for free."
+    />
+    <div class="features-grid">
+      {features.map((f) => (
+        <FeatureCard
+          icon={f.icon}
+          title={f.title}
+          description={f.description}
+          color={f.color}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 960px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 580px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

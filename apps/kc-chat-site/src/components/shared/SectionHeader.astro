@@ -1,0 +1,58 @@
+---
+type Props = {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  align?: 'center' | 'left';
+};
+
+const { eyebrow, title, subtitle, align = 'center' } = Astro.props;
+---
+
+<div class:list={['section-header', `align-${align}`]}>
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  <h2>{title}</h2>
+  {subtitle && <p class="subtitle">{subtitle}</p>}
+</div>
+
+<style>
+  .section-header {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .align-center {
+    text-align: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--color-accent);
+    margin-bottom: 0.85rem;
+  }
+  .eyebrow::before {
+    content: '> ';
+    white-space: pre;
+    opacity: 0.55;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: clamp(1.65rem, 3.5vw, 2.35rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .subtitle {
+    font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 56ch;
+  }
+  .align-center .subtitle {
+    margin-inline: auto;
+  }
+</style>

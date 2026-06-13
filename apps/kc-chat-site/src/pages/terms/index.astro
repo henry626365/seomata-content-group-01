@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL } from '../../consts';
+
+const updated = 'June 2026';
+---
+
+<BaseLayout
+  title="Terms of Service — KC Chat"
+  description="The terms that govern your use of KC Chat cards and the extension: licensing, acceptable use, refunds, and disclaimers."
+>
+  <section class="section legal">
+    <div class="container">
+      <p class="eyebrow">Legal</p>
+      <h1>Terms of Service</h1>
+      <p class="updated">Last updated: {updated}</p>
+
+      <p class="intro">
+        By purchasing a card or using the KC Chat extension you agree to these terms. Please read them
+        alongside our <a href="/privacy">Privacy Policy</a>.
+      </p>
+
+      <h2>1. License</h2>
+      <p>
+        A card grants a single license token cryptographically bound to one device on first activation.
+        Tiers (Monthly / Yearly / Lifetime) determine validity duration. Cards are personal and may not
+        be resold or shared.
+      </p>
+
+      <h2>2. Acceptable use</h2>
+      <ul>
+        <li>You still need an active Cursor account; KC Chat is a productivity extension, not a replacement for Cursor.</li>
+        <li>Do not attempt to circumvent device binding, redistribute the patched build, or resell tokens.</li>
+        <li>Do not use the extension for unlawful activity.</li>
+      </ul>
+
+      <h2>3. Device transfers</h2>
+      <p>
+        Switching machines is supported by unbinding a card for re-activation. Yearly includes one free
+        transfer per quarter; Lifetime includes unlimited transfers. Contact support to initiate one.
+      </p>
+
+      <h2>4. Refunds</h2>
+      <p>
+        Full refund within 7 days if the card has not been activated. After activation, refunds are
+        handled case-by-case for unresolved technical issues. See the <a href="/pricing">Pricing FAQ</a>
+        for details.
+      </p>
+
+      <h2>5. Disclaimer of warranty</h2>
+      <p>
+        The extension is provided “as is,” without warranties of any kind. Compatibility with future
+        Cursor releases is maintained on a best-effort basis and cannot be guaranteed.
+      </p>
+
+      <h2>6. Limitation of liability</h2>
+      <p>
+        To the maximum extent permitted by law, KC Chat is not liable for indirect or consequential
+        damages. Total liability is limited to the amount you paid for your card.
+      </p>
+
+      <h2>7. Changes</h2>
+      <p>
+        We may update these terms; material changes will be reflected by the “last updated” date above.
+        Continued use after changes constitutes acceptance.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about these terms? Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+
+      <p class="disclaimer">
+        This page is a plain-language summary provided for convenience and is not legal advice.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal .container { max-width: 760px; }
+  .eyebrow {
+    display: inline-flex; align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.01em;
+    text-transform: none; color: var(--color-accent);
+  }
+  .eyebrow::before { content: '> '; white-space: pre; opacity: 0.55; font-weight: 700; }
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em;
+    color: var(--text-primary); margin: 0.5rem 0 0.4rem;
+  }
+  .updated { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.75rem; }
+  .intro { font-size: 1.02rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem; }
+  h2 {
+    font-size: 1.25rem; font-weight: 700; color: var(--text-primary);
+    margin: 2rem 0 0.75rem; letter-spacing: -0.01em;
+  }
+  p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.9rem; }
+  ul { margin: 0 0 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  li { color: var(--text-secondary); line-height: 1.6; }
+  strong { color: var(--text-primary); }
+  .disclaimer {
+    margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-subtle);
+    font-size: 0.85rem; color: var(--text-muted); font-style: italic;
+  }
+</style>

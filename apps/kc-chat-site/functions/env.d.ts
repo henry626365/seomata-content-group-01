@@ -1,0 +1,39 @@
+/// <reference types="@cloudflare/workers-types" />
+
+export interface Env {
+  DB: D1Database;
+  // Static assets binding (Astro ./dist) — Workers Static Assets.
+  ASSETS: Fetcher;
+  ADMIN_TOKEN: string;
+  ADMIN_ALLOW_CIDR?: string;
+  CARD_PREFIX?: string;
+  PUBLIC_BRAND?: string;
+  // Payments (Lemon Squeezy / Merchant of Record) — set via `wrangler secret put ...`
+  LEMONSQUEEZY_API_KEY?: string;
+  LEMONSQUEEZY_STORE_ID?: string;
+  LEMONSQUEEZY_WEBHOOK_SECRET?: string;
+  // Variant ids (one LS product, multiple variants) — set as plain vars or secrets
+  LS_VARIANT_DAY?: string;       // 日卡 $5 / 24h trial
+  LS_VARIANT_MONTH?: string;
+  LS_VARIANT_YEAR?: string;
+  LS_VARIANT_LIFETIME?: string;
+  LS_VARIANT_LITE?: string;      // 轻享月卡 $10 / 30d (separate channel)
+  CHECKOUT_CURRENCY?: string; // default "usd"
+  SITE_URL?: string;          // optional override for success/redirect URLs
+  // Email delivery (Resend) — optional; card is still shown on the success page if unset
+  RESEND_API_KEY?: string;
+  MAIL_FROM?: string;         // e.g. "KC Chat <noreply@h540.com>"
+}
+
+declare global {
+  type PagesFunction<TEnv = Env, TParams extends string = string> = (
+    context: {
+      request: Request;
+      env: TEnv;
+      params: Record<TParams, string | string[]>;
+      data: Record<string, unknown>;
+      waitUntil(promise: Promise<unknown>): void;
+      next(input?: Request | string, init?: RequestInit): Promise<Response>;
+    },
+  ) => Response | Promise<Response>;
+}

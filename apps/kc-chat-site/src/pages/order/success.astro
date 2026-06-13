@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Order complete — KC Chat"
+  description="Your KC Chat card-key is being issued. Copy it and activate in the extension."
+>
+  <section class="section">
+    <div class="container success-page">
+      <div class="order-term bg-dots" id="order-term">
+        <div class="term-bar" aria-hidden="true">
+          <span class="d red"></span><span class="d yellow"></span><span class="d green"></span>
+          <span class="term-title">kc-chat · order</span>
+        </div>
+
+        <div class="term-body">
+          <p class="eyebrow">Payment received</p>
+
+          <!-- Pending / polling -->
+          <div id="state-pending">
+            <h1>Issuing your card-key<span class="caret"></span></h1>
+            <p class="lead">
+              <span class="cmd-prompt">$</span> waiting for payment confirmation &amp; card issuance…
+            </p>
+            <div class="bar"><span class="bar-fill"></span></div>
+          </div>
+
+          <!-- Success -->
+          <div id="state-done" hidden>
+            <h1>You're all set</h1>
+            <p class="lead">Here is your card-key — copy it and activate in Cursor.</p>
+            <div class="code-row">
+              <code class="card-code" id="card-code">KC-XXXX-XXXX-XXXX</code>
+              <button class="copy-btn" id="copy-btn" type="button">Copy</button>
+            </div>
+            <p class="tier-line" id="tier-line"></p>
+            <div class="actions">
+              <a class="btn-cta" id="activate-link" href="/activate">Activate now →</a>
+              <a class="btn-secondary" href="/tutorial">Setup guide</a>
+            </div>
+            <p class="keep-note">Keep this code safe. It's also tied to your order id <code id="ord-id"></code>.</p>
+          </div>
+
+          <!-- Timeout / processing -->
+          <div id="state-wait" hidden>
+            <h1>Payment is processing</h1>
+            <p class="lead">
+              This can take a moment for some payment methods. Your card-key will appear here, or
+              reach us with your order id below.
+            </p>
+            <p class="tier-line">Order id: <code id="ord-id-wait"></code></p>
+            <div class="actions">
+              <button class="btn-secondary" id="retry-btn" type="button">Check again</button>
+              <a class="btn-secondary" href="/contact">Contact support</a>
+            </div>
+          </div>
+
+          <!-- Error -->
+          <div id="state-error" hidden>
+            <h1>Couldn't find that order</h1>
+            <p class="lead" id="error-msg">The order link looks invalid or expired.</p>
+            <div class="actions">
+              <a class="btn-cta" href="/pricing">Back to pricing →</a>
+              <a class="btn-secondary" href="/contact">Contact support</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .success-page { max-width: 640px; }
+  .order-term {
+    --dot-color: rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-elevated);
+  }
+  .term-bar {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; gap: 7px;
+    padding: 0.7rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .term-bar .d { width: 10px; height: 10px; border-radius: 50%; }
+  .term-bar .d.red { background: #ef4444; }
+  .term-bar .d.yellow { background: #eab308; }
+  .term-bar .d.green { background: #22c55e; }
+  .term-title { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-on-dark-muted); margin-left: 0.4rem; }
+
+  .term-body { position: relative; z-index: 1; padding: clamp(1.6rem, 4vw, 2.5rem); }
+  .eyebrow {
+    display: inline-flex; align-items: center;
+    font-family: var(--font-mono); font-size: 0.76rem; font-weight: 500;
+    color: var(--color-signal-bright); margin-bottom: 0.9rem;
+  }
+  .eyebrow::before { content: '> '; white-space: pre; opacity: 0.6; font-weight: 700; }
+  h1 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); font-weight: 800; color: #fff; margin-bottom: 0.6rem; letter-spacing: -0.025em; }
+  .lead { color: var(--text-on-dark-muted); line-height: 1.6; margin-bottom: 1.25rem; }
+  .cmd-prompt { color: var(--color-signal-bright); font-family: var(--font-mono); font-weight: 700; margin-right: 0.4rem; }
+
+  .bar { height: 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+  .bar-fill {
+    display: block; height: 100%; width: 35%; border-radius: inherit;
+    background: linear-gradient(90deg, var(--color-signal), var(--color-signal-bright));
+    animation: indet 1.3s ease-in-out infinite;
+  }
+  @keyframes indet {
+    0% { margin-left: -35%; }
+    100% { margin-left: 100%; }
+  }
+
+  .code-row {
+    display: flex; gap: 0.6rem; align-items: stretch; flex-wrap: wrap;
+    margin-bottom: 0.85rem;
+  }
+  .card-code {
+    flex: 1; min-width: 220px;
+    font-family: var(--font-mono); font-size: clamp(1.05rem, 3vw, 1.5rem); font-weight: 700;
+    letter-spacing: 0.04em; color: var(--color-signal-bright);
+    background: rgba(34, 197, 94, 0.10);
+    border: 1px dashed rgba(34, 197, 94, 0.4);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem; display: flex; align-items: center; justify-content: center;
+    user-select: all;
+  }
+  .copy-btn {
+    font-family: var(--font-mono); font-weight: 600; font-size: 0.85rem;
+    color: #06250F; background: var(--color-signal);
+    border: none; border-radius: var(--radius-md); padding: 0 1.1rem; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .copy-btn:hover { background: var(--color-signal-bright); }
+  .copy-btn.copied { background: var(--color-signal-bright); }
+
+  .tier-line { font-size: 0.85rem; color: var(--text-on-dark-muted); margin-bottom: 1.4rem; }
+  .actions { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+  .btn-cta {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.72rem 1.4rem; border-radius: var(--radius-md);
+    background: var(--color-signal); color: #06250F; font-weight: 700; font-size: 0.92rem;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+  }
+  .btn-cta:hover { background: var(--color-signal-bright); transform: translateY(-1px); color: #06250F; }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    padding: 0.72rem 1.3rem; border-radius: var(--radius-md);
+    background: transparent; color: var(--text-on-dark); font-weight: 600; font-size: 0.92rem;
+    text-decoration: none; border: 1px solid rgba(255, 255, 255, 0.16); cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: rgba(34, 197, 94, 0.5); background: rgba(34, 197, 94, 0.08); color: #fff; }
+  .keep-note { margin-top: 1.25rem; font-size: 0.78rem; color: var(--text-on-dark-muted); }
+  .keep-note code, .tier-line code { font-family: var(--font-mono); color: var(--text-on-dark); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bar-fill { animation: none; width: 100%; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const params = new URLSearchParams(location.search);
+    const orderId = params.get('order') || params.get('id') || '';
+
+    const $ = (id) => document.getElementById(id);
+    const states = {
+      pending: $('state-pending'),
+      done: $('state-done'),
+      wait: $('state-wait'),
+      error: $('state-error'),
+    };
+    function showState(name) {
+      for (const k in states) states[k].hidden = k !== name;
+    }
+
+    if (!orderId) {
+      showState('error');
+      return;
+    }
+    $('ord-id') && ($('ord-id').textContent = orderId);
+    $('ord-id-wait') && ($('ord-id-wait').textContent = orderId);
+
+    let tries = 0;
+    const MAX_TRIES = 40; // ~100s at 2.5s interval
+    let timer = null;
+
+    function renderDone(data) {
+      const code = data.card_code;
+      $('card-code').textContent = code;
+      const link = $('activate-link');
+      link.href = '/activate?code=' + encodeURIComponent(code);
+      const label = data.tier_label || data.tier || '';
+      $('tier-line').textContent = label ? (label + ' card · activate it on one device') : '';
+      showState('done');
+    }
+
+    async function poll() {
+      tries++;
+      try {
+        const res = await fetch('/api/order/status?order=' + encodeURIComponent(orderId), {
+          headers: { accept: 'application/json' },
+        });
+        if (res.status === 404) { showState('error'); stop(); return; }
+        const data = await res.json();
+        if (data && data.ok && data.status === 'paid' && data.card_code) {
+          renderDone(data);
+          stop();
+          return;
+        }
+      } catch (_) { /* keep polling */ }
+      if (tries >= MAX_TRIES) { showState('wait'); stop(); }
+    }
+
+    function start() {
+      showState('pending');
+      tries = 0;
+      poll();
+      timer = setInterval(poll, 2500);
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    const retry = $('retry-btn');
+    if (retry) retry.addEventListener('click', start);
+
+    const copyBtn = $('copy-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const code = $('card-code').textContent || '';
+        try {
+          await navigator.clipboard.writeText(code);
+          copyBtn.textContent = 'Copied ✓';
+          copyBtn.classList.add('copied');
+          setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 1800);
+        } catch (_) {
+          const r = document.createRange();
+          r.selectNode($('card-code'));
+          const sel = window.getSelection();
+          sel.removeAllRanges(); sel.addRange(r);
+        }
+      });
+    }
+
+    start();
+  })();
+</script>

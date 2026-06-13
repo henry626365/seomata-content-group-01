@@ -1,0 +1,331 @@
+---
+interface Props {
+  kind: 'agents' | 'flow' | 'autopilot' | 'memory' | 'signals' | 'taskcard';
+  color: string;
+  title?: string;
+}
+const { kind, color, title } = Astro.props;
+
+const barTitles: Record<Props['kind'], string> = {
+  agents: 'KC Chat · Team',
+  flow: 'KC Flow',
+  autopilot: 'Autopilot · Round 3 / 8',
+  memory: 'Shared Memory',
+  signals: 'Signals',
+  taskcard: 'TaskCard #42',
+};
+---
+
+<div class="mock" style={`--fc: ${color}`} role="img" aria-label={title ? `${title} interface preview` : 'feature interface preview'}>
+  <div class="mock-bar">
+    <span class="dot r"></span>
+    <span class="dot y"></span>
+    <span class="dot g"></span>
+    <span class="bar-title">{barTitles[kind]}</span>
+  </div>
+
+  <div class="mock-body">
+    {kind === 'agents' && (
+      <div class="agents">
+        <div class="agent">
+          <span class="avatar lead">L</span>
+          <span class="who">Leader</span>
+          <span class="role">Orchestrator</span>
+          <span class="state on"></span>
+        </div>
+        <div class="agent">
+          <span class="avatar">A</span>
+          <span class="who">Architect</span>
+          <span class="role">Design</span>
+          <span class="state on"></span>
+        </div>
+        <div class="agent active">
+          <span class="avatar">F</span>
+          <span class="who">Frontend</span>
+          <span class="role">Build</span>
+          <span class="state pulse"></span>
+        </div>
+        <div class="agent">
+          <span class="avatar">Q</span>
+          <span class="who">QA</span>
+          <span class="role">Test</span>
+          <span class="state idle"></span>
+        </div>
+        <div class="msg">
+          <span class="msg-from">Leader → Frontend</span>
+          Build the <code>LoginForm</code> component
+        </div>
+      </div>
+    )}
+
+    {kind === 'flow' && (
+      <div class="flow">
+        <div class="stepper">
+          <span class="track"></span>
+          <span class="fill"></span>
+          <div class="node done"><span class="bullet">✓</span><span class="lbl">Plan</span></div>
+          <div class="node active"><span class="bullet ring"></span><span class="lbl">Build</span></div>
+          <div class="node"><span class="bullet"></span><span class="lbl">Test</span></div>
+          <div class="node"><span class="bullet"></span><span class="lbl">Ship</span></div>
+        </div>
+        <ul class="subs">
+          <li class="ok"><span class="tick">✓</span>Scaffold component</li>
+          <li class="run"><span class="tick spin">◐</span>Wire props &amp; state</li>
+          <li class="todo"><span class="tick">○</span>Write tests</li>
+        </ul>
+      </div>
+    )}
+
+    {kind === 'autopilot' && (
+      <div class="auto">
+        <div class="cycle">
+          <span class="phase">Inspect</span>
+          <span class="arr">→</span>
+          <span class="phase">Plan</span>
+          <span class="arr">→</span>
+          <span class="phase hot">Fix</span>
+          <span class="arr">→</span>
+          <span class="phase">Review</span>
+          <span class="loop">↻</span>
+        </div>
+        <div class="budget">
+          <div class="budget-head"><span>Round budget</span><span>3 / 8</span></div>
+          <div class="meter"><span style="width:37.5%"></span></div>
+        </div>
+        <div class="auto-stats">
+          <span><b>12</b> files</span>
+          <span><b>4m 20s</b> elapsed</span>
+          <span class="watch">● watchdog</span>
+        </div>
+      </div>
+    )}
+
+    {kind === 'memory' && (
+      <div class="mem">
+        <div class="search"><span class="mag"></span>category: decision</div>
+        <div class="rows">
+          <div class="mrow head"><span>key</span><span>scope</span><span>ttl</span></div>
+          <div class="mrow"><span class="k">auth.decision</span><span class="scope g">global</span><span class="ttl">∞</span></div>
+          <div class="mrow"><span class="k">api.schema</span><span class="scope gr">group</span><span class="ttl">24h</span></div>
+          <div class="mrow"><span class="k">ui.tokens</span><span class="scope se">session</span><span class="ttl">1h</span></div>
+        </div>
+      </div>
+    )}
+
+    {kind === 'signals' && (
+      <div class="sig">
+        <div class="toast wake">
+          <span class="badge high">high</span>
+          <div class="t-body"><b>task_done</b><span>Architect finished design</span></div>
+          <span class="ago">now</span>
+        </div>
+        <div class="toast">
+          <span class="badge high">high</span>
+          <div class="t-body"><b>@mention</b><span>You were mentioned</span></div>
+          <span class="ago">2s</span>
+        </div>
+        <div class="toast dim">
+          <span class="badge norm">normal</span>
+          <div class="t-body"><b>agent_online</b><span>QA joined the group</span></div>
+          <span class="ago">10s</span>
+        </div>
+        <p class="sig-note">High-priority signals wake a waiting agent instantly.</p>
+      </div>
+    )}
+
+    {kind === 'taskcard' && (
+      <div class="card">
+        <div class="card-head">
+          <b>Implement OAuth login</b>
+          <span class="chip">in&nbsp;progress</span>
+        </div>
+        <div class="meter card-meter"><span style="width:62%"></span></div>
+        <ul class="log">
+          <li><span class="ts">09:01</span> Card created · owner Frontend</li>
+          <li><span class="ts">09:14</span> Scaffolded auth routes</li>
+          <li class="blk"><span class="ts">09:32</span> ⚠ Blocker: missing client secret</li>
+        </ul>
+      </div>
+    )}
+  </div>
+</div>
+
+<style>
+  .mock {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+  .mock::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 80% at 80% -10%, color-mix(in srgb, var(--fc) 9%, transparent), transparent 60%);
+    pointer-events: none;
+  }
+  .mock-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: color-mix(in srgb, var(--fc) 4%, var(--bg-card));
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .dot.r { background: #FF5F57; }
+  .dot.y { background: #FEBC2E; }
+  .dot.g { background: #28C840; }
+  .bar-title {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+  }
+  .mock-body { padding: 1.1rem 1.15rem 1.25rem; }
+
+  /* ---------- agents ---------- */
+  .agents { display: flex; flex-direction: column; gap: 0.5rem; }
+  .agent {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.45rem 0.55rem; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle); background: var(--bg-card);
+  }
+  .agent.active {
+    border-color: color-mix(in srgb, var(--fc) 45%, transparent);
+    background: color-mix(in srgb, var(--fc) 6%, transparent);
+  }
+  .avatar {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    display: grid; place-items: center;
+    font-size: 0.72rem; font-weight: 700; color: #fff;
+    background: color-mix(in srgb, var(--fc) 65%, #334155);
+  }
+  .avatar.lead { background: var(--fc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--fc) 18%, transparent); }
+  .who { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+  .role {
+    font-size: 0.68rem; color: var(--text-secondary);
+    padding: 0.1rem 0.45rem; border-radius: 999px;
+    background: color-mix(in srgb, var(--fc) 10%, transparent);
+  }
+  .state { width: 8px; height: 8px; border-radius: 50%; margin-left: auto; background: #CBD5E1; }
+  .state.on { background: #22C55E; }
+  .state.idle { background: #CBD5E1; }
+  .state.pulse { background: var(--fc); animation: pulse 1.6s ease-in-out infinite; }
+  .msg {
+    margin-top: 0.3rem; font-size: 0.78rem; color: var(--text-secondary);
+    padding: 0.5rem 0.6rem; border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--fc) 7%, transparent);
+    border-left: 2px solid var(--fc);
+  }
+  .msg-from { display: block; font-size: 0.66rem; font-weight: 700; color: var(--fc); margin-bottom: 0.15rem; }
+  .msg code { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-primary); }
+
+  /* ---------- flow ---------- */
+  .stepper { position: relative; display: flex; justify-content: space-between; margin: 0.4rem 0 1.1rem; }
+  .track, .fill { position: absolute; top: 11px; left: 6%; right: 6%; height: 2px; border-radius: 2px; }
+  .track { background: var(--border-subtle); }
+  .fill { width: 38%; background: var(--fc); }
+  .node { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+  .bullet {
+    width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--bg-card); border: 2px solid var(--border-subtle);
+    font-size: 0.7rem; color: var(--text-muted);
+  }
+  .node.done .bullet { background: var(--fc); border-color: var(--fc); color: #fff; }
+  .node.active .bullet.ring {
+    border-color: var(--fc);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--fc) 20%, transparent);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  .lbl { font-size: 0.72rem; font-weight: 600; color: var(--text-secondary); }
+  .node.active .lbl { color: var(--text-primary); }
+  .subs { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; padding: 0.6rem 0.65rem; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--fc) 5%, transparent); }
+  .subs li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.76rem; color: var(--text-secondary); }
+  .subs .tick { width: 1em; font-weight: 700; }
+  .subs li.ok { color: var(--text-primary); }
+  .subs li.ok .tick { color: var(--fc); }
+  .subs li.run .tick { color: var(--fc); display: inline-block; animation: spin 1.8s linear infinite; }
+
+  /* ---------- autopilot ---------- */
+  .cycle { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-bottom: 1rem; }
+  .phase {
+    font-size: 0.74rem; font-weight: 600; color: var(--text-secondary);
+    padding: 0.3rem 0.6rem; border-radius: 999px; border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+  }
+  .phase.hot { color: #fff; background: var(--fc); border-color: var(--fc); }
+  .arr { color: var(--text-muted); font-size: 0.8rem; }
+  .loop { color: var(--fc); font-size: 0.95rem; font-weight: 700; animation: spin 3s linear infinite; }
+  .budget-head { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-secondary); margin-bottom: 0.3rem; }
+  .meter { height: 7px; border-radius: 999px; background: var(--border-subtle); overflow: hidden; }
+  .meter span { display: block; height: 100%; border-radius: 999px; background: var(--fc); }
+  .auto-stats { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 0.85rem; font-size: 0.72rem; color: var(--text-muted); }
+  .auto-stats b { color: var(--text-primary); }
+  .auto-stats .watch { color: var(--fc); margin-left: auto; }
+
+  /* ---------- memory ---------- */
+  .search {
+    display: flex; align-items: center; gap: 0.45rem;
+    font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary);
+    padding: 0.45rem 0.6rem; margin-bottom: 0.7rem;
+    border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--fc) 4%, transparent);
+  }
+  .mag { width: 12px; height: 12px; border: 1.5px solid var(--fc); border-radius: 50%; position: relative; flex-shrink: 0; }
+  .mag::after { content: ''; position: absolute; right: -3px; bottom: -3px; width: 5px; height: 1.5px; background: var(--fc); transform: rotate(45deg); }
+  .rows { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden; }
+  .mrow { display: grid; grid-template-columns: 1fr auto auto; gap: 0.6rem; align-items: center; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--border-subtle); }
+  .mrow:last-child { border-bottom: none; }
+  .mrow.head { font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); background: color-mix(in srgb, var(--fc) 4%, transparent); }
+  .mrow .k { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-primary); }
+  .scope { font-size: 0.66rem; font-weight: 600; padding: 0.1rem 0.45rem; border-radius: 999px; }
+  .scope.g { color: #fff; background: var(--fc); }
+  .scope.gr { color: var(--fc); background: color-mix(in srgb, var(--fc) 14%, transparent); }
+  .scope.se { color: var(--text-secondary); background: var(--border-subtle); }
+  .ttl { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); min-width: 2ch; text-align: right; }
+
+  /* ---------- signals ---------- */
+  .sig { display: flex; flex-direction: column; gap: 0.45rem; }
+  .toast {
+    display: flex; align-items: center; gap: 0.55rem;
+    padding: 0.5rem 0.6rem; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle); background: var(--bg-card);
+  }
+  .toast.wake {
+    border-color: color-mix(in srgb, var(--fc) 45%, transparent);
+    background: color-mix(in srgb, var(--fc) 7%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--fc) 10%, transparent);
+  }
+  .toast.dim { opacity: 0.62; }
+  .badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; padding: 0.15rem 0.4rem; border-radius: 5px; flex-shrink: 0; }
+  .badge.high { color: #fff; background: var(--fc); }
+  .badge.norm { color: var(--text-secondary); background: var(--border-subtle); }
+  .t-body { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+  .t-body b { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-primary); }
+  .t-body span { font-size: 0.7rem; color: var(--text-secondary); }
+  .ago { margin-left: auto; font-size: 0.66rem; color: var(--text-muted); flex-shrink: 0; }
+  .sig-note { margin-top: 0.3rem; font-size: 0.68rem; color: var(--text-muted); }
+
+  /* ---------- taskcard ---------- */
+  .card-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; }
+  .card-head b { font-size: 0.86rem; color: var(--text-primary); }
+  .chip { margin-left: auto; font-size: 0.62rem; font-weight: 700; color: var(--fc); background: color-mix(in srgb, var(--fc) 13%, transparent); padding: 0.15rem 0.5rem; border-radius: 999px; white-space: nowrap; }
+  .card-meter { margin-bottom: 0.85rem; }
+  .log { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .log li { position: relative; padding-left: 0.9rem; font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4; }
+  .log li::before { content: ''; position: absolute; left: 0; top: 0.45em; width: 6px; height: 6px; border-radius: 50%; background: var(--fc); }
+  .log li.blk { color: #B45309; }
+  .log li.blk::before { background: #F59E0B; }
+  .log .ts { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted); margin-right: 0.3rem; }
+
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.85); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .state.pulse, .node.active .bullet.ring, .subs li.run .tick, .loop { animation: none; }
+  }
+</style>

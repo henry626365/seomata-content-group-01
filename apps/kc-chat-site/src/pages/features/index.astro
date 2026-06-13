@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/shared/SectionHeader.astro';
+import FinalCTA from '../../components/home/FinalCTA.astro';
+import FeatureMockup from '../../components/features/FeatureMockup.astro';
+
+const featureDetails = [
+  {
+    title: 'Multi-Agent Collaboration',
+    description: 'Run a team of specialized AI agents — each in their own Cursor chat, each with a defined role. An architect designs, a frontend dev builds components, a QA engineer writes tests. The leader orchestrates, dispatches tasks, and collects results.',
+    highlights: ['Group creation & management', 'Role-based specialization', 'Leader ↔ Worker messaging', 'Cross-agent context sharing'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>',
+    color: 'var(--color-accent)',
+    align: 'left',
+    kind: 'agents',
+  },
+  {
+    title: 'KC Flow Visual Stepper',
+    description: 'A horizontal progress tracker above every chat input — the primary view for project progress. Each step shows status, owner, timing, and expandable sub-steps. Stalled detection auto-flags hung tasks. Decision points pause for user input.',
+    highlights: ['Real-time status updates', 'Sub-step drill-down', 'Stalled/disconnected detection', 'Decision point UI with options'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    color: 'var(--color-gold)',
+    align: 'right',
+    kind: 'flow',
+  },
+  {
+    title: 'Autopilot Mode',
+    description: 'Fully automated inspect → plan → fix → review loop. The leader drives rounds, workers execute scan and fix tasks, a watchdog monitors for regressions. Set budgets, autonomy levels, and success criteria — autopilot stops when goals are met.',
+    highlights: ['Configurable autonomy levels', 'Budget caps (rounds, files, time)', 'Watchdog regression detection', 'Auto-stop on success criteria'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
+    color: 'var(--color-accent)',
+    align: 'left',
+    kind: 'autopilot',
+  },
+  {
+    title: 'Shared Memory System',
+    description: 'A persistent key-value store that survives conversation resets. Agents write decisions, project context, and artifacts to shared memory. Scoped by global, group, or session — with categories, tags, and TTL for automatic cleanup.',
+    highlights: ['Global / group / session scopes', 'Category-based queries', 'Tag filtering', 'Priority levels & TTL expiry'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>',
+    color: 'var(--color-gold)',
+    align: 'right',
+    kind: 'memory',
+  },
+  {
+    title: 'Signal & Event System',
+    description: 'Lightweight perception events delivered automatically — message reads, task completions, agent status changes, @mentions. High-priority signals wake waiting agents immediately. Events stream for team-wide situational awareness.',
+    highlights: ['7 signal types with priority levels', 'High-priority wake-up (10s debounce)', 'Team event stream', 'Per-agent cursor tracking'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>',
+    color: 'var(--color-accent)',
+    align: 'left',
+    kind: 'signals',
+  },
+  {
+    title: 'TaskCard Tracking',
+    description: 'Dedicated panels for complex work items. Progress logs, findings, blockers — all tracked in a structured card linked to KC Flow. Workers report progress via task_report, keeping chat lanes clean while detail lives in the panel.',
+    highlights: ['Linked to KC Flow steps', 'Progress log with timestamps', 'Status state machine', 'Clean chat lane separation'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+    color: 'var(--color-gold)',
+    align: 'right',
+    kind: 'taskcard',
+  },
+];
+---
+
+<BaseLayout title="Features — KC Chat" description="Explore KC Chat's core features: multi-agent collaboration, visual flow tracking, autopilot mode, shared memory, and more.">
+  <section class="features-hero section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Features"
+        title="Built for multi-agent workflows"
+        subtitle="Every feature designed to make AI agents collaborate effectively — so you can focus on reviewing, not directing."
+      />
+    </div>
+  </section>
+
+  <section class="features-detail section">
+    <div class="container">
+      {featureDetails.map((f, i) => (
+        <div class:list={['feature-row', f.align]}>
+          <div class="feature-info">
+            <div class="feature-icon" style={`--fc: ${f.color}`}>
+              <Fragment set:html={f.icon} />
+            </div>
+            <h3>{f.title}</h3>
+            <p>{f.description}</p>
+            <ul class="highlights">
+              {f.highlights.map((h) => (
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={f.color} stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  {h}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="feature-visual">
+            <FeatureMockup kind={f.kind} color={f.color} title={f.title} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <FinalCTA />
+</BaseLayout>
+
+<style>
+  .features-hero {
+    padding-bottom: 0;
+  }
+  .feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding-block: clamp(2rem, 4vw, 3.5rem);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .feature-row:last-child {
+    border-bottom: none;
+  }
+  .feature-row.right .feature-info {
+    order: 2;
+  }
+  .feature-row.right .feature-visual {
+    order: 1;
+  }
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--fc) 10%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fc);
+    margin-bottom: 1.25rem;
+  }
+  .feature-icon :global(svg) {
+    width: 24px;
+    height: 24px;
+  }
+  h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .feature-info p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+  .highlights {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .highlights li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .feature-visual {
+    perspective: 1200px;
+  }
+  .feature-visual :global(.mock) {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .feature-row:hover .feature-visual :global(.mock) {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elevated);
+  }
+  @media (max-width: 768px) {
+    .feature-row {
+      grid-template-columns: 1fr;
+    }
+    .feature-row.right .feature-info,
+    .feature-row.right .feature-visual {
+      order: unset;
+    }
+    .feature-visual {
+      max-width: 420px;
+      margin-inline: auto;
+      width: 100%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .feature-visual :global(.mock),
+    .feature-row:hover .feature-visual :global(.mock) {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>

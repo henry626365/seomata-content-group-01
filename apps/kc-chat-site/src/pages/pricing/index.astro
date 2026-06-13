@@ -1,0 +1,402 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/shared/SectionHeader.astro';
+
+const plans = [
+  {
+    name: 'Monthly',
+    badge: '',
+    price: '98',
+    period: '/ 30 days',
+    description: 'Try unlimited Cursor risk-free for one month.',
+    features: [
+      'Unlimited Cursor conversations even after your tokens run out',
+      'Multi-agent KC Chat panel + autopilot mode (bundled)',
+      'KC Flow real-time progress tracker',
+      'Bound to one device · 30 days',
+      'Email support + WeChat group',
+    ],
+    cta: 'Buy monthly',
+    ctaHref: '/activate?tier=month',
+    tier: 'month',
+    highlight: false,
+    save: null,
+  },
+  {
+    name: 'Yearly',
+    badge: 'Most popular',
+    price: '198',
+    period: '/ 365 days',
+    description: 'Pays for itself in less than two months for the average user.',
+    features: [
+      'Everything in Monthly',
+      'Equivalent to ~$16.5 / month',
+      'Free WeChat group invite (bonus month for active members)',
+      'Free re-issue of device-transfer once / quarter',
+      'Priority support response (< 24 h)',
+    ],
+    cta: 'Buy yearly',
+    ctaHref: '/activate?tier=year',
+    tier: 'year',
+    highlight: true,
+    save: 'Save $978 / year vs paying Anthropic for excess tokens',
+  },
+  {
+    name: 'Lifetime',
+    badge: 'Best value',
+    price: '298',
+    period: 'one-time',
+    description: 'Pay once, forget about token bills forever. 100-year token validity.',
+    features: [
+      'Everything in Yearly',
+      'No renewals · token expires in year 2126',
+      'Locked-in pricing — future increases don\'t apply',
+      'Priority device-transfer (no quarterly cap)',
+      'Direct line to support during business hours',
+    ],
+    cta: 'Buy lifetime',
+    ctaHref: '/activate?tier=lifetime',
+    tier: 'lifetime',
+    highlight: false,
+    save: 'Break-even in ~3 weeks for heavy users',
+  },
+];
+
+const faq = [
+  {
+    q: 'What exactly am I paying for?',
+    a: 'The ability to keep your Cursor conversations alive after Cursor\'s included token quota runs out. A single card = a license token cryptographically bound to one machine.',
+  },
+  {
+    q: 'How does this compare to paying Anthropic / OpenAI directly for tokens?',
+    a: 'A typical agentic Cursor user spends $50–$200 / month on excess token usage. The Yearly card is $198 — break-even in 1–4 months. After that, every coding hour is pure savings.',
+  },
+  {
+    q: 'Is this legal in my jurisdiction?',
+    a: 'KC Chat is a productivity extension. We do not bypass Cursor\'s paid plan; you still need an active Cursor account. Talk to your employer\'s policy team if you have specific compliance concerns.',
+  },
+  {
+    q: 'What if Cursor releases an incompatible update?',
+    a: 'We freeze your Cursor at version 2.4.37 during installation (autoUpdate disabled, hosts entry blocking marketplace push). Major Cursor releases are tested against our patcher within 48 hours.',
+  },
+  {
+    q: 'Refunds?',
+    a: 'Full refund within 7 days if the card has not been activated. After activation, refunds are case-by-case for unresolved technical issues.',
+  },
+  {
+    q: 'Can I buy in bulk for a team?',
+    a: 'Yes — email support@h540.com for bulk discounts (≥ 10 seats). Per-seat tracking, central revocation, monthly invoicing.',
+  },
+];
+---
+
+<BaseLayout title="Pricing — KC Chat" description="Day pass $5 (24h trial) · Monthly $98 · Yearly $198 · Lifetime $298 · Lite $10. Pay once, no auto-renewal.">
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Pricing"
+        title="Stop paying per-token. Pay once."
+        description="Three tiers, no auto-renewal, no surprise charges. Lifetime card breaks even in ~3 weeks for heavy users."
+      />
+
+      <div class="savings-banner">
+        <span class="sb-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>
+        <p>
+          <strong>The maths:</strong> the average agentic Cursor user burns $50–$200 / month on
+          Anthropic + OpenAI tokens beyond their Pro included quota. KC Chat replaces those bills entirely.
+        </p>
+      </div>
+
+      <div class="trial-strip">
+        <div class="trial-info">
+          <span class="trial-badge">Trial</span>
+          <div>
+            <h3>Day Pass — try it for 24 hours</h3>
+            <p>Full KC Chat for one day. Activates instantly and expires 24&nbsp;h after activation — ideal for evaluating before you commit.</p>
+          </div>
+        </div>
+        <div class="trial-buy">
+          <span class="trial-price"><span class="cur">$</span>5</span>
+          <button class="plan-cta primary trial-cta" type="button" data-tier="day" data-fallback="/activate?tier=day">Start 24 h trial →</button>
+        </div>
+      </div>
+
+      <div class="plans-grid">
+        {plans.map((plan) => (
+          <article class:list={['plan-card', { highlight: plan.highlight }]}>
+            {plan.badge && <span class="plan-badge">{plan.badge}</span>}
+            <header class="plan-header">
+              <h3>{plan.name}</h3>
+              <p class="plan-desc">{plan.description}</p>
+            </header>
+            <div class="plan-price">
+              <span class="amount">${plan.price}</span>
+              <span class="period">{plan.period}</span>
+            </div>
+            {plan.save && <p class="plan-save">{plan.save}</p>}
+            <ul class="plan-features">
+              {plan.features.map((f) => (
+                <li>{f}</li>
+              ))}
+            </ul>
+            <button
+              class:list={['plan-cta', { primary: plan.highlight }]}
+              type="button"
+              data-tier={plan.tier}
+              data-fallback={plan.ctaHref}
+            >
+              {plan.cta} →
+            </button>
+          </article>
+        ))}
+      </div>
+
+      <section class="lite-section">
+        <div class="lite-card">
+          <div class="lite-head">
+            <span class="lite-badge">Standalone</span>
+            <h3>Lite Monthly</h3>
+            <p>A separate $10 / 30-day card-key, kept apart from the main tiers — handy as its own distribution channel.</p>
+          </div>
+          <div class="lite-buy">
+            <div class="lite-price"><span class="amount">10</span><span class="period">/ 30 days</span></div>
+            <button class="plan-cta lite-cta" type="button" data-tier="lite" data-fallback="/activate?tier=lite">Buy Lite →</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust">
+        <h2>What's included with every tier</h2>
+        <div class="trust-grid">
+          <div class="trust-item">
+            <h4><span class="ti-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>One-machine binding</h4>
+            <p>Card binds to your device fingerprint on first activation. Anti-piracy by design — no honest customer pays for someone else\'s usage.</p>
+          </div>
+          <div class="trust-item">
+            <h4><span class="ti-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M20 9h2M20 14h2M2 9h2M2 14h2"/></svg></span>Works offline</h4>
+            <p>Once activated, token validation is purely local (HMAC). The extension doesn\'t phone home — your conversations stay between you and Cursor.</p>
+          </div>
+          <div class="trust-item">
+            <h4><span class="ti-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span>Device transfers</h4>
+            <p>Switching laptops? Email support and we\'ll unbind the card so you can re-activate on the new machine. Yearly: 1 free transfer / quarter. Lifetime: unlimited.</p>
+          </div>
+          <div class="trust-item">
+            <h4><span class="ti-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Update-proof</h4>
+            <p>The installer disables Cursor auto-update for the extension and blocks the upstream self-update server. Your patched build stays patched.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq">
+        <h2>FAQ</h2>
+        {faq.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </section>
+
+      <section class="cta-final">
+        <h2>Ready to never see another &ldquo;out of tokens&rdquo; banner?</h2>
+        <p>Pick a tier, get your card, activate in 5 minutes.</p>
+        <a class="btn-primary-lg" href="/activate">Get a card →</a>
+        <p class="hint">Full tutorial at <a href="/tutorial">h540.com/tutorial</a></p>
+      </section>
+    </div>
+  </section>
+
+  <style>
+    .savings-banner {
+      display: flex; gap: 0.85rem; align-items: center;
+      background: color-mix(in srgb, var(--color-gold) 8%, var(--bg-card));
+      border: 1px solid color-mix(in srgb, var(--color-gold) 22%, transparent);
+      border-left: 3px solid var(--color-gold);
+      border-radius: var(--radius-md); padding: 1rem 1.3rem;
+      margin: 0 auto 2.5rem; max-width: 760px; box-shadow: var(--shadow-sm);
+    }
+    .savings-banner .sb-ic { color: var(--color-gold); flex-shrink: 0; display: flex; }
+    .savings-banner .sb-ic svg { width: 26px; height: 26px; }
+    .savings-banner p { margin: 0; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; }
+    .savings-banner strong { color: var(--color-gold); }
+
+    .plans-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem; margin-bottom: 3rem;
+    }
+    .plan-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 2rem 1.75rem;
+      box-shadow: var(--shadow-card); position: relative;
+      display: flex; flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .plan-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-elevated); }
+    .plan-card.highlight {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-card), 0 0 0 4px var(--color-accent-subtle);
+    }
+    .plan-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--color-accent); color: #fff;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .plan-header h3 { font-size: 1.4rem; margin: 0 0 0.4rem; color: var(--text-primary); }
+    .plan-desc { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.5; min-height: 3em; }
+    .plan-price { margin: 1.2rem 0 0.4rem; display: flex; align-items: baseline; gap: 0.4rem; }
+    .plan-price .amount { font-size: 2.6rem; font-weight: 800; color: var(--text-primary); }
+    .plan-price .amount::before { content: "$"; font-size: 1.3rem; font-weight: 700; margin-right: 0.05em; color: var(--text-muted); }
+    .plan-price .period { color: var(--text-muted); font-size: 0.9rem; }
+    .plan-save {
+      color: var(--color-success); font-size: 0.82rem; font-weight: 600;
+      margin: 0.2rem 0 1rem;
+    }
+    .plan-features {
+      list-style: none; padding: 0; margin: 1rem 0; flex: 1;
+      border-top: 1px dashed var(--border-subtle); padding-top: 1rem;
+    }
+    .plan-features li {
+      padding: 0.35rem 0 0.35rem 1.5rem; position: relative;
+      color: var(--text-secondary); font-size: 0.9rem; line-height: 1.45;
+    }
+    .plan-features li::before {
+      content: "✓"; position: absolute; left: 0;
+      color: var(--color-accent); font-weight: 700;
+    }
+    .plan-cta {
+      display: block; width: 100%; text-align: center;
+      padding: 0.7rem 1rem; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--color-accent); color: var(--color-accent);
+      background: transparent; font: inherit; font-weight: 600; text-decoration: none;
+      margin-top: 0.5rem; cursor: pointer; appearance: none; -webkit-appearance: none;
+      transition: background 0.2s, color 0.2s, opacity 0.2s;
+    }
+    .plan-cta:hover { background: var(--color-accent-subtle); color: var(--color-accent); }
+    .plan-cta.primary { background: var(--color-accent); color: #fff; }
+    .plan-cta.primary:hover { background: var(--color-accent-hover); color: #fff; }
+    .plan-cta[disabled] { opacity: 0.6; cursor: progress; }
+
+    /* Day-pass trial strip (above the premium tiers) */
+    .trial-strip {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.25rem;
+      background: var(--bg-card);
+      border: 1.5px solid var(--color-accent);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.6rem; margin: 0 auto 1.75rem; max-width: 920px;
+      box-shadow: var(--shadow-card), 0 0 0 4px var(--color-accent-subtle);
+    }
+    .trial-info { display: flex; align-items: center; gap: 1rem; }
+    .trial-badge {
+      background: var(--color-accent); color: #fff;
+      padding: 0.25rem 0.7rem; border-radius: 999px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    .trial-info h3 { margin: 0 0 0.2rem; font-size: 1.2rem; color: var(--text-primary); }
+    .trial-info p { margin: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; max-width: 48ch; }
+    .trial-buy { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+    .trial-price { font-size: 2.1rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
+    .trial-price .cur { font-size: 1.1rem; font-weight: 700; color: var(--text-muted); margin-right: 0.05em; }
+    .plan-cta.trial-cta, .plan-cta.lite-cta { width: auto; display: inline-block; margin-top: 0; white-space: nowrap; }
+
+    /* Standalone Lite ($10/mo) — kept separate from the main tiers */
+    .lite-section { margin: 0 auto 1rem; max-width: 920px; }
+    .lite-card {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.25rem;
+      background: var(--bg-card); border: 1px dashed var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 1.25rem 1.6rem;
+    }
+    .lite-head { flex: 1; min-width: 240px; }
+    .lite-badge {
+      display: inline-block; background: var(--bg-code); color: #E2E8F0;
+      padding: 0.18rem 0.6rem; border-radius: 6px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .lite-head h3 { margin: 0 0 0.25rem; font-size: 1.2rem; color: var(--text-primary); }
+    .lite-head p { margin: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; max-width: 52ch; }
+    .lite-buy { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+    .lite-price { display: flex; align-items: baseline; gap: 0.35rem; }
+    .lite-price .amount { font-size: 2rem; font-weight: 800; color: var(--text-primary); }
+    .lite-price .amount::before { content: "$"; font-size: 1.05rem; font-weight: 700; color: var(--text-muted); margin-right: 0.05em; }
+    .lite-price .period { color: var(--text-muted); font-size: 0.85rem; }
+
+    .trust { margin: 4rem 0 3rem; }
+    .trust h2 { font-size: 1.5rem; text-align: center; margin-bottom: 1.5rem; }
+    .trust-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .trust-item {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 1rem 1.25rem;
+    }
+    .trust-item h4 { display: flex; align-items: center; gap: 0.5rem; margin: 0 0 0.4rem; font-size: 1rem; color: var(--text-primary); }
+    .trust-item .ti-ic { color: var(--color-accent); display: inline-flex; flex-shrink: 0; }
+    .trust-item .ti-ic svg { width: 18px; height: 18px; }
+    .trust-item p { color: var(--text-secondary); font-size: 0.88rem; margin: 0; line-height: 1.5; }
+
+    .faq { margin: 3rem 0; max-width: 760px; margin-inline: auto; }
+    .faq h2 { font-size: 1.5rem; text-align: center; margin-bottom: 1.25rem; }
+    .faq details {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 0.85rem 1.1rem;
+      margin-bottom: 0.6rem;
+    }
+    .faq details summary {
+      font-weight: 600; cursor: pointer; outline: none; color: var(--text-primary);
+    }
+    .faq details[open] summary { color: var(--color-accent); margin-bottom: 0.5rem; }
+    .faq details p { color: var(--text-secondary); margin: 0.4rem 0 0; line-height: 1.6; }
+
+    .cta-final {
+      text-align: center; padding: 3rem 1rem; margin-top: 3rem;
+      background: linear-gradient(135deg, var(--color-accent-subtle) 0%, transparent 100%);
+      border-radius: var(--radius-2xl);
+    }
+    .cta-final h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 0.5rem; }
+    .cta-final p { color: var(--text-secondary); margin: 0.4rem 0 1.2rem; }
+    .btn-primary-lg {
+      display: inline-block; background: var(--color-accent); color: #fff;
+      padding: 0.9rem 1.8rem; border-radius: var(--radius-sm);
+      font-weight: 700; text-decoration: none; font-size: 1.05rem;
+      box-shadow: 0 4px 16px rgba(21, 128, 61, 0.32);
+    }
+    .btn-primary-lg:hover { background: var(--color-accent-hover); color: #fff; }
+    .hint { color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem; }
+  </style>
+
+  <script is:inline>
+    document.querySelectorAll('.plan-cta[data-tier]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const tier = btn.getAttribute('data-tier');
+        const fallback = btn.getAttribute('data-fallback');
+        if (!tier) return;
+        const orig = btn.textContent;
+        btn.setAttribute('disabled', 'true');
+        btn.textContent = 'Redirecting…';
+        try {
+          const res = await fetch('/api/checkout/create', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ tier }),
+          });
+          const data = await res.json().catch(() => null);
+          if (data && data.ok && data.url) { location.href = data.url; return; }
+          // Payment not configured yet (503) or error → fall back to manual activation.
+          if (fallback) { location.href = fallback; return; }
+          btn.textContent = orig;
+          btn.removeAttribute('disabled');
+        } catch (_) {
+          if (fallback) { location.href = fallback; return; }
+          btn.textContent = orig;
+          btn.removeAttribute('disabled');
+        }
+      });
+    });
+  </script>
+</BaseLayout>

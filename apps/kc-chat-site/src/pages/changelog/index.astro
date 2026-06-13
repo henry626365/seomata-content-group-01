@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/shared/SectionHeader.astro';
+
+const releases = [
+  {
+    version: 'v2.3.0',
+    date: 'May 25, 2026',
+    tag: 'Latest',
+    changes: [
+      'Added Signal system with 7 event types and priority-based delivery',
+      'KC Flow now supports sub-steps with inline drill-down',
+      'Stalled/disconnected detection with auto-recovery',
+      'POLL_TICK interval reduced from 300s to 180s for faster responsiveness',
+    ],
+  },
+  {
+    version: 'v2.2.0',
+    date: 'May 10, 2026',
+    tag: null,
+    changes: [
+      'Introduced TaskCard system for detailed work tracking',
+      'Flow step immutability with correction-of-seq pattern',
+      'Batch flow status updates (atomic multi-step transitions)',
+      'Smart flow re-read to reduce unnecessary polling',
+    ],
+  },
+  {
+    version: 'v2.1.0',
+    date: 'April 20, 2026',
+    tag: null,
+    changes: [
+      'Autopilot mode with configurable autonomy levels',
+      'Budget system (rounds, files, wall-clock time)',
+      'Watchdog regression detection',
+      'Silent ack protocol for noise-free broadcasts',
+    ],
+  },
+  {
+    version: 'v2.0.0',
+    date: 'April 5, 2026',
+    tag: null,
+    changes: [
+      'Major rewrite: KC Flow visual stepper',
+      'Group management with leader/worker roles',
+      'Shared memory system (global/group/session scopes)',
+      'Message queuing with read receipts',
+    ],
+  },
+  {
+    version: 'v1.0.0',
+    date: 'March 15, 2026',
+    tag: null,
+    changes: [
+      'Initial release',
+      'Multi-agent session management',
+      'Basic messaging between agents',
+      'Team event stream',
+    ],
+  },
+];
+---
+
+<BaseLayout title="Changelog — KC Chat" description="See what's new in KC Chat. Release notes, feature updates, and improvements.">
+  <section class="changelog-hero section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Changelog"
+        title="What's new in KC Chat"
+        subtitle="Release notes and feature updates. We ship improvements every two weeks."
+      />
+    </div>
+  </section>
+
+  <section class="releases section" style="padding-top:0">
+    <div class="container">
+      <div class="timeline">
+        {releases.map((r) => (
+          <div class="release-item">
+            <div class="release-marker">
+              <div class="marker-dot"></div>
+              <div class="marker-line"></div>
+            </div>
+            <div class="release-content">
+              <div class="release-header">
+                <h3>{r.version}</h3>
+                {r.tag && <span class="tag">{r.tag}</span>}
+                <span class="release-date">{r.date}</span>
+              </div>
+              <ul>
+                {r.changes.map((c) => (
+                  <li>{c}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .changelog-hero {
+    padding-bottom: 0;
+  }
+  .timeline {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+  .release-item {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 1.25rem;
+  }
+  .release-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .marker-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 3px solid var(--bg-page);
+    box-shadow: 0 0 0 2px var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .marker-line {
+    width: 2px;
+    flex: 1;
+    background: var(--border-subtle);
+  }
+  .release-item:last-child .marker-line {
+    display: none;
+  }
+  .release-content {
+    padding-bottom: 2rem;
+  }
+  .release-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.15rem 0.55rem;
+    border-radius: 100px;
+  }
+  .release-date {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  li {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.6;
+  }
+  li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+</style>

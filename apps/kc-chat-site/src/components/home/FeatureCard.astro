@@ -1,0 +1,65 @@
+---
+type Props = {
+  icon: string;
+  title: string;
+  description: string;
+  color?: string;
+};
+
+const { icon, title, description, color = 'var(--color-accent)' } = Astro.props;
+---
+
+<div class="feature-card">
+  <div class="icon-wrap" style={`--icon-color: ${color}`}>
+    <Fragment set:html={icon} />
+  </div>
+  <h3>{title}</h3>
+  <p>{description}</p>
+</div>
+
+<style>
+  .feature-card {
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  }
+  .feature-card:hover {
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+    transform: translateY(-3px);
+  }
+  .icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--icon-color) 11%, transparent);
+    border: 1px solid color-mix(in srgb, var(--icon-color) 24%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: var(--icon-color);
+    transition: transform 0.25s ease;
+  }
+  .feature-card:hover .icon-wrap {
+    transform: translateY(-1px) scale(1.04);
+  }
+  .icon-wrap :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+</style>

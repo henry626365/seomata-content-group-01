@@ -1,0 +1,72 @@
+# Cloudflare Workers config for kc-chat-site
+#
+# Migrated from Cloudflare Pages → Workers (Static Assets + a single Worker).
+#   - Static Astro output (./dist) is served via the [assets] binding.
+#   - The Worker (worker/index.ts) handles every /api/* endpoint.
+#
+# ── Local dev ───────────────────────────────────────────────────────────────
+#   pnpm wrangler d1 create kc-cards-dev               # one-time; paste the id below
+#   pnpm db:migrate:local                              # applies ALL migrations
+#   pnpm dev                                           # astro build + wrangler dev
+#
+# ── Deploy (production) ──────────────────────────────────────────────────────
+#   pnpm wrangler d1 create kc-cards-prod              # one-time; paste the id below
+#   pnpm db:migrate:prod                               # applies ALL migrations (remote)
+#   pnpm deploy                                        # astro build + wrangler deploy --env production
+#
+# ── Payment secrets (Lemon Squeezy / Merchant of Record) — NEVER commit ──────
+#   pnpm wrangler secret put LEMONSQUEEZY_API_KEY        --env production
+#   pnpm wrangler secret put LEMONSQUEEZY_STORE_ID       --env production
+#   pnpm wrangler secret put LEMONSQUEEZY_WEBHOOK_SECRET --env production
+#   pnpm wrangler secret put LS_VARIANT_MONTH            --env production
+#   pnpm wrangler secret put LS_VARIANT_YEAR             --env production
+#   pnpm wrangler secret put LS_VARIANT_LIFETIME         --env production
+#   pnpm wrangler secret put ADMIN_TOKEN                 --env production
+#   # Optional email (Resend): RESEND_API_KEY, MAIL_FROM
+#   Lemon Squeezy Dashboard → Settings → Webhooks → https://<your-domain>/api/checkout/webhook  (event: order_created)
+
+name = "kcchat-site"
+main = "worker/index.ts"
+compatibility_date = "2026-05-14"
+compatibility_flags = ["nodejs_compat"]
+
+# D1 migrations live in ./migrations (0001_*, 0002_*, 0003_*) — the wrangler default
+# location, applied via `wrangler d1 migrations apply` (see package.json scripts).
+
+# Static assets (Astro build output). The Worker runs for any request that does
+# not match a static asset (i.e. all /api/* routes).
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "404-page"
+
+# ── Default (local / staging) environment ────────────────────────────────────
+[[d1_databases]]
+binding       = "DB"
+database_name = "kc-cards-dev"
+database_id   = "00000000-0000-0000-0000-000000000000"   # TODO: replace with `wrangler d1 create kc-cards-dev` output
+
+[vars]
+CARD_PREFIX       = "KC"
+PUBLIC_BRAND      = "KC Chat"
+CHECKOUT_CURRENCY = "usd"
+
+# ── Production environment (deploy with `--env production`) ───────────────────
+# Bindings and vars are NOT inherited from the top level, so they are redeclared here.
+[env.production]
+# Custom domain — the zone h540.com must already be on this Cloudflare account.
+# wrangler provisions/attaches the Worker custom domain on `deploy --env production`.
+routes = [
+  { pattern = "h540.com", custom_domain = true },
+]
+
+[env.production.vars]
+CARD_PREFIX       = "KC"
+PUBLIC_BRAND      = "KC Chat"
+CHECKOUT_CURRENCY = "usd"
+SITE_URL          = "https://h540.com"
+
+[[env.production.d1_databases]]
+binding       = "DB"
+database_name = "kc-cards-prod"
+database_id   = "1f41b032-93ee-44a3-82f2-044a01f42a78"

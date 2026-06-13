@@ -1,0 +1,129 @@
+---
+import SectionHeader from '../shared/SectionHeader.astro';
+
+const steps = [
+  {
+    num: '01',
+    title: 'Buy a card',
+    description: 'Three tiers: $98 Monthly / $198 Yearly / $298 Lifetime. Pay once, receive a KC-XXXX-XXXX-XXXX code.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>',
+  },
+  {
+    num: '02',
+    title: 'One-line install',
+    description: 'Paste one command in PowerShell or bash. The installer downloads the patcher, applies it, and prints your activation command — ready to go.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+  },
+  {
+    num: '03',
+    title: 'Activate · use forever',
+    description: 'Run kc-activate.cjs with your card. Restart Cursor. No token meter ever again — your conversations resume past the quota line.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+  },
+];
+---
+
+<section class="how-section section bg-dots">
+  <div class="container">
+    <SectionHeader
+      eyebrow="How it works"
+      title="Three steps · 5 minutes · no friction"
+      subtitle="From card purchase to unlimited Cursor — the longest part is restarting Cursor at the end."
+    />
+    <div class="steps-grid">
+      {steps.map((step, i) => (
+        <div class="step-card">
+          <div class="step-num">{step.num}</div>
+          <div class="step-icon-wrap">
+            <Fragment set:html={step.icon} />
+          </div>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+          {i < steps.length - 1 && <div class="step-arrow" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .how-section {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, var(--bg-page) 0%, rgba(34, 197, 94, 0.045) 50%, var(--bg-page) 100%);
+  }
+  .how-section > .container {
+    position: relative;
+    z-index: 1;
+  }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    position: relative;
+  }
+  .step-card {
+    position: relative;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+  .step-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+  .step-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-accent-subtle);
+    border: 2px solid var(--border-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    color: var(--color-accent);
+  }
+  .step-icon-wrap :global(svg) {
+    width: 24px;
+    height: 24px;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.6rem;
+  }
+  p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+  .step-arrow {
+    position: absolute;
+    top: 50%;
+    right: -1.25rem;
+    transform: translateY(-50%);
+    color: var(--border-subtle);
+  }
+  @media (max-width: 768px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .step-arrow {
+      display: none;
+    }
+    p {
+      max-width: none;
+    }
+  }
+</style>

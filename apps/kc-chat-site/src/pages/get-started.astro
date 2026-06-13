@@ -1,0 +1,367 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/global.css';
+---
+
+<BaseLayout
+  title="Get started — KC Chat for Cursor"
+  description="Install the KC Chat extension, activate your license, and run your first multi-agent workflow in Cursor — in about five minutes."
+>
+  <section class="section">
+    <div class="container tutorial">
+      <header class="hero">
+        <p class="eyebrow">Get started · 5-minute setup</p>
+        <h1>From license to a multi-agent dev team in 5 minutes</h1>
+        <p class="lead">
+          KC Chat is a Cursor extension that turns a single chat into a team of <strong>specialized AI
+          agents</strong> — architect, frontend, backend, QA — running in parallel, with an autopilot
+          orchestrator and a live KC Flow progress tracker. You bring your own Cursor account; KC Chat adds
+          the orchestration layer on top.
+        </p>
+      </header>
+
+      <!-- Pricing snapshot -->
+      <div class="price-strip">
+        <div class="price-pill"><span class="t">Monthly</span><span class="p">$98</span><span class="d">30 days</span></div>
+        <div class="price-pill recommend"><span class="t">Yearly</span><span class="p">$198</span><span class="d">365 days · best value</span></div>
+        <div class="price-pill"><span class="t">Lifetime</span><span class="p">$298</span><span class="d">100 years</span></div>
+        <a class="btn-secondary" href="/pricing">See pricing →</a>
+      </div>
+
+      <!-- TOC -->
+      <nav class="toc" aria-label="Table of contents">
+        <h2>Contents</h2>
+        <ol>
+          <li><a href="#what">What KC Chat is</a></li>
+          <li><a href="#prereq">Prerequisites</a></li>
+          <li><a href="#buy">Buy a license</a></li>
+          <li><a href="#install">Install the extension</a></li>
+          <li><a href="#activate">Activate your license</a></li>
+          <li><a href="#use">Run your first task</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </nav>
+
+      <!-- 1. What -->
+      <article id="what" class="block">
+        <h2>🧭 What KC Chat is</h2>
+        <p>
+          KC Chat is a productivity layer for Cursor. Instead of one chat doing one task at a time, you run
+          several role-specialized agents at once and let an autopilot coordinate them while KC Flow shows you
+          exactly what each one is doing.
+        </p>
+        <ul>
+          <li><strong>Multi-agent panel</strong> — spin up architect / frontend / backend / QA agents, each in its own session.</li>
+          <li><strong>Autopilot</strong> — give a goal, a budget and success criteria; the orchestrator drives the loop.</li>
+          <li><strong>KC Flow</strong> — a live stepper showing progress, sub-steps, and where work is stuck.</li>
+          <li><strong>Shared memory</strong> — agents hand off context instead of starting from scratch.</li>
+        </ul>
+        <div class="tip">
+          <strong>What the license unlocks:</strong>
+          <p>
+            The card-key unlocks KC Chat's orchestration features inside the extension. It does <strong>not</strong>
+            change how Cursor bills you — you keep using your own Cursor account, plan and model access exactly
+            as before. KC Chat sits on top of Cursor, it does not replace or modify Cursor's billing.
+          </p>
+        </div>
+      </article>
+
+      <!-- 2. Prerequisites -->
+      <article id="prereq" class="block">
+        <h2>🛠️ Prerequisites</h2>
+        <ul class="checklist">
+          <li>✅ <strong>Cursor IDE</strong> installed, signed in with your own account (any current version).</li>
+          <li>✅ <strong>An active Cursor plan</strong> appropriate to your usage — KC Chat uses your normal Cursor model access.</li>
+          <li>✅ <strong>Node.js 18+</strong> — the KC Chat MCP server runs locally alongside the extension.</li>
+          <li>✅ <strong>A KC Chat license key</strong> shaped like <code>KC-XXXX-XXXX-XXXX</code> (see “Buy a license”).</li>
+        </ul>
+      </article>
+
+      <!-- 3. Buy -->
+      <article id="buy" class="block">
+        <h2>💳 Buy a license</h2>
+        <p>Three tiers — all one-time payments, one license = one device:</p>
+        <div class="tier-grid">
+          <div class="tier-card">
+            <div class="tier-badge">Monthly</div>
+            <div class="tier-price">$98</div>
+            <div class="tier-days">30 days</div>
+            <p class="tier-desc">Try it out · single project</p>
+          </div>
+          <div class="tier-card tier-recommend">
+            <div class="tier-badge">Yearly</div>
+            <div class="tier-price">$198</div>
+            <div class="tier-days">365 days</div>
+            <p class="tier-desc">Best value for daily drivers</p>
+            <span class="ribbon">Best value</span>
+          </div>
+          <div class="tier-card">
+            <div class="tier-badge">Lifetime</div>
+            <div class="tier-price">$298</div>
+            <div class="tier-days">100 years</div>
+            <p class="tier-desc">Buy once, keep the orchestration tools</p>
+          </div>
+        </div>
+        <p>
+          Checkout is handled by Lemon Squeezy (our merchant of record). After payment we email you a card code
+          shaped like <code>KC-XXXX-XXXX-XXXX</code> — keep it somewhere safe; it's your license key.
+        </p>
+        <p><a class="btn-primary" href="/pricing">Go to pricing →</a></p>
+      </article>
+
+      <!-- 4. Install -->
+      <article id="install" class="block">
+        <h2>📦 Install the extension</h2>
+
+        <h3>4.1 From the Cursor Marketplace (recommended)</h3>
+        <ol>
+          <li>Open Cursor → <strong>Extensions</strong> (sidebar).</li>
+          <li>Search <strong>“KC Chat”</strong>.</li>
+          <li>Click <strong>Install</strong>, then reload Cursor when prompted.</li>
+        </ol>
+
+        <h3>4.2 From the command line</h3>
+        <pre class="cmd">cursor --install-extension kc.kc-chat-panel</pre>
+        <p>Then restart Cursor.</p>
+
+        <h3>4.3 Manual install from VSIX</h3>
+        <ol>
+          <li>Download the <code>kc.kc-chat-panel-X.Y.Z.vsix</code> from <a href="#support">support</a> or your account.</li>
+          <li>Cursor → Extensions → top-right <code>···</code> → <em>Install from VSIX…</em></li>
+          <li>Select the file and restart Cursor.</li>
+        </ol>
+      </article>
+
+      <!-- 5. Activate -->
+      <article id="activate" class="block">
+        <h2>🔑 Activate your license</h2>
+        <ol>
+          <li>Open the <strong>KC Chat panel</strong> in Cursor → <strong>Settings → Activation</strong>.</li>
+          <li>Paste your card code <code>KC-XXXX-XXXX-XXXX</code> and click <strong>Activate</strong>.</li>
+          <li>
+            On first activation the license binds to this device and the extension stores a signed license token
+            locally. (You can also activate from <a href="/activate">the activation page</a>.)
+          </li>
+          <li>The panel shows <em>Activated · expires YYYY-MM-DD</em>. You're ready to go.</li>
+        </ol>
+        <p class="hint">
+          One card = one device. Switching machines? See the FAQ on transfers, or email
+          <a href="mailto:support@h540.com">support@h540.com</a>.
+        </p>
+      </article>
+
+      <!-- 6. Use -->
+      <article id="use" class="block">
+        <h2>⚡ Run your first task</h2>
+        <ul>
+          <li><strong>New project:</strong> open the KC Chat panel → create an <em>Architect</em> agent → ask for a plan first.</li>
+          <li><strong>Large refactors:</strong> use Group mode with a Leader; worker agents run in parallel.</li>
+          <li><strong>Long-running work:</strong> switch on <em>autopilot</em> with a budget and clear success criteria.</li>
+          <li><strong>Visibility:</strong> watch KC Flow for live progress and where any agent is blocked.</li>
+        </ul>
+        <div class="tip">
+          <strong>Tip:</strong>
+          <p>Start with one Architect agent and a single, well-scoped goal. Add worker agents once you're
+            comfortable with how hand-offs and KC Flow steps look.</p>
+        </div>
+      </article>
+
+      <!-- 7. FAQ -->
+      <article id="faq" class="block">
+        <h2>❓ FAQ</h2>
+
+        <details>
+          <summary>What exactly does the license unlock?</summary>
+          <p>KC Chat's orchestration features inside the extension: the multi-agent panel, autopilot, KC Flow
+            and shared memory. It's a productivity layer that runs on top of Cursor.</p>
+        </details>
+
+        <details>
+          <summary>Does it bypass Cursor's limits or change my Cursor bill?</summary>
+          <p>No. You use your own Cursor account, plan and model access exactly as normal. KC Chat does not modify
+            Cursor or change how Cursor bills you — it coordinates agents within your existing Cursor usage.</p>
+        </details>
+
+        <details>
+          <summary>What if I switch laptops?</summary>
+          <p>A license binds to one device on first activation. Email support with proof of purchase and we'll
+            unbind it so you can re-activate on the new machine. A cooldown prevents abuse.</p>
+        </details>
+
+        <details>
+          <summary>Does it phone home?</summary>
+          <p>After activation the extension validates your license token locally (HMAC); it doesn't need to call
+            our backend to keep working. Your coding traffic goes to Cursor's own services as usual.</p>
+        </details>
+
+        <details>
+          <summary>Can two people share a license?</summary>
+          <p>No. A card binds to your device on first activation; a second device triggers
+            <code>device_mismatch</code>. Buy one license per seat (bulk discounts available — see support).</p>
+        </details>
+
+        <details>
+          <summary>What's the refund policy?</summary>
+          <p>Full refund within 7 days for licenses that haven't been activated yet. Once activated, refunds are
+            handled case-by-case.</p>
+        </details>
+      </article>
+
+      <!-- 8. Support -->
+      <article id="support" class="block">
+        <h2>🙋 Support</h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="ic">✉️</div>
+            <div class="contact-title">Email</div>
+            <p><a href="mailto:support@h540.com">support@h540.com</a></p>
+          </div>
+          <div class="contact-card">
+            <div class="ic">📝</div>
+            <div class="contact-title">Contact form</div>
+            <p><a href="/contact">h540.com/contact</a></p>
+          </div>
+          <div class="contact-card">
+            <div class="ic">📚</div>
+            <div class="contact-title">Docs</div>
+            <p><a href="/docs">h540.com/docs</a></p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <style>
+    .tutorial { max-width: 920px; }
+    .hero { text-align: center; margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(1.85rem, 4vw, 2.6rem); margin: 0.4rem 0 0.8rem; line-height: 1.2; }
+    .eyebrow {
+      display: inline-flex; align-items: center;
+      font-family: var(--font-mono); text-transform: none; font-size: 0.78rem; letter-spacing: 0.01em;
+      color: var(--color-accent); font-weight: 500;
+    }
+    .eyebrow::before { content: '> '; white-space: pre; opacity: 0.55; font-weight: 700; }
+    .lead { color: var(--text-secondary); max-width: 42em; margin: 0 auto; line-height: 1.7; }
+
+    .price-strip {
+      display: flex; gap: 0.65rem; justify-content: center;
+      flex-wrap: wrap; align-items: center; margin: 0 0 2rem;
+    }
+    .price-pill {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 999px; padding: 0.4rem 1rem; display: flex; gap: 0.55rem;
+      align-items: baseline; box-shadow: var(--shadow-sm);
+    }
+    .price-pill.recommend {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-subtle);
+    }
+    .price-pill .t { font-weight: 700; color: var(--text-primary); }
+    .price-pill .p { font-weight: 700; color: var(--color-accent); font-size: 1.05rem; }
+    .price-pill .d { font-size: 0.78rem; color: var(--text-muted); }
+    .btn-secondary {
+      padding: 0.4rem 0.85rem; border: 1px solid var(--border-accent);
+      border-radius: 999px; color: var(--color-accent); font-weight: 600;
+      text-decoration: none; font-size: 0.85rem;
+    }
+    .btn-secondary:hover { background: var(--color-accent-subtle); }
+
+    .toc {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-card); margin-bottom: 2rem;
+    }
+    .toc h2 { font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .toc ol { margin-left: 1.25rem; line-height: 2; }
+
+    .block {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 1.75rem 2rem; box-shadow: var(--shadow-card);
+      margin-bottom: 1.5rem; scroll-margin-top: calc(var(--header-height) + 1rem);
+    }
+    .block h2 { font-size: 1.45rem; margin: 0 0 1rem; }
+    .block h3 { font-size: 1.08rem; margin: 1.25rem 0 0.5rem; color: var(--text-primary); }
+    .block p { color: var(--text-secondary); line-height: 1.75; margin: 0.4rem 0; }
+    .block ul, .block ol { margin: 0.6rem 0 0.6rem 1.4rem; line-height: 1.85; color: var(--text-secondary); }
+    .block li { margin: 0.18rem 0; }
+
+    code {
+      background: var(--color-accent-subtle); color: var(--color-accent);
+      padding: 0.05em 0.4em; border-radius: 4px;
+      font-family: var(--font-mono); font-size: 0.9em;
+    }
+    .cmd {
+      background: var(--bg-code); color: #E2E8F0;
+      padding: 0.85rem 1rem; border-radius: var(--radius-sm);
+      font-family: var(--font-mono); font-size: 0.86rem;
+      overflow-x: auto; margin: 0.5rem 0;
+    }
+
+    .tip {
+      background: #ECFDF5; border-left: 4px solid #10B981;
+      padding: 0.9rem 1.1rem; border-radius: var(--radius-sm); margin: 0.6rem 0;
+    }
+    .tip strong { color: #065F46; }
+    .tip p { color: #065F46; margin: 0.3rem 0 0; }
+
+    .checklist { list-style: none; margin-left: 0; }
+    .checklist li { padding: 0.25rem 0; }
+
+    .tier-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1rem; margin: 1rem 0;
+    }
+    .tier-card {
+      background: #fff; border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 1.25rem 1rem;
+      text-align: center; position: relative;
+    }
+    .tier-recommend {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-subtle);
+    }
+    .tier-badge { font-size: 1rem; font-weight: 700; color: var(--color-accent); letter-spacing: 0.05em; text-transform: uppercase; }
+    .tier-price { font-size: 2rem; font-weight: 700; color: var(--text-primary); margin: 0.4rem 0; }
+    .tier-days  { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+    .tier-desc  { font-size: 0.82rem; color: var(--text-muted); margin: 0.4rem 0 0; }
+    .ribbon {
+      position: absolute; top: -10px; right: 12px;
+      background: var(--color-accent); color: #fff;
+      font-size: 0.7rem; padding: 0.15rem 0.6rem; border-radius: 999px; font-weight: 600;
+    }
+
+    details {
+      background: #F8FAFC; border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm); padding: 0.7rem 1rem;
+      margin: 0.5rem 0; cursor: pointer;
+    }
+    details summary {
+      font-weight: 600; color: var(--text-primary);
+      cursor: pointer; outline: none;
+    }
+    details[open] summary { color: var(--color-accent); margin-bottom: 0.6rem; }
+    details p, details ul { color: var(--text-secondary); margin: 0.4rem 0; }
+
+    .btn-primary {
+      display: inline-block; background: var(--color-accent);
+      color: #fff; padding: 0.6rem 1.4rem; border-radius: var(--radius-sm);
+      font-weight: 600; text-decoration: none; margin-top: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--color-accent-hover); color: #fff; }
+
+    .hint { color: var(--text-muted); font-size: 0.85rem; }
+
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem; margin-top: 1rem;
+    }
+    .contact-card {
+      background: #fff; border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 1rem 1.25rem; text-align: center;
+    }
+    .contact-card .ic { font-size: 1.6rem; }
+    .contact-title { font-weight: 700; margin: 0.4rem 0; }
+    .contact-card p { font-size: 0.85rem; margin: 0; }
+  </style>
+</BaseLayout>

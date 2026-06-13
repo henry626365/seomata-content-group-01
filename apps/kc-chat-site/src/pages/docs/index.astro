@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/shared/SectionHeader.astro';
+
+const steps = [
+  {
+    num: '1',
+    title: 'Install KC Chat Extension',
+    content: 'Open Cursor IDE → Extensions → Search "KC Chat" → Click Install. The extension activates automatically for all workspaces.',
+    code: null,
+  },
+  {
+    num: '2',
+    title: 'Open the KC Chat Panel',
+    content: 'Click the KC Chat icon in the sidebar, or use the command palette (Ctrl+Shift+P) and search "KC Chat: Open Panel".',
+    code: null,
+  },
+  {
+    num: '3',
+    title: 'Create Your First Agent',
+    content: 'In the KC Chat panel, click "New Agent". Give it a role name (e.g., "Architect", "Frontend Dev"). Each agent gets its own Cursor chat window with a unique session ID.',
+    code: '// The agent receives a session ID like:\n// [Architect] kc-mcp-agent-2-abc123\n// This ID persists for the entire session.',
+  },
+  {
+    num: '4',
+    title: 'Form a Group',
+    content: 'Select multiple agents and click "Create Group". Assign a leader who orchestrates tasks. Members communicate through the group chat panel, visible to all.',
+    code: null,
+  },
+  {
+    num: '5',
+    title: 'Start Collaborating',
+    content: 'Send a task to the group. The leader decomposes it, dispatches sub-tasks to workers, and tracks progress on KC Flow. Each worker reports results back when done.',
+    code: '// Example: User sends to group\n"Build a login page with OAuth"\n\n// Leader decomposes:\n// → Architect: design auth flow\n// → Frontend: build login UI\n// → Backend: implement OAuth endpoints',
+  },
+];
+
+const configSections = [
+  {
+    title: 'Agent Roles',
+    description: 'Define specialized roles in your .cursor/rules/ directory. Each role gets custom system prompts that guide agent behavior.',
+    items: ['Architect — system design & API planning', 'Frontend Dev — React/Vue component implementation', 'Backend Dev — API endpoints & database queries', 'QA Engineer — test writing & verification', 'DevOps — deployment & CI/CD configuration'],
+  },
+  {
+    title: 'Autopilot Configuration',
+    description: 'Fine-tune autopilot behavior with autonomy levels, budgets, and success criteria.',
+    items: ['autonomyLevel: "ask" | "auto-bounded" | "auto"', 'budget: maxRounds, maxFiles, maxWallClockMs', 'focus: "full" | "security" | "quality"', 'successCriteria: bullet-point checklist', 'degradedPolicy: "pause" | "stop" | "notify"'],
+  },
+  {
+    title: 'Shared Memory Scopes',
+    description: 'Organize knowledge with scoped storage that persists across conversations.',
+    items: ['global — accessible to all agents everywhere', 'group:<id> — shared within a specific group', 'session:<id> — private to one agent session', 'Categories: context, knowledge, decision, task, artifact', 'TTL: auto-expire stale entries'],
+  },
+];
+---
+
+<BaseLayout title="Documentation — KC Chat" description="Get started with KC Chat in minutes. Installation, configuration, agent roles, autopilot setup, and best practices.">
+  <section class="docs-hero section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Documentation"
+        title="Get started in 5 minutes"
+        subtitle="From installation to your first multi-agent workflow — everything you need to know."
+      />
+    </div>
+  </section>
+
+  <section class="quickstart section" style="padding-top:0">
+    <div class="container">
+      <h2 class="sub-title">Quick Start</h2>
+      <div class="steps-list">
+        {steps.map((step) => (
+          <div class="step-item">
+            <div class="step-marker">{step.num}</div>
+            <div class="step-content">
+              <h3>{step.title}</h3>
+              <p>{step.content}</p>
+              {step.code && (
+                <pre class="code-block"><code>{step.code}</code></pre>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="config-section section">
+    <div class="container">
+      <h2 class="sub-title">Configuration Reference</h2>
+      <div class="config-grid">
+        {configSections.map((sec) => (
+          <div class="config-card">
+            <h3>{sec.title}</h3>
+            <p>{sec.description}</p>
+            <ul>
+              {sec.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .docs-hero {
+    padding-bottom: 0;
+  }
+  .sub-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.75rem;
+    letter-spacing: -0.01em;
+  }
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .step-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .step-item:last-child {
+    border-bottom: none;
+  }
+  .step-marker {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .step-content p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 0.85rem;
+  }
+  .code-block {
+    background: var(--bg-code);
+    color: #a5b4c8;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.65;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .config-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .config-card {
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+  }
+  .config-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .config-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .config-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .config-card li {
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    padding: 0.3rem 0.6rem;
+    background: var(--bg-page);
+    border-radius: var(--radius-sm);
+  }
+  @media (max-width: 768px) {
+    .config-grid {
+      grid-template-columns: 1fr;
+    }
+    .step-item {
+      grid-template-columns: 36px 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

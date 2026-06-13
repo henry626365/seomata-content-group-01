@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/shared/SectionHeader.astro';
+import FinalCTA from '../../components/home/FinalCTA.astro';
+
+const useCases = [
+  {
+    title: 'Full-Stack Feature Development',
+    description: 'An architect agent designs the API schema and data model. A frontend agent builds React components. A backend agent implements endpoints. All working in parallel, synced through shared memory.',
+    workflow: ['Architect designs schema', 'Leader dispatches sub-tasks', 'Frontend + Backend work in parallel', 'QA writes integration tests', 'Leader reviews & merges'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+    color: 'var(--color-accent)',
+  },
+  {
+    title: 'Automated Code Review',
+    description: 'Activate Autopilot and let agents scan your codebase for security vulnerabilities, code quality issues, and architecture violations. Each finding gets a TaskCard with fix suggestions.',
+    workflow: ['Set review focus & budget', 'Scanner agent inspects files', 'Findings logged as TaskCards', 'Fix agent proposes patches', 'You review & approve'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="m8.5 11 2 2 3.5-3.5"/></svg>',
+    color: 'var(--color-gold)',
+  },
+  {
+    title: 'Large-Scale Refactoring',
+    description: 'Rename a module used in 50 files? Migrate from REST to GraphQL? The architect plans the migration, workers execute file-by-file changes, and KC Flow tracks every step.',
+    workflow: ['Architect creates migration plan', 'Flow steps for each phase', 'Workers refactor in parallel', 'Stalled detection catches issues', 'Verification before completion'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="m15 15 6 6"/><path d="M4 4l5 5"/></svg>',
+    color: 'var(--color-accent)',
+  },
+  {
+    title: 'Bug Investigation & Fix',
+    description: 'A debug agent traces the stack, reads logs, and narrows down the root cause. A fix agent patches the code. A test agent verifies the fix doesn\'t regress. All tracked on one KC Flow.',
+    workflow: ['Debug agent investigates', 'Root cause documented in memory', 'Fix agent patches code', 'Test agent runs verification', 'Flow step marked done'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9V6a3 3 0 0 1 6 0v3"/><rect x="7" y="9" width="10" height="9" rx="5"/><path d="M12 13v5"/><path d="M3 13h4"/><path d="M17 13h4"/><path d="m4 8 3 2"/><path d="m20 8-3 2"/><path d="m4 18 3-2"/><path d="m20 18-3-2"/></svg>',
+    color: 'var(--color-danger)',
+  },
+  {
+    title: 'Documentation Generation',
+    description: 'Multiple agents each handle a section — API reference, getting started guide, architecture overview. Shared memory stores the doc structure so agents don\'t duplicate work.',
+    workflow: ['Leader outlines doc structure', 'Each agent claims a section', 'Sub-steps track per-section progress', 'Cross-references via shared memory', 'Final review & export'],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>',
+    color: 'var(--color-gold)',
+  },
+];
+---
+
+<BaseLayout title="Use Cases — KC Chat" description="See how developers use KC Chat for full-stack development, automated reviews, refactoring, debugging, and documentation.">
+  <section class="usecases-hero section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Use Cases"
+        title="Real workflows, powered by agents"
+        subtitle="See how teams use KC Chat to tackle common development challenges — from feature builds to large-scale refactors."
+      />
+    </div>
+  </section>
+
+  <section class="usecases-grid section" style="padding-top:0">
+    <div class="container">
+      {useCases.map((uc) => (
+        <div class="usecase-card">
+          <div class="card-header">
+            <span class="card-icon" style={`--uc: ${uc.color}`}>
+              <Fragment set:html={uc.icon} />
+            </span>
+            <h3>{uc.title}</h3>
+          </div>
+          <p class="card-desc">{uc.description}</p>
+          <div class="workflow">
+            <span class="workflow-label">Typical workflow</span>
+            <ol>
+              {uc.workflow.map((step, i) => (
+                <li>
+                  <span class="step-dot" style={`background: ${uc.color}`}>{i + 1}</span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <FinalCTA />
+</BaseLayout>
+
+<style>
+  .usecases-hero {
+    padding-bottom: 0;
+  }
+  .usecases-grid .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .usecase-card {
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+  .usecase-card:hover {
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 0.85rem;
+  }
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--uc);
+    background: color-mix(in srgb, var(--uc) 11%, transparent);
+    border: 1px solid color-mix(in srgb, var(--uc) 24%, transparent);
+  }
+  .card-icon :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .card-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    max-width: 72ch;
+  }
+  .workflow {
+    background: var(--bg-page);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+  }
+  .workflow-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.65rem;
+  }
+  ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .step-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+</style>

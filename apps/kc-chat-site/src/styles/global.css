@@ -1,0 +1,236 @@
+:root {
+  /* ── Structural ink ─────────────────────────────── */
+  --color-primary: #0B0E14;
+  --color-primary-light: #161B26;
+
+  /* ── Signature: terminal green ──────────────────── */
+  --color-accent: #15803D;          /* readable green for light surfaces (links/buttons) */
+  --color-accent-hover: #166534;
+  --color-accent-glow: rgba(34, 197, 94, 0.16);
+  --color-accent-subtle: rgba(22, 163, 74, 0.09);
+  --color-signal: #22C55E;          /* mid green */
+  --color-signal-bright: #4ADE80;   /* on dark surfaces */
+
+  /* ── Money / states ─────────────────────────────── */
+  --color-gold: #B45309;            /* amber-700, readable on light */
+  --color-gold-bright: #FBBF24;     /* on dark surfaces */
+  --color-success: #15803D;
+  --color-warning: #B45309;
+  --color-danger: #DC2626;
+  --color-danger-bright: #F87171;
+
+  /* ── Surfaces ───────────────────────────────────── */
+  --bg-page: #FAFAF7;               /* warm paper */
+  --bg-card: #FFFFFF;
+  --bg-subtle: #F3F3EE;             /* faint panel */
+  --bg-code: #0B0E14;
+  --bg-dark: #0A0D13;               /* terminal black */
+  --bg-dark-card: #121826;
+
+  /* ── Text ───────────────────────────────────────── */
+  --text-primary: #0B0E14;
+  --text-secondary: #41495A;
+  --text-muted: #79839A;
+  --text-on-dark: #D7DEE9;
+  --text-on-dark-muted: #8A93A8;
+
+  /* ── Borders ────────────────────────────────────── */
+  --border-subtle: #E7E5DD;         /* warm hairline */
+  --border-strong: #D6D4CA;
+  --border-accent: rgba(22, 163, 74, 0.28);
+  --border-dark: rgba(255, 255, 255, 0.08);
+
+  /* ── Shadows (inky, tightened) ──────────────────── */
+  --shadow-sm: 0 1px 2px rgba(11, 14, 20, 0.05);
+  --shadow-card: 0 6px 28px rgba(11, 14, 20, 0.07);
+  --shadow-elevated: 0 18px 50px rgba(11, 14, 20, 0.14);
+  --shadow-glow: 0 0 32px rgba(34, 197, 94, 0.14);
+
+  /* ── Radius (crisp, terminal) ───────────────────── */
+  --radius-sm: 7px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+
+  /* ── Type ───────────────────────────────────────── */
+  --font-display: 'Bricolage Grotesque', 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --max-width: 1200px;
+  --header-height: 64px;
+
+  /* ── Terminal texture ───────────────────────────── */
+  --grid-line: rgba(11, 14, 20, 0.05);
+  --dot-color: rgba(11, 14, 20, 0.07);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--bg-page);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv01', 'ss01';
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+}
+
+/* Display font for headings; tracking tuned for grotesk */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Terminal-green text selection */
+::selection {
+  background: rgba(34, 197, 94, 0.24);
+  color: var(--text-primary);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.section {
+  padding-block: clamp(3rem, 8vw, 5rem);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Mono label (terminal eyebrow) ─────────────────── */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* ── Terminal texture utilities ────────────────────── */
+/* dot-grid background — drop onto a positioned wrapper */
+.bg-dots::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 0%, transparent 80%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 0%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+/* faint grid lines */
+.bg-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 0%, transparent 85%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 0%, transparent 85%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* blinking caret — use as <span class="caret"></span> */
+.caret {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.05em;
+  margin-left: 0.12em;
+  vertical-align: text-bottom;
+  background: var(--color-signal);
+  border-radius: 1px;
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+@keyframes caret-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* Keyboard accessibility: visible focus ring for interactive elements */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Skip-to-content link — hidden until focused */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 200;
+  padding: 0.55rem 1rem;
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-elevated);
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .caret { animation: none; opacity: 1; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

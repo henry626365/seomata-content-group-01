@@ -1,0 +1,269 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="Admin — KC Chat" description="Card-key admin dashboard (private).">
+  <section class="section">
+    <div class="container admin-page">
+      <h1>Admin · Cards</h1>
+
+      <div class="card auth" id="auth-panel">
+        <label class="field">
+          <span class="field__label">Admin token</span>
+          <input type="password" id="token-input" placeholder="Bearer token" autocomplete="off" />
+        </label>
+        <div class="row">
+          <button id="auth-save" class="btn-primary">Save & load</button>
+          <button id="auth-clear" class="btn-ghost" type="button">Clear stored</button>
+        </div>
+        <p class="field__hint">Token is stored in <code>localStorage.kc_admin_token</code> on your browser.</p>
+      </div>
+
+      <section class="card" id="gen-panel" hidden>
+        <h2>Generate batch</h2>
+        <div class="grid">
+          <label class="field">
+            <span class="field__label">Tier</span>
+            <select id="gen-tier">
+              <option value="day">Day Pass · 日卡 ($5 / 24h)</option>
+              <option value="month">Monthly · 月卡 (30 days)</option>
+              <option value="year" selected>Yearly · 年卡 (365 days)</option>
+              <option value="lifetime">Lifetime · 终身 (100 years)</option>
+              <option value="lite">Lite · 轻享月卡 ($10 / 30d)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field__label">Count</span>
+            <input type="number" id="gen-count" value="10" min="1" max="1000" />
+          </label>
+          <label class="field">
+            <span class="field__label">Notes (optional)</span>
+            <input type="text" id="gen-notes" placeholder="bulk for april promo" />
+          </label>
+        </div>
+        <button id="gen-btn" class="btn-primary">Generate</button>
+        <pre id="gen-out" class="codeblock" hidden></pre>
+      </section>
+
+      <section class="card" id="list-panel" hidden>
+        <header class="row" style="justify-content:space-between; align-items:end;">
+          <h2 style="margin:0;">Cards</h2>
+          <div class="row" style="gap:0.5rem;">
+            <select id="list-status">
+              <option value="">All status</option>
+              <option value="unused">Unused</option>
+              <option value="active">Active</option>
+              <option value="revoked">Revoked</option>
+              <option value="expired">Expired</option>
+            </select>
+            <button id="list-reload" class="btn-ghost" type="button">Reload</button>
+          </div>
+        </header>
+        <div id="list-stats" class="stats"></div>
+        <div class="table-wrap">
+          <table id="list-table" class="table">
+            <thead>
+              <tr>
+                <th>Code</th><th>Tier</th><th>Status</th>
+                <th>Generated</th><th>Activated</th><th>Expires</th>
+                <th>Device</th><th>Notes</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <script is:inline>
+    const $ = (id) => document.getElementById(id);
+    const STORAGE = 'kc_admin_token';
+    let token = localStorage.getItem(STORAGE) || '';
+
+    function reveal() {
+      $('gen-panel').hidden = !token;
+      $('list-panel').hidden = !token;
+    }
+    if (token) { $('token-input').value = token; reveal(); loadList(); }
+
+    $('auth-save').onclick = () => {
+      token = $('token-input').value.trim();
+      if (!token) return alert('paste a token');
+      localStorage.setItem(STORAGE, token);
+      reveal();
+      loadList();
+    };
+    $('auth-clear').onclick = () => {
+      localStorage.removeItem(STORAGE);
+      token = '';
+      $('token-input').value = '';
+      $('gen-panel').hidden = true;
+      $('list-panel').hidden = true;
+    };
+
+    async function api(path, opts = {}) {
+      const res = await fetch(path, {
+        ...opts,
+        headers: {
+          'authorization': 'Bearer ' + token,
+          'content-type': 'application/json',
+          ...(opts.headers || {}),
+        },
+      });
+      let data = {};
+      try { data = await res.json(); } catch {}
+      if (!res.ok) throw new Error((data && (data.message || data.code)) || ('HTTP ' + res.status));
+      return data;
+    }
+
+    $('gen-btn').onclick = async () => {
+      try {
+        const data = await api('/api/admin/generate', {
+          method: 'POST',
+          body: JSON.stringify({
+            tier: $('gen-tier').value,
+            count: parseInt($('gen-count').value, 10),
+            notes: $('gen-notes').value || undefined,
+          }),
+        });
+        $('gen-out').hidden = false;
+        $('gen-out').textContent = data.codes.join('\n');
+        await loadList();
+      } catch (e) {
+        alert('Generate failed: ' + e.message);
+      }
+    };
+
+    $('list-status').onchange = loadList;
+    $('list-reload').onclick = loadList;
+
+    async function loadList() {
+      try {
+        const status = $('list-status').value;
+        const qs = status ? `?status=${encodeURIComponent(status)}` : '';
+        const data = await api('/api/admin/cards' + qs);
+        $('list-stats').textContent =
+          'Total: ' + data.total + '  ·  ' +
+          Object.entries(data.stats || {}).map(([k, v]) => k + ': ' + v).join('  ·  ');
+        const tbody = $('list-table').querySelector('tbody');
+        tbody.innerHTML = '';
+        for (const c of data.items) {
+          const tr = document.createElement('tr');
+          const cell = (txt, mono) => {
+            const td = document.createElement('td');
+            if (mono) td.className = 'mono';
+            td.textContent = txt;
+            return td;
+          };
+          const fmt = (t) => (t ? new Date(t).toISOString().slice(0, 16).replace('T', ' ') : '—');
+          tr.appendChild(cell(c.code, true));
+          tr.appendChild(cell(c.tier));
+          tr.appendChild(cell(c.status));
+          tr.appendChild(cell(fmt(c.generated_at)));
+          tr.appendChild(cell(fmt(c.activated_at)));
+          tr.appendChild(cell(fmt(c.expires_at)));
+          tr.appendChild(cell(c.device_hash ? c.device_hash.slice(0, 6) + '…' : '—', true));
+          tr.appendChild(cell(c.notes || '—'));
+          const td = document.createElement('td');
+          if (c.status === 'active') {
+            const b1 = document.createElement('button');
+            b1.className = 'btn-tiny';
+            b1.textContent = 'Transfer';
+            b1.onclick = async () => {
+              if (!confirm('Unbind ' + c.code + ' from current device?')) return;
+              try {
+                await api('/api/admin/transfer', { method: 'POST', body: JSON.stringify({ code: c.code }) });
+                await loadList();
+              } catch (e) { alert(e.message); }
+            };
+            td.appendChild(b1);
+          }
+          if (c.status !== 'revoked') {
+            const b2 = document.createElement('button');
+            b2.className = 'btn-tiny btn-tiny--danger';
+            b2.textContent = 'Revoke';
+            b2.onclick = async () => {
+              if (!confirm('Revoke ' + c.code + '?')) return;
+              try {
+                await api('/api/admin/revoke', { method: 'POST', body: JSON.stringify({ code: c.code }) });
+                await loadList();
+              } catch (e) { alert(e.message); }
+            };
+            td.appendChild(b2);
+          }
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        }
+      } catch (e) {
+        alert('List failed: ' + e.message);
+      }
+    }
+  </script>
+
+  <style>
+    .admin-page { max-width: 1100px; }
+    .admin-page h1 { margin-bottom: 1.5rem; }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: clamp(1rem, 2.5vw, 1.75rem);
+      box-shadow: var(--shadow-card);
+      margin-bottom: 1.5rem;
+    }
+    .card h2 { font-size: 1.15rem; margin: 0 0 1rem; }
+    .row { display: flex; gap: 0.75rem; align-items: center; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .field { display: grid; gap: 0.35rem; }
+    .field__label { font-weight: 600; font-size: 0.9rem; }
+    .field__hint { font-size: 0.78rem; color: var(--text-muted); }
+    input, select {
+      padding: 0.55rem 0.7rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #fff;
+    }
+    input[type='password'], input[type='text'] { font-family: var(--font-mono); }
+    .btn-primary {
+      background: var(--color-accent); color: #fff; border: 0;
+      padding: 0.55rem 1rem; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--color-accent-hover); }
+    .btn-ghost {
+      background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle);
+      padding: 0.5rem 0.9rem; border-radius: var(--radius-sm); cursor: pointer;
+    }
+    .btn-tiny {
+      background: var(--color-accent-subtle); color: var(--color-accent);
+      border: 1px solid var(--border-accent);
+      padding: 0.2rem 0.55rem; border-radius: 6px; font-size: 0.78rem; cursor: pointer; margin-right: 0.25rem;
+    }
+    .btn-tiny--danger {
+      background: #FEF2F2; color: #B91C1C; border-color: #FECACA;
+    }
+    .codeblock {
+      background: var(--bg-code); color: #E2E8F0;
+      padding: 0.85rem; border-radius: var(--radius-sm); font-family: var(--font-mono);
+      font-size: 0.78rem; max-height: 280px; overflow: auto; white-space: pre-wrap; word-break: break-all;
+      margin-top: 1rem;
+    }
+    .stats { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+    .table-wrap { overflow-x: auto; }
+    .table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .table th, .table td {
+      padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border-subtle); text-align: left;
+      white-space: nowrap;
+    }
+    .table th { background: #F8FAFC; font-weight: 600; }
+    .mono { font-family: var(--font-mono); }
+  </style>
+</BaseLayout>

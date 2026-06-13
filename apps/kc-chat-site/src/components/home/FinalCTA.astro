@@ -1,0 +1,147 @@
+---
+
+---
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card bg-dots">
+      <div class="cta-term-bar" aria-hidden="true">
+        <span class="d red"></span><span class="d yellow"></span><span class="d green"></span>
+        <span class="cta-term-title">kc-chat · activate</span>
+      </div>
+      <div class="cta-content">
+        <p class="cta-cmd" aria-hidden="true">
+          <span class="cmd-prompt">$</span> npx kc-activate --lifetime<span class="caret"></span>
+        </p>
+        <h2>Stop bleeding money on Cursor token overage</h2>
+        <p class="cta-lead">Lifetime card pays for itself in 1–4 weeks. After that — every coding hour is free. No subscription, no surprise charges, one-time $298.</p>
+        <div class="cta-actions">
+          <a class="btn-cta" href="/pricing">
+            See pricing
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn-outline" href="/tutorial">5-min setup guide</a>
+        </div>
+      </div>
+      <div class="cta-glow" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .cta-card {
+    --dot-color: rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-2xl);
+    text-align: center;
+  }
+  .cta-term-bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0.7rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .cta-term-bar .d { width: 10px; height: 10px; border-radius: 50%; }
+  .cta-term-bar .d.red { background: #ef4444; }
+  .cta-term-bar .d.yellow { background: #eab308; }
+  .cta-term-bar .d.green { background: #22c55e; }
+  .cta-term-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-on-dark-muted);
+    margin-left: 0.4rem;
+  }
+  .cta-glow {
+    position: absolute;
+    top: -55%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 560px;
+    height: 560px;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.20) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    padding: clamp(2.25rem, 5.5vw, 3.5rem) clamp(2rem, 5vw, 4rem) clamp(2.5rem, 6vw, 4rem);
+  }
+  .cta-cmd {
+    font-family: var(--font-mono);
+    font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+    color: var(--text-on-dark);
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .cta-cmd .cmd-prompt { color: var(--color-signal-bright); margin-right: 0.5rem; font-weight: 700; }
+  h2 {
+    font-size: clamp(1.55rem, 3vw, 2.25rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: #fff;
+    margin-bottom: 0.85rem;
+  }
+  .cta-lead {
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+    color: var(--text-on-dark-muted);
+    max-width: 50ch;
+    margin-inline: auto;
+    margin-bottom: 1.75rem;
+    line-height: 1.65;
+  }
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.82rem 1.75rem;
+    border-radius: var(--radius-md);
+    background: var(--color-signal);
+    color: #06250F;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.35);
+  }
+  .btn-cta:hover {
+    background: var(--color-signal-bright);
+    box-shadow: 0 6px 28px rgba(34, 197, 94, 0.5);
+    transform: translateY(-2px);
+    color: #06250F;
+  }
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.82rem 1.75rem;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-on-dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    transition: all 0.2s;
+  }
+  .btn-outline:hover {
+    border-color: rgba(34, 197, 94, 0.5);
+    background: rgba(34, 197, 94, 0.08);
+    color: #fff;
+  }
+</style>

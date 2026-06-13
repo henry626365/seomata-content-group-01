@@ -1,0 +1,245 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/shared/SectionHeader.astro';
+import { GITHUB_URL, CONTACT_EMAIL, TWITTER_URL } from '../../consts';
+
+const svg = (paths: string) =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+
+const channels = [
+  {
+    icon: svg('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'),
+    title: 'GitHub Discussions',
+    description: 'Ask questions, share ideas, and get help from the community.',
+    link: `${GITHUB_URL}/discussions`,
+    linkText: 'Open Discussion',
+  },
+  {
+    icon: svg('<path d="M9 9V6a3 3 0 0 1 6 0v3"/><rect x="7" y="9" width="10" height="9" rx="5"/><path d="M12 13v5M3 13h4M17 13h4M4 8l3 2M20 8l-3 2M4 18l3-2M20 18l-3-2"/>'),
+    title: 'Bug Reports',
+    description: 'Found a bug? Open an issue with reproduction steps.',
+    link: `${GITHUB_URL}/issues`,
+    linkText: 'Report Issue',
+  },
+  {
+    icon: svg('<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/>'),
+    title: 'Email',
+    description: 'For business inquiries, partnerships, or press.',
+    link: `mailto:${CONTACT_EMAIL}`,
+    linkText: CONTACT_EMAIL,
+  },
+  {
+    icon: svg('<path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>'),
+    title: 'Twitter / X',
+    description: 'Follow for updates, tips, and release announcements.',
+    link: TWITTER_URL,
+    linkText: `@${TWITTER_URL.split('/').pop()}`,
+  },
+];
+---
+
+<BaseLayout title="Contact — KC Chat" description="Get in touch with the KC Chat team. Bug reports, feature requests, partnerships, or just say hi.">
+  <section class="contact-hero section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Contact"
+        title="Get in touch"
+        subtitle="We'd love to hear from you. Choose the channel that works best."
+      />
+    </div>
+  </section>
+
+  <section class="channels section" style="padding-top:0">
+    <div class="container">
+      <div class="channels-grid">
+        {channels.map((ch) => (
+          <a class="channel-card" href={ch.link} target="_blank" rel="noopener noreferrer">
+            <div class="channel-icon" aria-hidden="true"><Fragment set:html={ch.icon} /></div>
+            <h3>{ch.title}</h3>
+            <p>{ch.description}</p>
+            <span class="channel-link">{ch.linkText} →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter section">
+    <div class="container">
+      <div class="newsletter-box">
+        <h2>Stay in the loop</h2>
+        <p>Get notified about new features, releases, and tips. No spam, ever.</p>
+        <form class="input-group" id="newsletter-form" novalidate>
+          <input
+            type="email"
+            name="email"
+            id="newsletter-email"
+            placeholder="you@example.com"
+            aria-label="Email address"
+            required
+          />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    padding-bottom: 0;
+  }
+  .channels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    max-width: 900px;
+    margin-inline: auto;
+  }
+  .channel-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .channel-card:hover {
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+  }
+  .channel-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.9rem;
+    color: var(--color-accent);
+    background: var(--color-accent-subtle);
+    border: 1px solid var(--border-accent);
+  }
+  .channel-icon :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+  }
+  .channel-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .channel-link {
+    font-size: 0.82rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-top: 0.75rem;
+  }
+  .newsletter-box {
+    max-width: 560px;
+    margin-inline: auto;
+    text-align: center;
+    background: var(--bg-dark);
+    padding: 3rem 2rem;
+    border-radius: var(--radius-xl);
+  }
+  .newsletter-box h2 {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .newsletter-box p {
+    color: var(--text-on-dark);
+    font-size: 0.88rem;
+    margin-bottom: 1.25rem;
+  }
+  .input-group {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 400px;
+    margin-inline: auto;
+  }
+  input {
+    flex: 1;
+    padding: 0.65rem 0.9rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 0.85rem;
+  }
+  input::placeholder {
+    color: var(--text-muted);
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+  button {
+    padding: 0.65rem 1.2rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  button:hover {
+    background: var(--color-accent-hover);
+  }
+
+  .newsletter-status {
+    min-height: 1.2em;
+    margin-top: 0.85rem;
+    margin-bottom: 0;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  .newsletter-status.ok { color: #6EE7B7; }
+  .newsletter-status.err { color: #FCA5A5; }
+
+  @media (max-width: 480px) {
+    .input-group {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
+  const input = document.getElementById('newsletter-email') as HTMLInputElement | null;
+  const status = document.getElementById('newsletter-status');
+
+  if (form && input && status) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = input.value.trim();
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!valid) {
+        status.textContent = 'Please enter a valid email address.';
+        status.className = 'newsletter-status err';
+        input.focus();
+        return;
+      }
+      status.textContent = `Thanks! We'll keep ${email} posted on releases.`;
+      status.className = 'newsletter-status ok';
+      form.reset();
+    });
+  }
+</script>
