@@ -26,6 +26,11 @@ import * as authMe from "../functions/api/auth/me";
 import * as authLogout from "../functions/api/auth/logout";
 import * as accountOrders from "../functions/api/account/orders";
 import * as accountResend from "../functions/api/account/resend";
+import * as btcIngest from "../functions/api/btc/ingest";
+import * as btcPoolRefill from "../functions/api/btc/pool_refill";
+import * as accountBtcRecharge from "../functions/api/account/btc/recharge";
+import * as accountBtcDeposits from "../functions/api/account/btc/deposits";
+import * as accountBuy from "../functions/api/account/buy";
 
 type Handler = PagesFunction<Env>;
 
@@ -55,6 +60,12 @@ const routes: Record<string, RouteModule> = {
   "/api/auth/logout": authLogout,
   "/api/account/orders": accountOrders,
   "/api/account/resend": accountResend,
+  // BTC recharge: server→Worker push (Bearer) + user-facing account endpoints.
+  "/api/btc/ingest": btcIngest,
+  "/api/btc/pool/refill": btcPoolRefill,
+  "/api/account/btc/recharge": accountBtcRecharge,
+  "/api/account/btc/deposits": accountBtcDeposits,
+  "/api/account/buy": accountBuy,
 };
 
 function pickHandler(mod: RouteModule, method: string): Handler | undefined {

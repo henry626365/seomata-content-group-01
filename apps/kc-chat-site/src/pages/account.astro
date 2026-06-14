@@ -23,6 +23,38 @@ import '../styles/global.css';
           </div>
         </header>
 
+        <section class="card balance-card">
+          <div class="bal-row">
+            <div>
+              <h2>Balance</h2>
+              <p id="bal-amount" class="bal-amount">—</p>
+            </div>
+            <button id="recharge-btn" class="btn-primary" type="button">Recharge with BTC</button>
+          </div>
+
+          <div id="recharge-box" class="recharge-box" hidden>
+            <p class="muted rc-help">
+              Send any amount of BTC to your personal address below. Your balance is credited
+              automatically after <span id="rc-conf">2</span> confirmation(s), converted at the
+              market exchange rate at the time of crediting.
+            </p>
+            <div class="rc-grid">
+              <img id="rc-qr" class="rc-qr" alt="BTC deposit address QR" hidden />
+              <div class="rc-info">
+                <label class="rc-label">Your BTC deposit address</label>
+                <div class="rc-addr-row">
+                  <code id="rc-addr" class="mono rc-addr">—</code>
+                  <button id="rc-copy" class="btn-tiny" type="button">Copy</button>
+                </div>
+                <p id="rc-rate" class="muted rc-rate"></p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="buy-title">Buy a plan with your balance</h3>
+          <div id="buy-grid" class="buy-grid"></div>
+        </section>
+
         <section class="card">
           <h2>Your orders</h2>
           <div id="orders-empty" class="muted" hidden>
@@ -37,6 +69,19 @@ import '../styles/global.css';
             </table>
           </div>
         </section>
+
+        <section class="card">
+          <h2>BTC deposits</h2>
+          <div id="deposits-empty" class="muted" hidden>No deposits yet.</div>
+          <div class="table-wrap">
+            <table id="deposits-table" class="table" hidden>
+              <thead>
+                <tr><th>Date</th><th>Amount (BTC)</th><th>Status</th><th>Credited</th><th>Conf.</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
       </div>
     </div>
   </section>
@@ -44,6 +89,148 @@ import '../styles/global.css';
   <script is:inline>
     const $ = (id) => document.getElementById(id);
     const TIER_LABEL = { day: 'Day Pass', month: 'Monthly', year: 'Yearly', lifetime: 'Lifetime', lite: 'Lite' };
+
+    // Plan prices in cents — kept in sync with functions/lib/cards.ts (TIERS).
+    const BUY_TIERS = [
+      { id: 'day', label: 'Day Pass', cents: 500 },
+      { id: 'lite', label: 'Lite · 30d', cents: 1000 },
+      { id: 'month', label: 'Monthly', cents: 9800 },
+      { id: 'year', label: 'Yearly', cents: 19800 },
+      { id: 'lifetime', label: 'Lifetime', cents: 29800 },
+    ];
+    let balanceCents = 0;
+    let creditCurrency = 'usd';
+    let rechargeLoaded = false;
+    const money = (cents, cur) =>
+      cents == null ? '—' : (cents / 100).toLocaleString(undefined, { style: 'currency', currency: (cur || creditCurrency || 'usd').toUpperCase() });
+    const fmtDate = (t) => (t ? new Date(t).toISOString().slice(0, 10) : '—');
+    const btcAmt = (sat) => (sat == null ? '—' : (sat / 1e8).toFixed(8).replace(/0+$/, '').replace(/\.$/, ''));
+
+    function renderBuyGrid() {
+      const grid = $('buy-grid');
+      grid.innerHTML = '';
+      for (const t of BUY_TIERS) {
+        const item = document.createElement('div');
+        item.className = 'buy-item';
+        const name = document.createElement('div');
+        name.className = 'buy-name';
+        name.textContent = t.label;
+        const price = document.createElement('div');
+        price.className = 'buy-price';
+        price.textContent = money(t.cents);
+        const b = document.createElement('button');
+        b.className = 'btn-buy';
+        b.type = 'button';
+        b.textContent = 'Buy';
+        b.onclick = () => buyPlan(t, b);
+        item.appendChild(name);
+        item.appendChild(price);
+        item.appendChild(b);
+        grid.appendChild(item);
+      }
+    }
+
+    async function buyPlan(t, btnEl) {
+      if (!confirm(`Buy ${t.label} for ${money(t.cents)} using your balance?`)) return;
+      const orig = btnEl.textContent;
+      btnEl.disabled = true; btnEl.textContent = '…';
+      try {
+        const r = await fetch('/api/account/buy', {
+          method: 'POST', credentials: 'same-origin',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ tier: t.id }),
+        });
+        const d = await r.json().catch(() => ({}));
+        if (r.status === 402) {
+          alert(`Not enough balance. You have ${money(d.balance_cents)}, need ${money(d.price_cents)}. Please recharge first.`);
+          $('recharge-box').hidden = false;
+          openRecharge();
+          return;
+        }
+        if (!r.ok) throw new Error(d.message || d.code || ('HTTP ' + r.status));
+        alert(`Purchased! Your ${t.label} card-key:\n\n${d.card_code}\n\n(It was also emailed to you.)`);
+        location.reload();
+      } catch (e) {
+        alert('Purchase failed: ' + e.message);
+      } finally {
+        btnEl.disabled = false; btnEl.textContent = orig;
+      }
+    }
+
+    function setupRecharge() {
+      $('recharge-btn').onclick = () => {
+        const box = $('recharge-box');
+        box.hidden = !box.hidden;
+        if (!box.hidden) openRecharge();
+      };
+      $('rc-copy').onclick = async () => {
+        const addr = $('rc-addr').textContent || '';
+        if (!addr || addr === '—') return;
+        try {
+          await navigator.clipboard.writeText(addr);
+          $('rc-copy').textContent = 'Copied';
+          setTimeout(() => { $('rc-copy').textContent = 'Copy'; }, 1500);
+        } catch {}
+      };
+    }
+
+    async function openRecharge() {
+      if (rechargeLoaded) return;
+      try {
+        const r = await fetch('/api/account/btc/recharge', { method: 'POST', credentials: 'same-origin' });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || d.code || ('HTTP ' + r.status));
+        rechargeLoaded = true;
+        $('rc-addr').textContent = d.address;
+        $('rc-conf').textContent = d.min_confirmations != null ? d.min_confirmations : 2;
+        const qr = $('rc-qr');
+        qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent('bitcoin:' + d.address);
+        qr.hidden = false;
+        $('rc-rate').textContent = d.rate_cents_per_btc > 0
+          ? 'Current rate: 1 BTC ≈ ' + money(d.rate_cents_per_btc, d.currency)
+          : 'Live rate temporarily unavailable — deposits are still credited at the rate when confirmed.';
+      } catch (e) {
+        $('rc-addr').textContent = '—';
+        $('rc-rate').textContent = 'Could not load a deposit address: ' + e.message;
+      }
+    }
+
+    async function loadBalance() {
+      try {
+        const d = await (await fetch('/api/account/btc/deposits', { credentials: 'same-origin' })).json();
+        balanceCents = d.balance_cents || 0;
+        creditCurrency = d.currency || 'usd';
+        $('bal-amount').textContent = money(balanceCents);
+        renderBuyGrid();
+        renderDeposits((d && d.items) || []);
+      } catch {
+        $('bal-amount').textContent = money(0);
+      }
+    }
+
+    function renderDeposits(items) {
+      if (!items.length) { $('deposits-empty').hidden = false; $('deposits-table').hidden = true; return; }
+      const tbody = $('deposits-table').querySelector('tbody');
+      tbody.innerHTML = '';
+      const stLabel = { pending: 'Pending', credited: 'Credited', ignored: 'Ignored' };
+      for (const it of items) {
+        const tr = document.createElement('tr');
+        const td = (txt, mono) => { const c = document.createElement('td'); if (mono) c.className = 'mono'; c.textContent = txt; return c; };
+        tr.appendChild(td(fmtDate(it.first_seen_at)));
+        tr.appendChild(td(btcAmt(it.amount_sat), true));
+        const st = document.createElement('td');
+        const badge = document.createElement('span');
+        badge.className = 'badge badge--' + (it.status === 'credited' ? 'paid' : it.status === 'pending' ? 'pending' : 'refunded');
+        badge.textContent = stLabel[it.status] || it.status;
+        st.appendChild(badge);
+        tr.appendChild(st);
+        tr.appendChild(td(it.credited_cents != null ? money(it.credited_cents, it.currency) : '—'));
+        tr.appendChild(td(String(it.confirmations != null ? it.confirmations : '—')));
+        tbody.appendChild(tr);
+      }
+      $('deposits-empty').hidden = true;
+      $('deposits-table').hidden = false;
+    }
 
     async function init() {
       let me;
@@ -64,6 +251,10 @@ import '../styles/global.css';
 
       $('loading').hidden = true;
       $('account').hidden = false;
+
+      renderBuyGrid();
+      setupRecharge();
+      loadBalance();
 
       try {
         const data = await (await fetch('/api/account/orders', { credentials: 'same-origin' })).json();
@@ -171,5 +362,42 @@ import '../styles/global.css';
     .badge--pending { background: #FEF9C3; color: #854D0E; }
     .badge--refunded { background: #F1F5F9; color: #475569; }
     .badge--failed { background: #FEE2E2; color: #991B1B; }
+
+    /* Balance + recharge + buy */
+    .balance-card { margin-bottom: 1.25rem; }
+    .bal-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .bal-amount { margin: 0.2rem 0 0; font-size: 1.9rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px; }
+    .btn-primary {
+      background: var(--color-accent); color: #fff; border: 1px solid var(--color-accent);
+      padding: 0.6rem 1.1rem; border-radius: var(--radius-sm); cursor: pointer;
+      font-size: 0.9rem; font-weight: 700;
+    }
+    .btn-primary:hover { filter: brightness(0.95); }
+    .recharge-box { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dashed var(--border-subtle); }
+    .rc-help { font-size: 0.85rem; line-height: 1.6; margin: 0 0 0.9rem; }
+    .rc-grid { display: flex; gap: 1.1rem; flex-wrap: wrap; align-items: flex-start; }
+    .rc-qr { width: 180px; height: 180px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); background: #fff; }
+    .rc-info { flex: 1; min-width: 240px; }
+    .rc-label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.35rem; }
+    .rc-addr-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .rc-addr {
+      font-size: 0.85rem; word-break: break-all; background: var(--color-accent-subtle);
+      border: 1px solid var(--border-subtle); border-radius: 6px; padding: 0.45rem 0.6rem; flex: 1; min-width: 200px;
+    }
+    .rc-rate { font-size: 0.82rem; margin: 0.6rem 0 0; }
+    .buy-title { font-size: 1rem; margin: 1.4rem 0 0.8rem; }
+    .buy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; }
+    .buy-item {
+      border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.9rem;
+      display: flex; flex-direction: column; gap: 0.5rem; text-align: center;
+    }
+    .buy-name { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
+    .buy-price { font-size: 1.15rem; font-weight: 800; color: var(--text-primary); }
+    .btn-buy {
+      background: var(--color-accent-subtle); color: var(--color-accent); border: 1px solid var(--border-accent);
+      padding: 0.45rem 0.7rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+    }
+    .btn-buy:hover:not(:disabled) { background: var(--color-accent); color: #fff; }
+    .btn-buy:disabled { opacity: 0.6; cursor: not-allowed; }
   </style>
 </BaseLayout>

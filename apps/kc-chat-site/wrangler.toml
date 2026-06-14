@@ -24,6 +24,11 @@
 #   pnpm wrangler secret put ADMIN_TOKEN                 --env production
 #   # Optional email (Resend): RESEND_API_KEY, MAIL_FROM
 #   Lemon Squeezy Dashboard → Settings → Webhooks → https://<your-domain>/api/checkout/webhook  (event: order_created)
+#
+# ── BTC recharge (self-hosted bitcoind, server-push model) ───────────────────
+#   pnpm wrangler secret put BTC_INGEST_SECRET           --env production
+#   # The wallet machine's detect.php / fill_pool.php send `Authorization: Bearer <BTC_INGEST_SECRET>`
+#   # to POST /api/btc/ingest and POST /api/btc/pool/refill. BTC_MIN_CONFIRMATIONS is a plain var below.
 
 name = "kcchat-site"
 main = "worker/index.ts"
@@ -47,9 +52,10 @@ database_name = "kc-cards-dev"
 database_id   = "00000000-0000-0000-0000-000000000000"   # TODO: replace with `wrangler d1 create kc-cards-dev` output
 
 [vars]
-CARD_PREFIX       = "KC"
-PUBLIC_BRAND      = "KC Chat"
-CHECKOUT_CURRENCY = "usd"
+CARD_PREFIX           = "KC"
+PUBLIC_BRAND          = "KC Chat"
+CHECKOUT_CURRENCY     = "usd"
+BTC_MIN_CONFIRMATIONS = "2"
 
 # ── Production environment (deploy with `--env production`) ───────────────────
 # Bindings and vars are NOT inherited from the top level, so they are redeclared here.
@@ -61,10 +67,11 @@ routes = [
 ]
 
 [env.production.vars]
-CARD_PREFIX       = "KC"
-PUBLIC_BRAND      = "KC Chat"
-CHECKOUT_CURRENCY = "usd"
-SITE_URL          = "https://h540.com"
+CARD_PREFIX           = "KC"
+PUBLIC_BRAND          = "KC Chat"
+CHECKOUT_CURRENCY     = "usd"
+SITE_URL              = "https://h540.com"
+BTC_MIN_CONFIRMATIONS = "2"
 
 [[env.production.d1_databases]]
 binding       = "DB"

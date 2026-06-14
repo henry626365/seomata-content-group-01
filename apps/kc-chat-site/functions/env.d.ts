@@ -28,6 +28,11 @@ export interface Env {
   GOOGLE_CLIENT_SECRET?: string;
   // Comma-separated email whitelist that gets role='admin' on login (e.g. "me@gmail.com,boss@h540.com")
   ADMIN_EMAILS?: string;
+  // BTC recharge (self-hosted bitcoind, server-push model) — see functions/lib/btc.ts
+  // Shared secret the wallet machine uses to call /api/btc/ingest + /api/btc/pool/refill.
+  BTC_INGEST_SECRET?: string;
+  BTC_MIN_CONFIRMATIONS?: string; // default "2"
+  BTC_CREDIT_CURRENCY?: string;   // default falls back to CHECKOUT_CURRENCY ("usd")
 }
 
 declare global {
