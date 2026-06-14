@@ -33,6 +33,8 @@ export interface Env {
   BTC_INGEST_SECRET?: string;
   BTC_MIN_CONFIRMATIONS?: string; // default "2"
   BTC_CREDIT_CURRENCY?: string;   // default falls back to CHECKOUT_CURRENCY ("usd")
+  // Optional manual rate pin (integer cents per 1 BTC); skips the price APIs when set.
+  BTC_RATE_OVERRIDE_CENTS?: string;
 }
 
 declare global {

@@ -55,13 +55,21 @@ export function satToCents(amountSat: number, rateCentsPerBtc: number): number {
  * 0 as "rate unavailable" and skip crediting until the next poll).
  */
 export async function fetchBtcRateCents(env: Env): Promise<number> {
+  // Manual / ops / test override: pin the rate (integer cents per 1 BTC) and skip
+  // every network call. Useful for local dev (outbound price APIs may be blocked)
+  // or as an emergency pin if both sources are down. Ignored unless a positive int.
+  const override = parseInt((env.BTC_RATE_OVERRIDE_CENTS || "").trim(), 10);
+  if (Number.isFinite(override) && override > 0) return override;
+
   const cur = creditCurrency(env).toUpperCase();
 
-  // Source 1: Coinbase spot price.
+  // Source 1: Coinbase spot price. 8s timeout so an unreachable source can't hang
+  // the ingest request (no timeout = request blocks until the platform kills it).
   try {
     const r = await fetch(`https://api.coinbase.com/v2/prices/BTC-${cur}/spot`, {
       headers: { accept: "application/json" },
       cf: { cacheTtl: 30, cacheEverything: true },
+      signal: AbortSignal.timeout(8000),
     });
     if (r.ok) {
       const j = (await r.json()) as { data?: { amount?: string } };
@@ -77,6 +85,7 @@ export async function fetchBtcRateCents(env: Env): Promise<number> {
     const pair = cur === "USD" ? "XBTUSD" : `XBT${cur}`;
     const r = await fetch(`https://api.kraken.com/0/public/Ticker?pair=${pair}`, {
       headers: { accept: "application/json" },
+      signal: AbortSignal.timeout(8000),
     });
     if (r.ok) {
       const j = (await r.json()) as { result?: Record<string, { c?: string[] }> };
