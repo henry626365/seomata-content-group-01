@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
-    "astro": "^6.2.2"
+    "astro": "^6.2.2",
+    "qrcode-generator": "^2.0.4"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260520.0",

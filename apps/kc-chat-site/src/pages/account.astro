@@ -38,8 +38,11 @@ import '../styles/global.css';
               automatically after <span id="rc-conf">2</span> confirmation(s), converted at the
               market exchange rate at the time of crediting.
             </p>
+
+            <div id="rc-status" class="rc-status" role="status" aria-live="polite" hidden></div>
+
             <div class="rc-grid">
-              <img id="rc-qr" class="rc-qr" alt="BTC deposit address QR" hidden />
+              <div id="rc-qr" class="rc-qr" role="img" aria-label="BTC deposit address QR code" hidden></div>
               <div class="rc-info">
                 <label class="rc-label">Your BTC deposit address</label>
                 <div class="rc-addr-row">
@@ -47,11 +50,13 @@ import '../styles/global.css';
                   <button id="rc-copy" class="btn-tiny" type="button">Copy</button>
                 </div>
                 <p id="rc-rate" class="muted rc-rate"></p>
+                <p id="rc-target" class="rc-target" hidden></p>
               </div>
             </div>
           </div>
 
           <h3 class="buy-title">Buy a plan with your balance</h3>
+          <div id="buy-error" class="inline-error" role="alert" hidden></div>
           <div id="buy-grid" class="buy-grid"></div>
         </section>
 
@@ -86,6 +91,53 @@ import '../styles/global.css';
     </div>
   </section>
 
+  <!-- Purchase confirmation sheet -->
+  <div id="confirm-modal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cm-title">
+      <h3 id="cm-title" class="modal-title">Confirm purchase</h3>
+      <div class="modal-kv">
+        <div class="kv"><span>Plan</span><b id="cm-plan">—</b></div>
+        <div class="kv"><span>Price</span><b id="cm-price">—</b></div>
+        <div class="kv"><span>Current balance</span><b id="cm-balance">—</b></div>
+        <div class="kv kv--accent"><span>Balance after</span><b id="cm-after">—</b></div>
+      </div>
+      <div class="modal-actions">
+        <button id="cm-cancel" class="btn-ghost" type="button">Cancel</button>
+        <button id="cm-confirm" class="btn-primary" type="button">Confirm purchase →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card-key delivery (success) -->
+  <div id="success-modal" class="modal-overlay" hidden>
+    <div class="modal modal--success" role="dialog" aria-modal="true" aria-labelledby="sm-title">
+      <div class="sm-emoji" aria-hidden="true">🎉</div>
+      <h3 id="sm-title" class="modal-title">Purchased! <span id="sm-plan"></span></h3>
+      <label class="rc-label">Your card-key</label>
+      <div class="sm-code-row">
+        <code id="sm-code" class="mono sm-code">—</code>
+        <button id="sm-copy" class="btn-tiny" type="button">Copy</button>
+      </div>
+      <p class="muted sm-sent">Also emailed to <span id="sm-email">your email</span>.</p>
+      <div class="modal-actions">
+        <a id="sm-activate" class="btn-ghost" href="#">Activate now →</a>
+        <button id="sm-done" class="btn-primary" type="button">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Local QR generator (bundled by Astro/Vite) — no external service. -->
+  <script>
+    import qrcode from 'qrcode-generator';
+    window.__btcQR = (data) => {
+      const qr = qrcode(0, 'M');
+      qr.addData(data);
+      qr.make();
+      return qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+    };
+    window.dispatchEvent(new Event('btcqr-ready'));
+  </script>
+
   <script is:inline>
     const $ = (id) => document.getElementById(id);
     const TIER_LABEL = { day: 'Day Pass', month: 'Monthly', year: 'Yearly', lifetime: 'Lifetime', lite: 'Lite' };
@@ -98,64 +150,75 @@ import '../styles/global.css';
       { id: 'year', label: 'Yearly', cents: 19800 },
       { id: 'lifetime', label: 'Lifetime', cents: 29800 },
     ];
+
     let balanceCents = 0;
     let creditCurrency = 'usd';
     let rechargeLoaded = false;
+    let rateCentsPerBtc = 0; // 0 = live rate temporarily unavailable
+    let minConf = 2;
+    let targetTier = null; // a tier the user is recharging toward
+    let userEmail = '';
+
     const money = (cents, cur) =>
       cents == null ? '—' : (cents / 100).toLocaleString(undefined, { style: 'currency', currency: (cur || creditCurrency || 'usd').toUpperCase() });
     const fmtDate = (t) => (t ? new Date(t).toISOString().slice(0, 10) : '—');
     const btcAmt = (sat) => (sat == null ? '—' : (sat / 1e8).toFixed(8).replace(/0+$/, '').replace(/\.$/, ''));
+    const btcForCents = (cents) =>
+      rateCentsPerBtc > 0 ? (cents / rateCentsPerBtc).toFixed(8).replace(/0+$/, '').replace(/\.$/, '') : null;
+
+    /* ───────────────────────── Buy grid (affordability three states) ─────────────── */
 
     function renderBuyGrid() {
       const grid = $('buy-grid');
       grid.innerHTML = '';
       for (const t of BUY_TIERS) {
+        const affordable = balanceCents >= t.cents;
+        const isTarget = targetTier === t.id;
+
         const item = document.createElement('div');
-        item.className = 'buy-item';
+        item.className = 'buy-item' + (affordable ? ' buy-item--ok' : '') + (isTarget ? ' buy-item--target' : '');
+
         const name = document.createElement('div');
         name.className = 'buy-name';
         name.textContent = t.label;
+
         const price = document.createElement('div');
         price.className = 'buy-price';
         price.textContent = money(t.cents);
-        const b = document.createElement('button');
-        b.className = 'btn-buy';
-        b.type = 'button';
-        b.textContent = 'Buy';
-        b.onclick = () => buyPlan(t, b);
+
         item.appendChild(name);
         item.appendChild(price);
-        item.appendChild(b);
+
+        if (affordable) {
+          const b = document.createElement('button');
+          b.className = 'btn-buy';
+          b.type = 'button';
+          b.textContent = 'Buy';
+          b.onclick = () => buyPlan(t, b);
+          item.appendChild(b);
+        } else {
+          const gap = document.createElement('div');
+          gap.className = 'buy-gap';
+          gap.textContent = 'Need ' + money(t.cents - balanceCents) + ' more';
+          const b = document.createElement('button');
+          b.className = 'btn-buy btn-buy--ghost';
+          b.type = 'button';
+          b.textContent = isTarget ? 'Selected · recharge ↑' : 'Recharge to buy';
+          b.onclick = () => {
+            targetTier = t.id;
+            $('recharge-box').hidden = false;
+            renderBuyGrid();
+            openRecharge();
+            $('recharge-box').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          };
+          item.appendChild(gap);
+          item.appendChild(b);
+        }
         grid.appendChild(item);
       }
     }
 
-    async function buyPlan(t, btnEl) {
-      if (!confirm(`Buy ${t.label} for ${money(t.cents)} using your balance?`)) return;
-      const orig = btnEl.textContent;
-      btnEl.disabled = true; btnEl.textContent = '…';
-      try {
-        const r = await fetch('/api/account/buy', {
-          method: 'POST', credentials: 'same-origin',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ tier: t.id }),
-        });
-        const d = await r.json().catch(() => ({}));
-        if (r.status === 402) {
-          alert(`Not enough balance. You have ${money(d.balance_cents)}, need ${money(d.price_cents)}. Please recharge first.`);
-          $('recharge-box').hidden = false;
-          openRecharge();
-          return;
-        }
-        if (!r.ok) throw new Error(d.message || d.code || ('HTTP ' + r.status));
-        alert(`Purchased! Your ${t.label} card-key:\n\n${d.card_code}\n\n(It was also emailed to you.)`);
-        location.reload();
-      } catch (e) {
-        alert('Purchase failed: ' + e.message);
-      } finally {
-        btnEl.disabled = false; btnEl.textContent = orig;
-      }
-    }
+    /* ───────────────────────── Recharge (address + QR + live polling) ─────────────── */
 
     function setupRecharge() {
       $('recharge-btn').onclick = () => {
@@ -163,49 +226,162 @@ import '../styles/global.css';
         box.hidden = !box.hidden;
         if (!box.hidden) openRecharge();
       };
-      $('rc-copy').onclick = async () => {
-        const addr = $('rc-addr').textContent || '';
-        if (!addr || addr === '—') return;
-        try {
-          await navigator.clipboard.writeText(addr);
-          $('rc-copy').textContent = 'Copied';
-          setTimeout(() => { $('rc-copy').textContent = 'Copy'; }, 1500);
-        } catch {}
-      };
+      $('rc-copy').onclick = () => copyText($('rc-addr').textContent, $('rc-copy'), 'Copy');
+    }
+
+    function updateTargetHint() {
+      const el = $('rc-target');
+      if (!targetTier) { el.hidden = true; return; }
+      const t = BUY_TIERS.find((x) => x.id === targetTier);
+      if (!t) { el.hidden = true; return; }
+      const need = btcForCents(t.cents);
+      el.hidden = false;
+      el.innerHTML = need
+        ? 'Buying <b>' + t.label + '</b> (' + money(t.cents) + ')? Send about <b>' + need + ' BTC</b>.'
+        : 'Buying <b>' + t.label + '</b> (' + money(t.cents) + '). Send enough to cover it at the confirmation-time rate.';
     }
 
     async function openRecharge() {
-      if (rechargeLoaded) return;
+      ensurePolling();
+      if (rechargeLoaded) { updateTargetHint(); return; }
       try {
         const r = await fetch('/api/account/btc/recharge', { method: 'POST', credentials: 'same-origin' });
         const d = await r.json().catch(() => ({}));
         if (!r.ok) throw new Error(d.message || d.code || ('HTTP ' + r.status));
         rechargeLoaded = true;
+        rateCentsPerBtc = d.rate_cents_per_btc || 0;
+        minConf = d.min_confirmations != null ? d.min_confirmations : 2;
         $('rc-addr').textContent = d.address;
-        $('rc-conf').textContent = d.min_confirmations != null ? d.min_confirmations : 2;
-        const qr = $('rc-qr');
-        qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent('bitcoin:' + d.address);
-        qr.hidden = false;
-        $('rc-rate').textContent = d.rate_cents_per_btc > 0
-          ? 'Current rate: 1 BTC ≈ ' + money(d.rate_cents_per_btc, d.currency)
+        $('rc-conf').textContent = minConf;
+        renderQR(d.address);
+        $('rc-rate').textContent = rateCentsPerBtc > 0
+          ? 'Current rate: 1 BTC ≈ ' + money(rateCentsPerBtc, d.currency)
           : 'Live rate temporarily unavailable — deposits are still credited at the rate when confirmed.';
+        updateTargetHint();
       } catch (e) {
         $('rc-addr').textContent = '—';
         $('rc-rate').textContent = 'Could not load a deposit address: ' + e.message;
       }
     }
 
-    async function loadBalance() {
+    function renderQR(address) {
+      const box = $('rc-qr');
+      const data = 'bitcoin:' + address;
+      const draw = () => {
+        try { box.innerHTML = window.__btcQR(data); box.hidden = false; }
+        catch { box.hidden = true; }
+      };
+      if (window.__btcQR) draw();
+      else window.addEventListener('btcqr-ready', draw, { once: true });
+    }
+
+    function setRcStatus(kind, html) {
+      const el = $('rc-status');
+      if (!html) { el.hidden = true; return; }
+      el.className = 'rc-status rc-status--' + kind;
+      el.innerHTML = html;
+      el.hidden = false;
+    }
+
+    /* ───────────────────────── Smart deposit polling ─────────────── */
+
+    let pollTimer = null;
+    let pollStartedAt = 0;
+    let prevDeposits = new Map(); // id -> { status, confirmations }
+    let creditFlashUntil = 0;
+
+    function depositsHavePending(items) {
+      return items.some((it) => it.status === 'pending');
+    }
+
+    function ensurePolling() {
+      if (pollTimer) return;
+      pollStartedAt = Date.now();
+      scheduleNextPoll(0);
+    }
+
+    function stopPolling() {
+      if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
+    }
+
+    function scheduleNextPoll(delay) {
+      pollTimer = setTimeout(pollTick, delay);
+    }
+
+    async function pollTick() {
+      pollTimer = null;
+      if (document.hidden) { scheduleNextPoll(8000); return; } // pause work while hidden
+      let keepGoing = false;
       try {
-        const d = await (await fetch('/api/account/btc/deposits', { credentials: 'same-origin' })).json();
-        balanceCents = d.balance_cents || 0;
-        creditCurrency = d.currency || 'usd';
-        $('bal-amount').textContent = money(balanceCents);
-        renderBuyGrid();
-        renderDeposits((d && d.items) || []);
-      } catch {
-        $('bal-amount').textContent = money(0);
+        keepGoing = await loadBalance();
+      } catch { keepGoing = false; }
+      const boxOpen = !$('recharge-box').hidden;
+      const flashing = Date.now() < creditFlashUntil;
+      if (boxOpen || keepGoing || flashing) {
+        const elapsed = Date.now() - pollStartedAt;
+        scheduleNextPoll(elapsed < 120000 ? 8000 : 20000);
       }
+    }
+
+    /* ───────────────────────── Balance + deposits load (with diff) ─────────────── */
+
+    function countUp(el, fromCents, toCents) {
+      if (fromCents === toCents) { el.textContent = money(toCents); return; }
+      const start = performance.now();
+      const dur = 450;
+      function frame(now) {
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = money(Math.round(fromCents + (toCents - fromCents) * eased));
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    async function loadBalance() {
+      const d = await (await fetch('/api/account/btc/deposits', { credentials: 'same-origin' })).json();
+      const newBal = d.balance_cents || 0;
+      creditCurrency = d.currency || 'usd';
+      const items = (d && d.items) || [];
+
+      // Diff against previous snapshot to drive the live status bar.
+      let newlyCredited = 0;
+      let sawNewPending = false;
+      for (const it of items) {
+        const prev = prevDeposits.get(it.id);
+        if (it.status === 'credited' && (!prev || prev.status !== 'credited')) {
+          newlyCredited += it.credited_cents || 0;
+        }
+        if (it.status === 'pending' && !prev) sawNewPending = true;
+      }
+      const hadSnapshot = prevDeposits.size > 0;
+      prevDeposits = new Map(items.map((it) => [it.id, { status: it.status, confirmations: it.confirmations }]));
+
+      // Animate the balance number if it changed.
+      if (newBal !== balanceCents) {
+        countUp($('bal-amount'), balanceCents, newBal);
+        balanceCents = newBal;
+      } else {
+        $('bal-amount').textContent = money(balanceCents);
+      }
+
+      // Status bar messaging.
+      if (hadSnapshot && newlyCredited > 0) {
+        creditFlashUntil = Date.now() + 6000;
+        setRcStatus('ok', '✅ Received <b>+' + money(newlyCredited) + '</b> · balance now <b>' + money(balanceCents) + '</b>');
+        loadOrders(); // a credit may unlock affordability; orders unchanged but keep fresh
+        setTimeout(() => { if (Date.now() >= creditFlashUntil) setRcStatus('ok', ''); }, 6000);
+      } else if (depositsHavePending(items)) {
+        const p = items.find((it) => it.status === 'pending');
+        const conf = p && p.confirmations != null ? p.confirmations : 0;
+        setRcStatus('pending', '⏳ Deposit detected · <b>' + conf + '/' + minConf + '</b> confirmations · usually 10–30 min');
+      } else if (Date.now() >= creditFlashUntil && !$('recharge-box').hidden && rechargeLoaded) {
+        setRcStatus('wait', '⏳ Waiting for your transfer… this updates automatically.');
+      }
+
+      renderBuyGrid();
+      renderDeposits(items);
+      return depositsHavePending(items);
     }
 
     function renderDeposits(items) {
@@ -232,44 +408,159 @@ import '../styles/global.css';
       $('deposits-table').hidden = false;
     }
 
-    async function init() {
-      let me;
+    /* ───────────────────────── Buy flow (confirm sheet → success modal) ─────────────── */
+
+    function showBuyError(msg) {
+      const el = $('buy-error');
+      el.textContent = msg;
+      el.hidden = false;
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setTimeout(() => { el.hidden = true; }, 6000);
+    }
+
+    function buyPlan(t, btnEl) {
+      openConfirm(t, btnEl);
+    }
+
+    function openConfirm(t, btnEl) {
+      $('cm-plan').textContent = t.label;
+      $('cm-price').textContent = money(t.cents);
+      $('cm-balance').textContent = money(balanceCents);
+      $('cm-after').textContent = money(balanceCents - t.cents);
+      const confirmBtn = $('cm-confirm');
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = 'Confirm purchase →';
+      confirmBtn.onclick = () => doBuy(t, confirmBtn, btnEl);
+      openModal('confirm-modal', confirmBtn);
+    }
+
+    async function doBuy(t, confirmBtn, originBtn) {
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Processing…';
+      if (originBtn) originBtn.disabled = true;
       try {
-        me = await (await fetch('/api/auth/me', { credentials: 'same-origin' })).json();
-      } catch { me = { user: null }; }
+        const r = await fetch('/api/account/buy', {
+          method: 'POST', credentials: 'same-origin',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ tier: t.id }),
+        });
+        const d = await r.json().catch(() => ({}));
 
-      if (!me || !me.user) {
-        location.replace('/login?redirect=/account');
-        return;
+        if (r.status === 402) {
+          closeModal('confirm-modal');
+          targetTier = t.id;
+          $('recharge-box').hidden = false;
+          renderBuyGrid();
+          openRecharge();
+          const need = (d.price_cents || t.cents) - (d.balance_cents != null ? d.balance_cents : balanceCents);
+          setRcStatus('wait', 'Need <b>' + money(need) + '</b> more for ' + t.label + '. Recharge below — your balance updates automatically.');
+          $('recharge-box').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          return;
+        }
+        if (r.status === 409) {
+          closeModal('confirm-modal');
+          if (d.balance_cents != null) { countUp($('bal-amount'), balanceCents, d.balance_cents); balanceCents = d.balance_cents; renderBuyGrid(); }
+          showBuyError(t.label + ' is temporarily out of stock — your balance was not charged.');
+          return;
+        }
+        if (!r.ok) throw new Error(d.message || d.code || ('HTTP ' + r.status));
+
+        // Success → update balance immediately, then celebrate.
+        if (d.balance_cents != null) { countUp($('bal-amount'), balanceCents, d.balance_cents); balanceCents = d.balance_cents; }
+        closeModal('confirm-modal');
+        renderBuyGrid();
+        loadOrders();
+        showSuccess(t, d.card_code);
+      } catch (e) {
+        closeModal('confirm-modal');
+        showBuyError('Purchase failed: ' + e.message);
+      } finally {
+        if (originBtn) originBtn.disabled = false;
       }
+    }
 
-      const u = me.user;
-      $('acct-name').textContent = u.name || 'My account';
-      $('acct-email').textContent = u.email || '';
-      if (u.picture) { $('acct-pic').src = u.picture; $('acct-pic').hidden = false; }
-      if (u.role === 'admin') $('admin-link').hidden = false;
+    function showSuccess(t, code) {
+      $('sm-plan').textContent = t.label;
+      $('sm-code').textContent = code || '—';
+      $('sm-email').textContent = userEmail || 'your email';
+      const act = $('sm-activate');
+      act.href = code ? '/activate?code=' + encodeURIComponent(code) : '/activate';
+      $('sm-copy').onclick = () => copyText(code, $('sm-copy'), 'Copy');
+      openModal('success-modal', $('sm-done'));
+    }
 
-      $('loading').hidden = true;
-      $('account').hidden = false;
+    /* ───────────────────────── Modal helpers (focus trap + Esc + overlay) ─────────────── */
 
-      renderBuyGrid();
-      setupRecharge();
-      loadBalance();
+    let activeModal = null;
+    let lastFocused = null;
 
+    function openModal(id, focusEl) {
+      const overlay = $(id);
+      lastFocused = document.activeElement;
+      overlay.hidden = false;
+      activeModal = overlay;
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => { (focusEl || overlay.querySelector('button, a, input')).focus(); });
+    }
+
+    function closeModal(id) {
+      const overlay = id ? $(id) : activeModal;
+      if (!overlay) return;
+      overlay.hidden = true;
+      if (activeModal === overlay) activeModal = null;
+      if (!activeModal) document.body.style.overflow = '';
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    function wireModals() {
+      $('cm-cancel').onclick = () => closeModal('confirm-modal');
+      $('sm-done').onclick = () => closeModal('success-modal');
+      for (const id of ['confirm-modal', 'success-modal']) {
+        $(id).addEventListener('mousedown', (e) => { if (e.target === $(id)) closeModal(id); });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (!activeModal) return;
+        if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+        if (e.key === 'Tab') {
+          const f = activeModal.querySelectorAll('button:not([disabled]), a[href], input, [tabindex]:not([tabindex="-1"])');
+          if (!f.length) return;
+          const first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      });
+    }
+
+    async function copyText(text, btnEl, restore) {
+      if (!text || text === '—') return;
+      try {
+        await navigator.clipboard.writeText(text);
+        const orig = restore || btnEl.textContent;
+        btnEl.textContent = 'Copied ✓';
+        btnEl.classList.add('btn-tiny--ok');
+        setTimeout(() => { btnEl.textContent = orig; btnEl.classList.remove('btn-tiny--ok'); }, 1500);
+      } catch {}
+    }
+
+    /* ───────────────────────── Orders ─────────────── */
+
+    async function loadOrders() {
       try {
         const data = await (await fetch('/api/account/orders', { credentials: 'same-origin' })).json();
         const items = (data && data.items) || [];
-        if (!items.length) { $('orders-empty').hidden = false; return; }
-
-        const fmt = (t) => (t ? new Date(t).toISOString().slice(0, 10) : '—');
-        const money = (cents, cur) => (cents == null ? '—' : (cents / 100).toLocaleString(undefined, { style: 'currency', currency: (cur || 'usd').toUpperCase() }));
-        const statusLabel = { pending: 'Pending', paid: 'Paid', refunded: 'Refunded', failed: 'Failed' };
-
         const tbody = $('orders-table').querySelector('tbody');
+        tbody.innerHTML = '';
+        if (!items.length) {
+          $('orders-empty').hidden = false;
+          $('orders-empty').innerHTML = 'No orders yet. <a href="/pricing">Browse plans →</a>';
+          $('orders-table').hidden = true;
+          return;
+        }
+        const statusLabel = { pending: 'Pending', paid: 'Paid', refunded: 'Refunded', failed: 'Failed' };
         for (const o of items) {
           const tr = document.createElement('tr');
           const td = (txt, mono) => { const c = document.createElement('td'); if (mono) c.className = 'mono'; c.textContent = txt; return c; };
-          tr.appendChild(td(fmt(o.created_at)));
+          tr.appendChild(td(fmtDate(o.created_at)));
           tr.appendChild(td(TIER_LABEL[o.tier] || o.tier));
           const st = document.createElement('td');
           const badge = document.createElement('span');
@@ -295,11 +586,13 @@ import '../styles/global.css';
                 });
                 const d = await r.json().catch(() => ({}));
                 if (!r.ok) throw new Error(d.message || d.code || ('HTTP ' + r.status));
-                alert('Card-key email re-sent to ' + (d.to || 'your email') + '.');
+                rb.textContent = 'Sent ✓';
+                setTimeout(() => { rb.textContent = orig; }, 1800);
               } catch (e) {
-                alert('Resend failed: ' + e.message);
+                showBuyError('Resend failed: ' + e.message);
+                rb.textContent = orig;
               } finally {
-                rb.disabled = false; rb.textContent = orig;
+                rb.disabled = false;
               }
             };
             actTd.appendChild(rb);
@@ -307,11 +600,48 @@ import '../styles/global.css';
           tr.appendChild(actTd);
           tbody.appendChild(tr);
         }
+        $('orders-empty').hidden = true;
         $('orders-table').hidden = false;
       } catch {
         $('orders-empty').hidden = false;
         $('orders-empty').textContent = 'Could not load your orders. Please refresh.';
+        $('orders-table').hidden = true;
       }
+    }
+
+    /* ───────────────────────── Init ─────────────── */
+
+    async function init() {
+      let me;
+      try {
+        me = await (await fetch('/api/auth/me', { credentials: 'same-origin' })).json();
+      } catch { me = { user: null }; }
+
+      if (!me || !me.user) {
+        location.replace('/login?redirect=/account');
+        return;
+      }
+
+      const u = me.user;
+      userEmail = u.email || '';
+      $('acct-name').textContent = u.name || 'My account';
+      $('acct-email').textContent = u.email || '';
+      if (u.picture) { $('acct-pic').src = u.picture; $('acct-pic').hidden = false; }
+      if (u.role === 'admin') $('admin-link').hidden = false;
+
+      $('loading').hidden = true;
+      $('account').hidden = false;
+
+      renderBuyGrid();
+      setupRecharge();
+      wireModals();
+      loadOrders();
+      loadBalance().then((hasPending) => { if (hasPending) ensurePolling(); });
+
+      // Resume polling promptly when the tab becomes visible again.
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && (!$('recharge-box').hidden || prevDeposits.size)) ensurePolling();
+      });
     }
 
     $('logout-btn').onclick = async () => {
@@ -357,6 +687,7 @@ import '../styles/global.css';
     }
     .btn-tiny:hover:not(:disabled) { background: var(--color-accent); color: #fff; }
     .btn-tiny:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-tiny--ok { background: #DCFCE7 !important; color: #166534 !important; border-color: #86EFAC !important; }
     .badge { padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
     .badge--paid { background: #DCFCE7; color: #166534; }
     .badge--pending { background: #FEF9C3; color: #854D0E; }
@@ -366,17 +697,27 @@ import '../styles/global.css';
     /* Balance + recharge + buy */
     .balance-card { margin-bottom: 1.25rem; }
     .bal-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .bal-amount { margin: 0.2rem 0 0; font-size: 1.9rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px; }
+    .bal-amount { margin: 0.2rem 0 0; font-size: 1.9rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
     .btn-primary {
       background: var(--color-accent); color: #fff; border: 1px solid var(--color-accent);
       padding: 0.6rem 1.1rem; border-radius: var(--radius-sm); cursor: pointer;
       font-size: 0.9rem; font-weight: 700;
     }
-    .btn-primary:hover { filter: brightness(0.95); }
+    .btn-primary:hover:not(:disabled) { filter: brightness(0.95); }
+    .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
     .recharge-box { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dashed var(--border-subtle); }
     .rc-help { font-size: 0.85rem; line-height: 1.6; margin: 0 0 0.9rem; }
+    .rc-status {
+      font-size: 0.85rem; font-weight: 600; line-height: 1.5;
+      padding: 0.6rem 0.85rem; border-radius: var(--radius-sm); margin: 0 0 0.9rem;
+      border: 1px solid transparent;
+    }
+    .rc-status--pending { background: #FEF9C3; color: #854D0E; border-color: #FDE68A; }
+    .rc-status--ok { background: #DCFCE7; color: #166534; border-color: #86EFAC; }
+    .rc-status--wait { background: var(--color-accent-subtle); color: var(--text-secondary); border-color: var(--border-subtle); }
     .rc-grid { display: flex; gap: 1.1rem; flex-wrap: wrap; align-items: flex-start; }
-    .rc-qr { width: 180px; height: 180px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); background: #fff; }
+    .rc-qr { width: 180px; height: 180px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); background: #fff; box-sizing: border-box; padding: 6px; }
+    .rc-qr svg { width: 100%; height: 100%; display: block; }
     .rc-info { flex: 1; min-width: 240px; }
     .rc-label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.35rem; }
     .rc-addr-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
@@ -385,19 +726,71 @@ import '../styles/global.css';
       border: 1px solid var(--border-subtle); border-radius: 6px; padding: 0.45rem 0.6rem; flex: 1; min-width: 200px;
     }
     .rc-rate { font-size: 0.82rem; margin: 0.6rem 0 0; }
+    .rc-target {
+      font-size: 0.84rem; margin: 0.6rem 0 0; padding: 0.55rem 0.7rem;
+      background: var(--color-accent-subtle); border: 1px dashed var(--border-accent);
+      border-radius: 6px; color: var(--text-primary);
+    }
     .buy-title { font-size: 1rem; margin: 1.4rem 0 0.8rem; }
+    .inline-error {
+      font-size: 0.85rem; font-weight: 600; color: #991B1B; background: #FEE2E2;
+      border: 1px solid #FECACA; border-radius: var(--radius-sm); padding: 0.6rem 0.85rem; margin: 0 0 0.8rem;
+    }
     .buy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; }
     .buy-item {
       border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.9rem;
-      display: flex; flex-direction: column; gap: 0.5rem; text-align: center;
+      display: flex; flex-direction: column; gap: 0.5rem; text-align: center; transition: border-color 0.15s, box-shadow 0.15s;
     }
+    .buy-item--ok { border-color: var(--border-accent); }
+    .buy-item--target { border-color: var(--color-accent); box-shadow: 0 0 0 2px var(--color-accent-subtle); }
     .buy-name { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
     .buy-price { font-size: 1.15rem; font-weight: 800; color: var(--text-primary); }
+    .buy-gap { font-size: 0.74rem; font-weight: 600; color: #B45309; }
     .btn-buy {
-      background: var(--color-accent-subtle); color: var(--color-accent); border: 1px solid var(--border-accent);
+      background: var(--color-accent); color: #fff; border: 1px solid var(--color-accent);
       padding: 0.45rem 0.7rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
     }
-    .btn-buy:hover:not(:disabled) { background: var(--color-accent); color: #fff; }
+    .btn-buy:hover:not(:disabled) { filter: brightness(0.95); }
     .btn-buy:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-buy--ghost {
+      background: var(--color-accent-subtle); color: var(--color-accent); border: 1px solid var(--border-accent);
+    }
+    .btn-buy--ghost:hover:not(:disabled) { background: var(--color-accent); color: #fff; filter: none; }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55);
+      display: flex; align-items: center; justify-content: center; padding: 1rem; z-index: 100;
+      animation: modal-fade 0.15s ease-out;
+    }
+    @keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
+    .modal {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25); padding: clamp(1.25rem, 3vw, 1.85rem);
+      width: 100%; max-width: 420px; animation: modal-pop 0.18s ease-out;
+    }
+    @keyframes modal-pop { from { transform: translateY(8px) scale(0.98); opacity: 0; } to { transform: none; opacity: 1; } }
+    .modal-title { font-size: 1.15rem; margin: 0 0 1rem; }
+    .modal-kv { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.25rem; }
+    .kv { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--text-secondary); }
+    .kv b { color: var(--text-primary); font-weight: 700; }
+    .kv--accent { padding-top: 0.55rem; border-top: 1px dashed var(--border-subtle); }
+    .kv--accent b { color: var(--color-accent); }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 0.6rem; align-items: center; }
+    .modal--success { text-align: center; }
+    .modal--success .modal-actions { justify-content: center; }
+    .modal--success .rc-label { text-align: left; }
+    .sm-emoji { font-size: 2.4rem; line-height: 1; margin-bottom: 0.4rem; }
+    .sm-code-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; }
+    .sm-code {
+      flex: 1; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.5px; text-align: center;
+      background: var(--color-accent-subtle); border: 1px solid var(--border-accent);
+      border-radius: 8px; padding: 0.7rem 0.6rem; word-break: break-all;
+    }
+    .sm-sent { font-size: 0.82rem; margin: 0 0 1.1rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .modal-overlay, .modal { animation: none; }
+    }
   </style>
 </BaseLayout>
